@@ -72,7 +72,7 @@ initScreen(BuildContext context) {
                     width: localWidth,
                     height: localHeight / 3.9,
                     child: Image.asset(
-                      'assets/images/logo.jpg',
+                      'assets/images/logo.png',
                       filterQuality: FilterQuality.high,
                     ),
                   ),

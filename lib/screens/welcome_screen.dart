@@ -28,8 +28,8 @@ class WelcomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        'assets/images/logo.jpg',
-                        width: 150,
+                        'assets/images/logo.png',
+                        width: 200,
                       ),
                       SizedBox(
                         height: 40,

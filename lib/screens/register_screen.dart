@@ -31,7 +31,7 @@ class RegisterScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Image.asset(
-                        'assets/images/logo.jpg',
+                        'assets/images/logo.png',
                         width: 150,
                       ),
                       SizedBox(

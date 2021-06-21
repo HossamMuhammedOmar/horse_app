@@ -296,6 +296,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
+  responsive_framework:
+    dependency: "direct main"
+    description:
+      name: responsive_framework
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   rxdart:
     dependency: transitive
     description:
@@ -342,13 +349,6 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_windows
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
-  shimmer_animation:
-    dependency: "direct main"
-    description:
-      name: shimmer_animation
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"

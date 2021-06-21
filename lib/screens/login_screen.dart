@@ -5,6 +5,9 @@ import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/widgets/reusable_widgets.dart';
 
 class LoginScreen extends StatelessWidget {
+  final _userNameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,18 +31,19 @@ class LoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/logo.jpg',
+                          'assets/images/logo.png',
                           width: 150,
                         ),
                         SizedBox(
                           height: 40,
                         ),
                         Form(
+                          key: _formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               AutoSizeText(
-                                'إسم المستخدم',
+                                'البريد الإلكتروني',
                                 maxLines: 1,
                                 style: TextStyle(
                                   fontSize: 16,
@@ -49,9 +53,14 @@ class LoginScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 5),
                               TextFormField(
+                                controller: _userNameController,
+                                validator: (value) {
+                                  if (value!.isEmpty || !value.contains('@')) {
+                                    return 'أدخل البريد الإلكتروني';
+                                  }
+                                },
                                 decoration: new InputDecoration(
                                   enabledBorder: const OutlineInputBorder(
-                                    // width: 0.0 produces a thin "hairline" border
                                     borderSide: const BorderSide(
                                         color: mPrimaryColor, width: 0.8),
                                   ),
@@ -72,6 +81,12 @@ class LoginScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 5),
                               TextFormField(
+                                controller: _passwordController,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'أدخل كلمه المرور';
+                                  }
+                                },
                                 decoration: new InputDecoration(
                                   enabledBorder: const OutlineInputBorder(
                                     // width: 0.0 produces a thin "hairline" border
@@ -89,7 +104,9 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(height: 30),
                         myPrimaryButton(
                           title: 'دخـــــول',
-                          onClick: () {},
+                          onClick: () {
+                            if (_formKey.currentState!.validate()) {}
+                          },
                         ),
                         SizedBox(
                           height: 30,
