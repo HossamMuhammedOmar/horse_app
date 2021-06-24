@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class DioHelper {
   static Dio? dio;
-  static final path = ' https://alasakerhorse.com/api/';
+  static final path = 'https://alasakerhorse.com/api/';
 
   static init() {
     dio = Dio(

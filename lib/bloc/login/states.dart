@@ -1,9 +1,15 @@
-abstract class LgoinStates {}
+import '../../models/login_model.dart';
 
-class LoginInitState extends LgoinStates {}
+abstract class LoginStates {}
 
-class LoginLoadingState extends LgoinStates {}
+class LoginInitState extends LoginStates {}
 
-class LoginSuccessState extends LgoinStates {}
+class LoginLoadingState extends LoginStates {}
 
-class LoginErrorState extends LgoinStates {}
+class LoginSuccessState extends LoginStates {
+  final LoginModel loginModel;
+
+  LoginSuccessState(this.loginModel);
+}
+
+class LoginErrorState extends LoginStates {}

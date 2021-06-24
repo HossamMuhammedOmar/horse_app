@@ -1,24 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
-import 'package:horse_app/screens/splash_screen.dart';
+import 'package:horse_app/screens/home_screen.dart';
+import 'package:horse_app/screens/register_screen.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
+
+import 'networking/dio_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  DioHelper.init();
   await SharedHelper.init();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'app title',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => HomeCubit(),
+        ),
+      ],
+      child: MaterialApp(
+        home: HomeScreen(),
+        debugShowCheckedModeBanner: false,
+        title: 'Horse App',
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+        ),
       ),
-      home: SplashScreen(),
     );
   }
 }

@@ -9,7 +9,6 @@ import 'package:horse_app/models/on_boarding_model.dart';
 import 'package:horse_app/screens/welcome_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:transitioner/transitioner.dart';
-import 'home_screen.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   @override
