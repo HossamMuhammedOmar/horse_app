@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
+import 'package:horse_app/constants/keys.dart';
+import 'package:horse_app/helpers/shared_helper_Screen.dart';
+import 'package:horse_app/screens/home_screen.dart';
 import '../constants/colors.dart';
 import 'package:transitioner/transitioner.dart';
 import 'on_boarding_screen.dart';
@@ -30,7 +33,9 @@ class _SplashScreenState extends State<SplashScreen> {
   route() {
     Transitioner(
       context: context,
-      child: OnBoardingScreen(),
+      child: SharedHelper.getCacheData(key: TOKEN) == null
+          ? OnBoardingScreen()
+          : HomeScreen(),
       animation: AnimationType.fadeIn, // Optional value
       duration: Duration(milliseconds: 1000), // Optional value
       replacement: true, // Optional value

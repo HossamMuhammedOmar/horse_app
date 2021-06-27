@@ -4,9 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
 import 'package:horse_app/screens/home_screen.dart';
-import 'package:horse_app/screens/register_screen.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
-
+import 'package:horse_app/screens/splash_screen.dart';
 import 'networking/dio_helper.dart';
 
 void main() async {
@@ -25,11 +23,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => HomeCubit(),
+          create: (context) => HomeCubit()..getAllCategories(),
         ),
       ],
       child: MaterialApp(
-        home: HomeScreen(),
+        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
         title: 'Horse App',
         theme: ThemeData(

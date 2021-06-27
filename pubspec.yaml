@@ -37,8 +37,8 @@ dependencies:
   dio: ^4.0.0
   bloc: ^7.0.0
   flutter_bloc: ^7.0.1
-  responsive_framework: ^0.1.2
   image_picker: ^0.8.0+3
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

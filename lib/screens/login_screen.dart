@@ -8,7 +8,9 @@ import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/constants/keys.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
+import 'package:horse_app/screens/home_screen.dart';
 import 'package:horse_app/widgets/reusable_widgets.dart';
+import 'package:transitioner/transitioner.dart';
 
 class LoginScreen extends StatelessWidget {
   final _emailController = TextEditingController();
@@ -21,27 +23,34 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, states) {
           if (states is LoginSuccessState) {
-            if (states.loginModel.status == true) {
-              SharedHelper.cacheData(key: TOKEN, value: '');
-              Fluttertoast.showToast(
-                  msg: states.loginModel.message!,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-              // navigationAndFinish(context, HomeScreen());
-            } else {
-              Fluttertoast.showToast(
-                  msg: states.loginModel.message!,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-            }
+            SharedHelper.cacheData(
+                key: TOKEN, value: '${states.loginModel.data!.id}');
+            Fluttertoast.showToast(
+              msg: 'تم الدخول بنجاح',
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            Transitioner(
+              context: context,
+              child: HomeScreen(),
+              animation: AnimationType.slideRight, // Optional value
+              duration: Duration(milliseconds: 300), // Optional value
+              replacement: true, // Optional value
+              curveType: CurveType.decelerate, // Optional value
+            );
+          } else if (states is LoginErrorState) {
+            Fluttertoast.showToast(
+                msg: 'البيانات غير صحيحة',
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
           }
         },
         builder: (context, states) {
