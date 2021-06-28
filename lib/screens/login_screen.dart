@@ -97,6 +97,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     TextFormField(
+                                      keyboardType: TextInputType.emailAddress,
                                       controller: _emailController,
                                       validator: (value) {
                                         if (value!.isEmpty ||
@@ -126,6 +127,9 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     TextFormField(
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
+                                      obscureText: true,
                                       controller: _passwordController,
                                       validator: (value) {
                                         if (value!.isEmpty) {

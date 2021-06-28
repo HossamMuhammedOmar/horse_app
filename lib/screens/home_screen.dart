@@ -1,4 +1,5 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horse_app/bloc/home/cubit.dart';
@@ -6,21 +7,24 @@ import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/models/categories_model.dart';
-import 'package:horse_app/models/packages_model.dart';
-import 'package:horse_app/models/posts_model.dart';
+import 'package:horse_app/screens/contact_screen.dart';
+import 'package:horse_app/screens/profile_screen.dart';
+import 'package:horse_app/screens/reservation_screen.dart';
+import 'package:transitioner/transitioner.dart';
+
+import 'notification_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {
-        if (state is HomeInitState) {}
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         HomeCubit _cubit = HomeCubit.get(context);
 
         var catId;
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             toolbarHeight: 110,
             centerTitle: true,
@@ -40,7 +44,17 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Transitioner(
+                          context: context,
+                          child: NotificationScreen(),
+                          animation: AnimationType.fadeIn, // Optional value
+                          duration:
+                              Duration(milliseconds: 300), // Optional value
+                          replacement: true, // Optional value
+                          curveType: CurveType.decelerate, // Optional value
+                        );
+                      },
                       icon: Icon(
                         Icons.notifications_none,
                         size: 30,
@@ -59,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          '1',
+                          '0',
                           style: TextStyle(color: Colors.red),
                         ),
                       ),
@@ -90,8 +104,8 @@ class HomeScreen extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Container(
-            height: 60.0,
-            width: 60.0,
+            height: 65.0,
+            width: 65.0,
             child: FittedBox(
               child: FloatingActionButton(
                 elevation: 0,
@@ -104,43 +118,43 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          bottomNavigationBar: Container(
-            height: 60,
-            child: BottomAppBar(
-              color: mPrimaryColor,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        print('Contact Us');
-                      },
-                      child: Image.asset(
-                        'assets/images/mail_bulk.png',
-                        width: 30,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _cubit.getUserDataById();
-                        print('Account Info');
-                      },
-                      child: Image.asset(
-                        'assets/images/chalkboard.png',
-                        width: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          body: _cubit.categoriesModel != null
+          // bottomNavigationBar: Container(
+          //   height: 60,
+          //   child: BottomAppBar(
+          //     color: mPrimaryColor,
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(
+          //         horizontal: 20,
+          //       ),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         children: [
+          //           GestureDetector(
+          //             onTap: () {
+          //               print('Contact Us');
+          //             },
+          //             child: Image.asset(
+          //               'assets/images/mail_bulk.png',
+          //               width: 30,
+          //             ),
+          //           ),
+          //           GestureDetector(
+          //             onTap: () {
+          //               _cubit.getUserDataById();
+          //               print('Account Info');
+          //             },
+          //             child: Image.asset(
+          //               'assets/images/chalkboard.png',
+          //               width: 30,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          body: _cubit.categoriesModel != null && _cubit.postsModel != null
               ? Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -148,149 +162,215 @@ class HomeScreen extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: LayoutBuilder(
-                      builder: (context, constraint) {
-                        var topHeight = constraint.maxHeight;
-                        var topWidht = constraint.maxWidth;
-                        return Column(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Center(
-                                child: RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(
-                                    text: 'إشتراك ',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: mPrimaryArabicFont,
-                                      color: mPrimaryColor,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: LayoutBuilder(
+                          builder: (context, constraint) {
+                            var topHeight = constraint.maxHeight;
+                            var topWidht = constraint.maxWidth;
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Center(
+                                    child: RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        text: 'إشتراك ',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: mPrimaryArabicFont,
+                                          color: mPrimaryColor,
+                                        ),
+                                        children: const <TextSpan>[
+                                          TextSpan(
+                                            text: 'فعال',
+                                            style: TextStyle(
+                                              color: Color(0xff079606),
+                                            ),
+                                          ),
+                                          TextSpan(text: ' ( 0 )'),
+                                          TextSpan(text: ' '),
+                                          TextSpan(text: ' إشتراك '),
+                                          TextSpan(
+                                            text: 'منتهي ',
+                                            style: TextStyle(
+                                              color: Color(0xffEE1313),
+                                            ),
+                                          ),
+                                          TextSpan(text: '( 0 )'),
+                                        ],
+                                      ),
                                     ),
-                                    children: const <TextSpan>[
-                                      TextSpan(
-                                        text: 'فعال',
-                                        style: TextStyle(
-                                          color: Color(0xff079606),
-                                        ),
-                                      ),
-                                      TextSpan(text: ' ( 10 )'),
-                                      TextSpan(text: ' '),
-                                      TextSpan(text: ' إشتراك '),
-                                      TextSpan(
-                                        text: 'منتهي ',
-                                        style: TextStyle(
-                                          color: Color(0xffEE1313),
-                                        ),
-                                      ),
-                                      TextSpan(text: '( 0 )'),
-                                    ],
                                   ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Container(
-                                width: double.infinity,
-                                height: 0.5,
-                                color: Color(0xff707070),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            width: 1,
-                                            color: Colors.grey.withOpacity(0.9),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: DecoratedBox(
-                                          decoration: ShapeDecoration(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(3.0),
+                                SizedBox(height: 5),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 0.5,
+                                    color: Color(0xff707070),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                width: 1,
+                                                color: Colors.grey
+                                                    .withOpacity(0.9),
                                               ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                             ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 20,
-                                            ),
-                                            child: DropdownButtonHideUnderline(
-                                              child: DropdownButton(
-                                                icon: Icon(Icons
-                                                    .keyboard_arrow_down_sharp),
-                                                iconEnabledColor: mPrimaryColor,
-                                                items: _cubit.service.map(
-                                                  (s) {
-                                                    return DropdownMenuItem(
-                                                      onTap: () {
-                                                        catId = s.id;
-                                                        _cubit
-                                                            .getAllCategoriesPackage(
-                                                          catId: s.id,
+                                            child: DecoratedBox(
+                                              decoration: ShapeDecoration(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(3.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 20,
+                                                ),
+                                                child:
+                                                    DropdownButtonHideUnderline(
+                                                  child: DropdownButton(
+                                                    icon: Icon(Icons
+                                                        .keyboard_arrow_down_sharp),
+                                                    iconEnabledColor:
+                                                        mPrimaryColor,
+                                                    items: _cubit.service.map(
+                                                      (s) {
+                                                        return DropdownMenuItem(
+                                                          onTap: () {
+                                                            catId = s.id;
+                                                            _cubit
+                                                                .getAllCategoriesPackage(
+                                                              catId: s.id,
+                                                            );
+                                                          },
+                                                          value: s.name,
+                                                          child: Container(
+                                                            child: AutoSizeText(
+                                                              s.name,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              maxLines: 1,
+                                                              style: TextStyle(
+                                                                color:
+                                                                    mPrimaryColor,
+                                                                fontFamily:
+                                                                    mPrimaryArabicFont,
+                                                                fontSize: 13,
+                                                              ),
+                                                            ),
+                                                          ),
                                                         );
                                                       },
-                                                      value: s.name,
-                                                      child: Container(
-                                                        child: AutoSizeText(
-                                                          s.name,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          maxLines: 1,
-                                                          style: TextStyle(
-                                                            color:
-                                                                mPrimaryColor,
-                                                            fontFamily:
-                                                                mPrimaryArabicFont,
-                                                            fontSize: 13,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).toList(),
-                                                value: _cubit.selectedService,
-                                                onChanged: (value) {
-                                                  _cubit.selecteService(value);
-                                                },
+                                                    ).toList(),
+                                                    value:
+                                                        _cubit.selectedService,
+                                                    onChanged: (value) {
+                                                      _cubit.selecteService(
+                                                          value);
+                                                    },
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 30),
-                                    Container(
-                                      // color: Colors.black,
-                                      width: double.infinity,
-                                      height: topHeight / 2.6,
-                                      child: ListView.separated(
-                                        physics: BouncingScrollPhysics(),
-                                        reverse: true,
-                                        scrollDirection: Axis.horizontal,
-                                        itemBuilder: (context, index) {
-                                          if (index == 3) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 20.0,
-                                              ),
-                                              child: _buildHorizontalItem(
+                                        SizedBox(height: 30),
+                                        Container(
+                                          // color: Colors.black,
+                                          width: double.infinity,
+                                          height: topHeight / 2.6,
+                                          child: ListView.separated(
+                                            physics: BouncingScrollPhysics(),
+                                            reverse: true,
+                                            scrollDirection: Axis.horizontal,
+                                            itemBuilder: (context, index) {
+                                              if (index == 3) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 20.0,
+                                                  ),
+                                                  child: _buildHorizontalItem(
+                                                    topWidht,
+                                                    topHeight,
+                                                    _cubit.packagesModel != null
+                                                        ? _cubit
+                                                            .packagesModel!
+                                                            .data!
+                                                            .packages![index]
+                                                        : null,
+                                                    _cubit.packagesModel != null
+                                                        ? _cubit
+                                                            .packagesModel!.data
+                                                        : null,
+                                                    _cubit.categoriesModel!,
+                                                    _cubit
+                                                        .categoriesModel!
+                                                        .data!
+                                                        .first
+                                                        .packages![index]
+                                                        .title,
+                                                    index,
+                                                    context,
+                                                  ),
+                                                );
+                                              } else if (index == 0) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 20.0),
+                                                  child: _buildHorizontalItem(
+                                                    topWidht,
+                                                    topHeight,
+                                                    _cubit.packagesModel != null
+                                                        ? _cubit
+                                                            .packagesModel!
+                                                            .data!
+                                                            .packages![index]
+                                                        : null,
+                                                    _cubit.packagesModel != null
+                                                        ? _cubit
+                                                            .packagesModel!.data
+                                                        : null,
+                                                    _cubit.categoriesModel!,
+                                                    _cubit
+                                                        .categoriesModel!
+                                                        .data!
+                                                        .first
+                                                        .packages![index]
+                                                        .title,
+                                                    index,
+                                                    context,
+                                                  ),
+                                                );
+                                              } else {
+                                                return _buildHorizontalItem(
                                                   topWidht,
                                                   topHeight,
                                                   _cubit.packagesModel != null
@@ -310,103 +390,128 @@ class HomeScreen extends StatelessWidget {
                                                       .first
                                                       .packages![index]
                                                       .title,
-                                                  index),
-                                            );
-                                          } else if (index == 0) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 20.0),
-                                              child: _buildHorizontalItem(
-                                                  topWidht,
-                                                  topHeight,
-                                                  _cubit.packagesModel != null
-                                                      ? _cubit
-                                                          .packagesModel!
-                                                          .data!
-                                                          .packages![index]
-                                                      : null,
-                                                  _cubit.packagesModel != null
-                                                      ? _cubit
-                                                          .packagesModel!.data
-                                                      : null,
-                                                  _cubit.categoriesModel!,
-                                                  _cubit
-                                                      .categoriesModel!
-                                                      .data!
-                                                      .first
-                                                      .packages![index]
-                                                      .title,
-                                                  index),
-                                            );
-                                          } else {
-                                            return _buildHorizontalItem(
-                                                topWidht,
-                                                topHeight,
+                                                  index,
+                                                  context,
+                                                );
+                                              }
+                                            },
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    SizedBox(width: 20),
+                                            itemCount:
                                                 _cubit.packagesModel != null
                                                     ? _cubit.packagesModel!
-                                                        .data!.packages![index]
-                                                    : null,
-                                                _cubit.packagesModel != null
-                                                    ? _cubit.packagesModel!.data
-                                                    : null,
-                                                _cubit.categoriesModel!,
-                                                _cubit
-                                                    .categoriesModel!
-                                                    .data!
-                                                    .first
-                                                    .packages![index]
-                                                    .title,
-                                                index);
-                                          }
-                                        },
-                                        separatorBuilder: (context, index) =>
-                                            SizedBox(width: 20),
-                                        itemCount: _cubit.packagesModel != null
-                                            ? _cubit.packagesModel!.data!
-                                                .packages!.length
-                                            : _cubit.categoriesModel!.data!
-                                                .first.packages!.length,
-                                      ),
-                                    ),
-                                    SizedBox(height: 40),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                      ),
-                                      child: Container(
-                                        width: double.infinity,
-                                        // color: Colors.black,
-                                        child: ListView.separated(
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemBuilder: (conext, index) =>
-                                              _buildVerticalItem(
-                                                  topHeight,
-                                                  topWidht,
-                                                  _cubit.postsModel!
-                                                      .data![index]),
-                                          separatorBuilder: (context, index) =>
-                                              SizedBox(height: 10),
-                                          itemCount: 1,
+                                                        .data!.packages!.length
+                                                    : _cubit
+                                                        .categoriesModel!
+                                                        .data!
+                                                        .first
+                                                        .packages!
+                                                        .length,
+                                          ),
                                         ),
-                                      ),
+                                        SizedBox(height: 40),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 20,
+                                          ),
+                                          child: Container(
+                                            width: double.infinity,
+                                            // color: Colors.black,
+                                            child: ListView.separated(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              itemBuilder: (conext, index) =>
+                                                  _buildVerticalItem(
+                                                      topHeight,
+                                                      topWidht,
+                                                      _cubit.postsModel!
+                                                          .data![index]),
+                                              separatorBuilder:
+                                                  (context, index) =>
+                                                      SizedBox(height: 10),
+                                              itemCount: 1,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: mPrimaryColor,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height / 13.5,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Transitioner(
+                                      context: context,
+                                      child: ContactScreen(),
+                                      animation: AnimationType
+                                          .fadeIn, // Optional value
+                                      duration: Duration(
+                                          milliseconds: 300), // Optional value
+                                      replacement: true, // Optional value
+                                      curveType: CurveType
+                                          .decelerate, // Optional value
+                                    );
+                                  },
+                                  child: Image.asset(
+                                    'assets/images/mail_bulk.png',
+                                    width: 30,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    _cubit.getUserDataById();
+                                    Transitioner(
+                                      context: context,
+                                      child: ProfileScreen(),
+                                      animation: AnimationType
+                                          .fadeIn, // Optional value
+                                      duration: Duration(
+                                          milliseconds: 300), // Optional value
+                                      replacement: true, // Optional value
+                                      curveType: CurveType
+                                          .decelerate, // Optional value
+                                    );
+                                  },
+                                  child: Image.asset(
+                                    'assets/images/chalkboard.png',
+                                    width: 30,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        );
-                      },
-                    ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               : Center(
                   child: CircularProgressIndicator(
-                  color: mPrimaryColor,
-                )),
+                    color: mPrimaryColor,
+                  ),
+                ),
         );
       },
     );
@@ -414,11 +519,31 @@ class HomeScreen extends StatelessWidget {
 
   // HELPER METHODS
   Widget _buildHorizontalItem(
-      topWidht, height, item, p, CategoriesModel c, title, index) {
+      topWidht, height, item, p, CategoriesModel c, title, index, context) {
     return GestureDetector(
       onTap: () {
-        if (item == null) print(c.data!.first.packages![index].id);
-        if (item != null) print(item.id);
+        if (item == null) {
+          print(c.data!.first.packages![index].id);
+          Transitioner(
+            context: context,
+            child: ReservationScreen(),
+            animation: AnimationType.fadeIn,
+            duration: Duration(milliseconds: 300),
+            replacement: true,
+            curveType: CurveType.decelerate,
+          );
+        }
+        if (item != null) {
+          print(item.id);
+          Transitioner(
+            context: context,
+            child: ReservationScreen(),
+            animation: AnimationType.fadeIn,
+            duration: Duration(milliseconds: 300),
+            replacement: true,
+            curveType: CurveType.decelerate,
+          );
+        }
       },
       child: Container(
         width: topWidht / 2,
@@ -439,9 +564,12 @@ class HomeScreen extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.network(
-                  item != null ? '${p.image}' : '${c.data!.first.image}',
-                  fit: BoxFit.cover,
+                child: FancyShimmerImage(
+                  imageUrl:
+                      item != null ? '${p.image}' : '${c.data!.first.image}',
+                  errorWidget: Image.network(
+                      'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
+                  boxFit: BoxFit.cover,
                   height: height / 4.4,
                 ),
               ),
@@ -473,7 +601,7 @@ class HomeScreen extends StatelessWidget {
       width: double.infinity,
       height: height / 6,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.7),
+        color: Colors.white.withOpacity(0.5),
         borderRadius: BorderRadius.circular(7),
         border: Border.all(
           color: Color(0xff707070).withOpacity(0.7),
@@ -490,11 +618,11 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 7, left: 20),
                 child: Center(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(7),
                     child: Image.asset(
                       'assets/images/horsers.jpg',
-                      width: width / 5,
-                      height: height / 9,
+                      width: width / 4.8,
+                      height: height / 8,
                       fit: BoxFit.cover,
                     ),
                   ),

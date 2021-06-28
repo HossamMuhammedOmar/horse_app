@@ -10,6 +10,10 @@ class HomeGetAllCategoriesError extends HomeStates {}
 
 class HomeChangeSelectedSerivce extends HomeStates {}
 
+class HomeChangeSelectedTrainner extends HomeStates {}
+
+class HomeChangeRadioOption extends HomeStates {}
+
 // GET USER DATA BY ID
 class GetUserDataLoading extends HomeStates {}
 
@@ -45,3 +49,12 @@ class GetAllPostsDataSuccess extends HomeStates {}
 
 // GET ALL POSTS DATA
 class GetAllPostsDataError extends HomeStates {}
+
+// GET ALL POSTS DATA
+class GetAllTrainersDataLoading extends HomeStates {}
+
+// GET ALL POSTS DATA
+class GetAllTrainersDataSuccess extends HomeStates {}
+
+// GET ALL POSTS DATA
+class GetAllTrainersDataError extends HomeStates {}

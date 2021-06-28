@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => HomeCubit()
             ..getAllCategories()
-            ..getAllPostsData(),
+            ..getAllPostsData()
+            ..getAllTrainers(),
         ),
       ],
       child: MaterialApp(

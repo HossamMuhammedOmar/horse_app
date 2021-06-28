@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  fancy_shimmer_image:
+    dependency: "direct main"
+    description:
+      name: fancy_shimmer_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0+1"
   ffi:
     dependency: transitive
     description:
