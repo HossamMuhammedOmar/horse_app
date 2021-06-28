@@ -36,3 +36,12 @@ class GetCategoriesPackagesSuccess extends HomeStates {}
 
 // GET ALL CAEGORIES PACKAGES
 class GetCategoriesPackagesError extends HomeStates {}
+
+// GET ALL POSTS DATA
+class GetAllPostsDataLoading extends HomeStates {}
+
+// GET ALL POSTS DATA
+class GetAllPostsDataSuccess extends HomeStates {}
+
+// GET ALL POSTS DATA
+class GetAllPostsDataError extends HomeStates {}

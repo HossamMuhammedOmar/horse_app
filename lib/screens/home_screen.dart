@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
-import 'package:horse_app/bloc/login/cubit.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
-import 'package:horse_app/constants/keys.dart';
-import 'package:horse_app/helpers/shared_helper_Screen.dart';
+import 'package:horse_app/models/categories_model.dart';
 import 'package:horse_app/models/packages_model.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:horse_app/models/posts_model.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -25,6 +23,7 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 110,
+            centerTitle: true,
             backgroundColor: Colors.white,
             elevation: 0,
             title: Container(
@@ -91,8 +90,8 @@ class HomeScreen extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Container(
-            height: 75.0,
-            width: 75.0,
+            height: 60.0,
+            width: 60.0,
             child: FittedBox(
               child: FloatingActionButton(
                 elevation: 0,
@@ -123,7 +122,7 @@ class HomeScreen extends StatelessWidget {
                       },
                       child: Image.asset(
                         'assets/images/mail_bulk.png',
-                        width: 35,
+                        width: 30,
                       ),
                     ),
                     GestureDetector(
@@ -133,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                       },
                       child: Image.asset(
                         'assets/images/chalkboard.png',
-                        width: 35,
+                        width: 30,
                       ),
                     ),
                   ],
@@ -141,7 +140,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          body: state is! GetCategoriesDataLoading
+          body: _cubit.categoriesModel != null
               ? Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -259,6 +258,7 @@ class HomeScreen extends StatelessWidget {
                                                                 mPrimaryColor,
                                                             fontFamily:
                                                                 mPrimaryArabicFont,
+                                                            fontSize: 13,
                                                           ),
                                                         ),
                                                       ),
@@ -275,50 +275,92 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: 20),
+                                    SizedBox(height: 30),
                                     Container(
+                                      // color: Colors.black,
                                       width: double.infinity,
-                                      height: topHeight / 3,
+                                      height: topHeight / 2.6,
                                       child: ListView.separated(
+                                        physics: BouncingScrollPhysics(),
                                         reverse: true,
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index) {
-                                          if (index == 9) {
+                                          if (index == 3) {
                                             return Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 15.0),
-                                              child: _buildHorizontalItem(
-                                                topWidht,
-                                                topHeight,
-                                                _cubit.packagesModel!.data!
-                                                    .packages![index],
-                                                _cubit.packagesModel!,
+                                                left: 20.0,
                                               ),
+                                              child: _buildHorizontalItem(
+                                                  topWidht,
+                                                  topHeight,
+                                                  _cubit.packagesModel != null
+                                                      ? _cubit
+                                                          .packagesModel!
+                                                          .data!
+                                                          .packages![index]
+                                                      : null,
+                                                  _cubit.packagesModel != null
+                                                      ? _cubit
+                                                          .packagesModel!.data
+                                                      : null,
+                                                  _cubit.categoriesModel!,
+                                                  _cubit
+                                                      .categoriesModel!
+                                                      .data!
+                                                      .first
+                                                      .packages![index]
+                                                      .title,
+                                                  index),
                                             );
                                           } else if (index == 0) {
                                             return Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 15.0),
+                                                  right: 20.0),
                                               child: _buildHorizontalItem(
-                                                topWidht,
-                                                topHeight,
-                                                _cubit.packagesModel!.data!
-                                                    .packages![index],
-                                                _cubit.packagesModel!,
-                                              ),
+                                                  topWidht,
+                                                  topHeight,
+                                                  _cubit.packagesModel != null
+                                                      ? _cubit
+                                                          .packagesModel!
+                                                          .data!
+                                                          .packages![index]
+                                                      : null,
+                                                  _cubit.packagesModel != null
+                                                      ? _cubit
+                                                          .packagesModel!.data
+                                                      : null,
+                                                  _cubit.categoriesModel!,
+                                                  _cubit
+                                                      .categoriesModel!
+                                                      .data!
+                                                      .first
+                                                      .packages![index]
+                                                      .title,
+                                                  index),
                                             );
                                           } else {
                                             return _buildHorizontalItem(
-                                              topWidht,
-                                              topHeight,
-                                              _cubit.packagesModel!.data!
-                                                  .packages![index],
-                                              _cubit.packagesModel!,
-                                            );
+                                                topWidht,
+                                                topHeight,
+                                                _cubit.packagesModel != null
+                                                    ? _cubit.packagesModel!
+                                                        .data!.packages![index]
+                                                    : null,
+                                                _cubit.packagesModel != null
+                                                    ? _cubit.packagesModel!.data
+                                                    : null,
+                                                _cubit.categoriesModel!,
+                                                _cubit
+                                                    .categoriesModel!
+                                                    .data!
+                                                    .first
+                                                    .packages![index]
+                                                    .title,
+                                                index);
                                           }
                                         },
                                         separatorBuilder: (context, index) =>
-                                            SizedBox(width: 10),
+                                            SizedBox(width: 20),
                                         itemCount: _cubit.packagesModel != null
                                             ? _cubit.packagesModel!.data!
                                                 .packages!.length
@@ -326,15 +368,29 @@ class HomeScreen extends StatelessWidget {
                                                 .first.packages!.length,
                                       ),
                                     ),
-                                    SizedBox(height: 20),
+                                    SizedBox(height: 40),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 20,
                                       ),
                                       child: Container(
                                         width: double.infinity,
-                                        color: Colors.black,
-                                        height: topHeight / 2.3,
+                                        // color: Colors.black,
+                                        child: ListView.separated(
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemBuilder: (conext, index) =>
+                                              _buildVerticalItem(
+                                                  topHeight,
+                                                  topWidht,
+                                                  _cubit.postsModel!
+                                                      .data![index]),
+                                          separatorBuilder: (context, index) =>
+                                              SizedBox(height: 10),
+                                          itemCount: 1,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -357,41 +413,137 @@ class HomeScreen extends StatelessWidget {
   }
 
   // HELPER METHODS
-  Widget _buildHorizontalItem(topWidht, height, item, PackagesModel p) {
-    return Container(
-      width: topWidht / 2,
-      child: Column(
-        textDirection: TextDirection.rtl,
-        children: [
-          Container(
-            child: Image.network(
-              '${p.data!.image}',
-              fit: BoxFit.cover,
+  Widget _buildHorizontalItem(
+      topWidht, height, item, p, CategoriesModel c, title, index) {
+    return GestureDetector(
+      onTap: () {
+        if (item == null) print(c.data!.first.packages![index].id);
+        if (item != null) print(item.id);
+      },
+      child: Container(
+        width: topWidht / 2,
+        child: Column(
+          textDirection: TextDirection.rtl,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 3,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  item != null ? '${p.image}' : '${c.data!.first.image}',
+                  fit: BoxFit.cover,
+                  height: height / 4.4,
+                ),
+              ),
+              width: double.infinity,
             ),
-            width: double.infinity,
+            SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 22),
+              child: AutoSizeText(
+                item != null ? '${item.title}' : '$title',
+                maxLines: 2,
+                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Cairo',
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVerticalItem(height, width, item) {
+    return Container(
+      width: double.infinity,
+      height: height / 6,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(7),
+        border: Border.all(
+          color: Color(0xff707070).withOpacity(0.7),
+          width: .7,
+        ),
+      ),
+      child: Stack(
+        alignment: Alignment.bottomLeft,
+        children: [
+          Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 7, left: 20),
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      'assets/images/horsers.jpg',
+                      width: width / 5,
+                      height: height / 9,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AutoSizeText(
+                        '${item.title} في الجزيرة العربية ',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: mPrimaryArabicFont,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      AutoSizeText(
+                        '${item.createdAt}',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      AutoSizeText(
+                        '${item.title}',
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(
+                            fontFamily: mPrimaryArabicFont, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22),
-            child: AutoSizeText(
-              item != null
-                  ? '${item.title}'
-                  : '${p.data!.packages!.first.title}',
-              maxLines: 2,
-              textDirection: TextDirection.rtl,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 14,
-                fontFamily: mPrimaryArabicFont,
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Image.asset(
+              'assets/images/arrow_double.png',
+              width: width / 35,
             ),
           ),
         ],
       ),
     );
-  }
-
-  Widget _buildVerticalItem() {
-    return Container();
   }
 }

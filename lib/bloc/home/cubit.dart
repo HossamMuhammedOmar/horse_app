@@ -6,6 +6,7 @@ import 'package:horse_app/helpers/end_points.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
 import 'package:horse_app/models/categories_model.dart';
 import 'package:horse_app/models/packages_model.dart';
+import 'package:horse_app/models/posts_model.dart';
 import 'package:horse_app/networking/dio_helper.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
@@ -74,6 +75,24 @@ class HomeCubit extends Cubit<HomeStates> {
       (e) {
         print(e.toString());
         emit(GetCategoriesPackagesError());
+      },
+    );
+  }
+
+  // GET ALL POSTS
+  PostsModel? postsModel;
+  void getAllPostsData() {
+    emit(GetAllPostsDataLoading());
+    DioHelper.getData(url: POSTS).then(
+      (value) {
+        postsModel = PostsModel.fromJson(value.data);
+        print(postsModel!.data!.first.title);
+        emit(GetAllPostsDataSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetAllPostsDataError());
       },
     );
   }
