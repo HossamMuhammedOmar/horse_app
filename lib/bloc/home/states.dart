@@ -58,3 +58,21 @@ class GetAllTrainersDataSuccess extends HomeStates {}
 
 // GET ALL POSTS DATA
 class GetAllTrainersDataError extends HomeStates {}
+
+// GET PACKAGE REQUEST BY ID
+class GetPackageRequestLoading extends HomeStates {}
+
+// GET PACKAGE REQUEST BY ID
+class GetPackageRequestSuccess extends HomeStates {}
+
+// GET PACKAGE REQUEST BY ID
+class GetPackageRequestError extends HomeStates {}
+
+// GET IND RESERVATION
+class GetIndReservationLoading extends HomeStates {}
+
+// GET IND RESERVATION
+class GetIndReservationSuccess extends HomeStates {}
+
+// GET IND RESERVATION
+class GetIndReservationError extends HomeStates {}

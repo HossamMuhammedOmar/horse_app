@@ -8,6 +8,7 @@ import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/models/categories_model.dart';
 import 'package:horse_app/screens/contact_screen.dart';
+import 'package:horse_app/screens/posts_detail_screen.dart';
 import 'package:horse_app/screens/profile_screen.dart';
 import 'package:horse_app/screens/reservation_screen.dart';
 import 'package:transitioner/transitioner.dart';
@@ -425,10 +426,11 @@ class HomeScreen extends StatelessWidget {
                                                   NeverScrollableScrollPhysics(),
                                               itemBuilder: (conext, index) =>
                                                   _buildVerticalItem(
-                                                      topHeight,
-                                                      topWidht,
-                                                      _cubit.postsModel!
-                                                          .data![index]),
+                                                topHeight,
+                                                topWidht,
+                                                _cubit.postsModel!.data![index],
+                                                context,
+                                              ),
                                               separatorBuilder:
                                                   (context, index) =>
                                                       SizedBox(height: 10),
@@ -523,10 +525,17 @@ class HomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (item == null) {
-          print(c.data!.first.packages![index].id);
           Transitioner(
             context: context,
-            child: ReservationScreen(),
+            child: ReservationScreen(
+              id: c.data!.first.packages![index].id,
+              price: c.data!.first.packages![index].price,
+              title: c.data!.first.packages![index].title,
+              classCount: c.data!.first.packages![index].classCount,
+              subDays: c.data!.first.packages![index].subDays,
+              image: c.data!.first.packages![index].image,
+              conditions: c.data!.first.packages![index].conditions,
+            ),
             animation: AnimationType.fadeIn,
             duration: Duration(milliseconds: 300),
             replacement: true,
@@ -534,10 +543,17 @@ class HomeScreen extends StatelessWidget {
           );
         }
         if (item != null) {
-          print(item.id);
           Transitioner(
             context: context,
-            child: ReservationScreen(),
+            child: ReservationScreen(
+              id: item.id,
+              price: item.price,
+              title: item.title,
+              classCount: item.classCount,
+              subDays: item.subDays,
+              image: item.image,
+              conditions: item.conditions,
+            ),
             animation: AnimationType.fadeIn,
             duration: Duration(milliseconds: 300),
             replacement: true,
@@ -596,81 +612,99 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildVerticalItem(height, width, item) {
-    return Container(
-      width: double.infinity,
-      height: height / 6,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(7),
-        border: Border.all(
-          color: Color(0xff707070).withOpacity(0.7),
-          width: .7,
+  Widget _buildVerticalItem(height, width, item, context) {
+    return GestureDetector(
+      onTap: () {
+        Transitioner(
+          context: context,
+          child: PostsDetailScreen(
+            id: item.id,
+            name: item.title,
+            content: item.content,
+            date: item.createdAt,
+            image: item.image,
+          ),
+          animation: AnimationType.fadeIn, // Optional value
+          duration: Duration(milliseconds: 300), // Optional value
+          replacement: true, // Optional value
+          curveType: CurveType.decelerate, // Optional value
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        height: height / 6,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(7),
+          border: Border.all(
+            color: Color(0xff707070).withOpacity(0.7),
+            width: .7,
+          ),
         ),
-      ),
-      child: Stack(
-        alignment: Alignment.bottomLeft,
-        children: [
-          Row(
-            textDirection: TextDirection.rtl,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 7, left: 20),
-                child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(7),
-                    child: Image.asset(
-                      'assets/images/horsers.jpg',
-                      width: width / 4.8,
-                      height: height / 8,
-                      fit: BoxFit.cover,
+        child: Stack(
+          alignment: Alignment.bottomLeft,
+          children: [
+            Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 7, left: 20),
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(7),
+                      child: Image.asset(
+                        'assets/images/horsers.jpg',
+                        width: width / 4.8,
+                        height: height / 8,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AutoSizeText(
-                        '${item.title} في الجزيرة العربية ',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: mPrimaryArabicFont,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          '${item.title} في الجزيرة العربية ',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: mPrimaryArabicFont,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      AutoSizeText(
-                        '${item.createdAt}',
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      AutoSizeText(
-                        '${item.title}',
-                        overflow: TextOverflow.ellipsis,
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(
-                            fontFamily: mPrimaryArabicFont, fontSize: 12),
-                      ),
-                    ],
+                        SizedBox(height: 5),
+                        AutoSizeText(
+                          '${item.createdAt}',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        AutoSizeText(
+                          '${item.title}',
+                          overflow: TextOverflow.ellipsis,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                              fontFamily: mPrimaryArabicFont, fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Image.asset(
-              'assets/images/arrow_double.png',
-              width: width / 35,
+              ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Image.asset(
+                'assets/images/arrow_double.png',
+                width: width / 35,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

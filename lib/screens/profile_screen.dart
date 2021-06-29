@@ -6,7 +6,9 @@ import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/home_screen.dart';
+import 'package:horse_app/screens/ind_reservations_list_screen.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
+import 'package:horse_app/screens/trainer_reservation_list_screen.dart';
 import 'package:transitioner/transitioner.dart';
 
 import 'contact_screen.dart';
@@ -257,18 +259,17 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               onTap: () {
+                                                // _cubit.getPackageRequestById();
                                                 Transitioner(
                                                   context: context,
                                                   child: SubscibeScreen(),
-                                                  animation: AnimationType
-                                                      .fadeIn, // Optional value
+                                                  animation:
+                                                      AnimationType.fadeIn,
                                                   duration: Duration(
-                                                      milliseconds:
-                                                          300), // Optional value
-                                                  replacement:
-                                                      true, // Optional value
-                                                  curveType: CurveType
-                                                      .decelerate, // Optional value
+                                                      milliseconds: 300),
+                                                  replacement: true,
+                                                  curveType:
+                                                      CurveType.decelerate,
                                                 );
                                               },
                                             ),
@@ -345,6 +346,20 @@ class ProfileScreen extends StatelessWidget {
                                                       TextDirection.rtl,
                                                 ),
                                               ),
+                                              onTap: () {
+                                                Transitioner(
+                                                  context: context,
+                                                  child:
+                                                      TrainerReservationListScreen(),
+                                                  animation:
+                                                      AnimationType.fadeIn,
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  replacement: true,
+                                                  curveType:
+                                                      CurveType.decelerate,
+                                                );
+                                              },
                                             ),
                                             SizedBox(height: 12),
                                             Container(
@@ -382,6 +397,20 @@ class ProfileScreen extends StatelessWidget {
                                                       TextDirection.rtl,
                                                 ),
                                               ),
+                                              onTap: () {
+                                                Transitioner(
+                                                  context: context,
+                                                  child:
+                                                      IndReservationListScreen(),
+                                                  animation:
+                                                      AnimationType.fadeIn,
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  replacement: true,
+                                                  curveType:
+                                                      CurveType.decelerate,
+                                                );
+                                              },
                                             ),
                                             SizedBox(height: 12),
                                             Container(

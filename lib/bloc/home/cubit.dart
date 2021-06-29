@@ -5,6 +5,7 @@ import 'package:horse_app/constants/keys.dart';
 import 'package:horse_app/helpers/end_points.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
 import 'package:horse_app/models/categories_model.dart';
+import 'package:horse_app/models/ind_reservation_model.dart';
 import 'package:horse_app/models/login_model.dart';
 import 'package:horse_app/models/packages_model.dart';
 import 'package:horse_app/models/posts_model.dart';
@@ -130,6 +131,42 @@ class HomeCubit extends Cubit<HomeStates> {
       (e) {
         print(e.toString());
         emit(GetAllTrainersDataError());
+      },
+    );
+  }
+
+  // GET PACKAGE REQUEST BY ID
+  void getPackageRequestById() {
+    print(SharedHelper.getCacheData(key: TOKEN));
+    emit(GetPackageRequestLoading());
+    DioHelper.getData(
+            url: '$PACKAGEREQUEST/${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        print(value.data);
+        emit(GetPackageRequestSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetPackageRequestError());
+      },
+    );
+  }
+
+  // GET INDIV RESERVATION
+  IndReservationModel? indReservationModel;
+  void getIndivReservation() {
+    emit(GetIndReservationLoading());
+    DioHelper.getData(url: INDRESERVATIONS).then(
+      (value) {
+        indReservationModel = IndReservationModel.fromJson(value.data);
+        emit(GetIndReservationSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetIndReservationError());
       },
     );
   }

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
-import 'package:horse_app/screens/home_screen.dart';
 import 'package:horse_app/screens/splash_screen.dart';
 import 'networking/dio_helper.dart';
 
@@ -26,7 +25,8 @@ class MyApp extends StatelessWidget {
           create: (context) => HomeCubit()
             ..getAllCategories()
             ..getAllPostsData()
-            ..getAllTrainers(),
+            ..getAllTrainers()
+            ..getIndivReservation(),
         ),
       ],
       child: MaterialApp(

@@ -10,6 +10,25 @@ import 'package:horse_app/screens/home_screen.dart';
 import 'package:transitioner/transitioner.dart';
 
 class ReservationScreen extends StatelessWidget {
+  final id;
+  final price;
+  final title;
+  final classCount;
+  final subDays;
+  final image;
+  final conditions;
+
+  const ReservationScreen({
+    Key? key,
+    required this.id,
+    required this.price,
+    required this.title,
+    required this.classCount,
+    required this.subDays,
+    required this.image,
+    required this.conditions,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
@@ -162,7 +181,7 @@ class ReservationScreen extends StatelessWidget {
                                     height: 60,
                                     child: Center(
                                       child: AutoSizeText(
-                                        '8 حصص ارضي لاقل من 18 سنه لمده شهر',
+                                        '$title',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
@@ -194,7 +213,7 @@ class ReservationScreen extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           AutoSizeText(
-                                            '1500',
+                                            '$price',
                                             textDirection: TextDirection.rtl,
                                             style: TextStyle(
                                               fontSize: 16,
@@ -228,7 +247,7 @@ class ReservationScreen extends StatelessWidget {
                                           ),
                                           SizedBox(width: 5),
                                           AutoSizeText(
-                                            '8',
+                                            '$classCount',
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.red,
@@ -250,12 +269,13 @@ class ReservationScreen extends StatelessWidget {
                                               ),
                                             ),
                                             child: AutoSizeText(
-                                              '30 شهر',
+                                              ' شهر $subDays',
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.red,
                                                 fontFamily: mPrimaryArabicFont,
                                               ),
+                                              textDirection: TextDirection.rtl,
                                             ),
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 10),
