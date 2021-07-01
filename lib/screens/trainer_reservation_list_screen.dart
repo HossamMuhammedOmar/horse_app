@@ -6,6 +6,7 @@ import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/profile_screen.dart';
+import 'package:horse_app/screens/trainer_subscrip_screen.dart';
 import 'package:transitioner/transitioner.dart';
 
 class TrainerReservationListScreen extends StatelessWidget {
@@ -152,7 +153,9 @@ class TrainerReservationListScreen extends StatelessWidget {
                             child: ListView.separated(
                               itemBuilder: (context, index) {
                                 return _buildItem(
-                                    _cubit.trainersModel!.data![index]);
+                                  _cubit.trainersModel!.data![index],
+                                  context,
+                                );
                               },
                               separatorBuilder: (context, index) {
                                 return SizedBox(height: 30);
@@ -173,7 +176,7 @@ class TrainerReservationListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(item) {
+  Widget _buildItem(item, context) {
     return Column(
       textDirection: TextDirection.rtl,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +222,19 @@ class TrainerReservationListScreen extends StatelessWidget {
         ),
         SizedBox(height: 20),
         MaterialButton(
-          onPressed: () {},
+          onPressed: () {
+            Transitioner(
+              context: context,
+              child: TrainerSubscribeScreen(
+                id: item.id,
+                name: item.name,
+              ),
+              animation: AnimationType.fadeIn, // Optional value
+              duration: Duration(milliseconds: 300), // Optional value
+              replacement: true, // Optional value
+              curveType: CurveType.decelerate, // Optional value
+            );
+          },
           child: Text(
             'إحجز الآن',
             style: TextStyle(

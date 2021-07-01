@@ -12,6 +12,8 @@ class HomeChangeSelectedSerivce extends HomeStates {}
 
 class HomeChangeSelectedTrainner extends HomeStates {}
 
+class HomeChangeSelectedTime extends HomeStates {}
+
 class HomeChangeRadioOption extends HomeStates {}
 
 // GET USER DATA BY ID
@@ -76,3 +78,21 @@ class GetIndReservationSuccess extends HomeStates {}
 
 // GET IND RESERVATION
 class GetIndReservationError extends HomeStates {}
+
+// POST SUBSCRIPE TRAINER
+class PostSubscribTrainerLoading extends HomeStates {}
+
+// POST SUBSCRIPE TRAINER
+class PostSubscribTrainerSuccess extends HomeStates {}
+
+// POST SUBSCRIPE TRAINER
+class PostSubscribTrainerError extends HomeStates {}
+
+// POST SUBSCRIPE IND
+class PostSubscribIndLoading extends HomeStates {}
+
+// POST SUBSCRIPE IND
+class PostSubscribIndSuccess extends HomeStates {}
+
+// POST SUBSCRIPE IND
+class PostSubscribIndError extends HomeStates {}

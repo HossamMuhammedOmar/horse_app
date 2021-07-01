@@ -269,12 +269,13 @@ class ReservationScreen extends StatelessWidget {
                                               ),
                                             ),
                                             child: AutoSizeText(
-                                              ' شهر $subDays',
+                                              '$subDays يوم ',
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.red,
                                                 fontFamily: mPrimaryArabicFont,
                                               ),
+                                              textAlign: TextAlign.center,
                                               textDirection: TextDirection.rtl,
                                             ),
                                             padding: const EdgeInsets.symmetric(

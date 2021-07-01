@@ -21,6 +21,18 @@ class HomeCubit extends Cubit<HomeStates> {
 
   List trainner = [];
 
+  List timeList = [
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+  ];
+
+  String selectedTime = '4';
+
   String selectedService = 'اشتراكات تدريب الخيل ارضي اقل 18 سنه';
 
   String selectedTrainner = 'الاخصائية منار محمد المكيرش';
@@ -37,6 +49,11 @@ class HomeCubit extends Cubit<HomeStates> {
   void selecteService(currentValue) {
     selectedService = currentValue;
     emit(HomeChangeSelectedSerivce());
+  }
+
+  void selecteTime(currentValue) {
+    selectedTime = currentValue;
+    emit(HomeChangeSelectedTime());
   }
 
   void selecteTrainner(currentValue) {
@@ -169,5 +186,66 @@ class HomeCubit extends Cubit<HomeStates> {
         emit(GetIndReservationError());
       },
     );
+  }
+
+  // SUBSCRIPT TRAINER
+  void subscribeTrainer({
+    required studentId,
+    required trainerId,
+    required dateFrom,
+    required dateTo,
+    required timeFrom,
+    required timeTo,
+    required classCount,
+  }) {
+    emit(PostSubscribTrainerLoading());
+    DioHelper.postData(
+      url: ORDERS,
+      data: {
+        'student_id': studentId,
+        'trainer_id': trainerId,
+        'date_from': dateFrom,
+        'date_to': dateTo,
+        'time_from': timeFrom,
+        'time_to': timeTo,
+        'class_count': classCount,
+      },
+    ).then(
+      (value) {
+        print(value.data);
+        emit(PostSubscribTrainerSuccess());
+      },
+    ).catchError(
+      (e) {
+        print("ERRRO ${e.toString()}");
+        emit(PostSubscribTrainerError());
+      },
+    );
+  }
+
+  // SUBSCRIPT IND
+  void subscribeInd({
+    required userId,
+    required indReservationId,
+    required date,
+    required time,
+  }) {
+    emit(PostSubscribIndLoading());
+    DioHelper.postData(
+      url:
+          "$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}",
+      data: {
+        'user_id': userId,
+        'ind_reservation_id': indReservationId,
+        'date': date,
+        'time': time,
+      },
+    ).then((value) {
+      print(value.data);
+      emit(PostSubscribIndSuccess());
+    }).catchError((e) {
+      print(e.toString());
+      emit(PostSubscribIndError());
+    });
   }
 }

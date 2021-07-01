@@ -581,8 +581,9 @@ class HomeScreen extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: FancyShimmerImage(
-                  imageUrl:
-                      item != null ? '${p.image}' : '${c.data!.first.image}',
+                  imageUrl: item != null
+                      ? '${item.image}'
+                      : '${c.data!.first.packages!.first.image}',
                   errorWidget: Image.network(
                       'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
                   boxFit: BoxFit.cover,
@@ -624,10 +625,10 @@ class HomeScreen extends StatelessWidget {
             date: item.createdAt,
             image: item.image,
           ),
-          animation: AnimationType.fadeIn, // Optional value
-          duration: Duration(milliseconds: 300), // Optional value
+          animation: AnimationType.fadeIn,
+          duration: Duration(milliseconds: 300),
           replacement: true, // Optional value
-          curveType: CurveType.decelerate, // Optional value
+          curveType: CurveType.decelerate,
         );
       },
       child: Container(
@@ -652,8 +653,8 @@ class HomeScreen extends StatelessWidget {
                   child: Center(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(7),
-                      child: Image.asset(
-                        'assets/images/horsers.jpg',
+                      child: Image.network(
+                        '${item.image}',
                         width: width / 4.8,
                         height: height / 8,
                         fit: BoxFit.cover,

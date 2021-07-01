@@ -19,4 +19,6 @@ const POSTS = 'posts';
 const ATTENDS = 'attends';
 const ORDERS = 'orders';
 const GETUSERPACKAGES = 'userPackages?user_id/=';
-const RESERVATIONREQUESTSWITHID = 'reservationRequests?user_id=';
+
+// NEED ID IN THE END OF URL
+const RESERVATIONREQUESTSWITHID = 'reservationRequests?user_id';
