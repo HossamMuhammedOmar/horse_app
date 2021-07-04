@@ -21,4 +21,7 @@ const ORDERS = 'orders';
 const GETUSERPACKAGES = 'userPackages?user_id/=';
 
 // NEED ID IN THE END OF URL
+const GETORDERS = 'orders?user_id';
+
+// NEED ID IN THE END OF URL
 const RESERVATIONREQUESTSWITHID = 'reservationRequests?user_id';

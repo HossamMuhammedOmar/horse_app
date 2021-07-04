@@ -7,8 +7,10 @@ import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/home_screen.dart';
 import 'package:horse_app/screens/ind_reservations_list_screen.dart';
+import 'package:horse_app/screens/my_ind_subscribe_follow.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
 import 'package:horse_app/screens/trainer_reservation_list_screen.dart';
+import 'package:horse_app/screens/trainer_subscribe_follow.dart';
 import 'package:transitioner/transitioner.dart';
 
 import 'contact_screen.dart';
@@ -347,10 +349,11 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               onTap: () {
+                                                _cubit.getMyTrainerSubscribe();
                                                 Transitioner(
                                                   context: context,
                                                   child:
-                                                      TrainerReservationListScreen(),
+                                                      TrainerSubscribeFollow(),
                                                   animation:
                                                       AnimationType.fadeIn,
                                                   duration: Duration(
@@ -398,10 +401,10 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               onTap: () {
+                                                _cubit.getMyIndSubscribe();
                                                 Transitioner(
                                                   context: context,
-                                                  child:
-                                                      IndReservationListScreen(),
+                                                  child: MyIndSubscribeFollow(),
                                                   animation:
                                                       AnimationType.fadeIn,
                                                   duration: Duration(

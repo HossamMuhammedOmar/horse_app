@@ -96,3 +96,21 @@ class PostSubscribIndSuccess extends HomeStates {}
 
 // POST SUBSCRIPE IND
 class PostSubscribIndError extends HomeStates {}
+
+// GET MY SUBSCRIBE TRAINER
+class GetMySubscribTrainerLoading extends HomeStates {}
+
+// GET MY SUBSCRIBE TRAINER
+class GetMySubscribTrainerSuccess extends HomeStates {}
+
+// GET MY SUBSCRIBE TRAINER
+class GetMySubscribTrainerError extends HomeStates {}
+
+// GET MY SUBSCRIBE IND
+class GetMySubscribIndLoading extends HomeStates {}
+
+// GET MY SUBSCRIBE IND
+class GetMySubscribIndSuccess extends HomeStates {}
+
+// GET MY SUBSCRIBE IND
+class GetMySubscribIndError extends HomeStates {}

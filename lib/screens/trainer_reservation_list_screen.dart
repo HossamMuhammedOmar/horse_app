@@ -5,7 +5,7 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
-import 'package:horse_app/screens/profile_screen.dart';
+import 'package:horse_app/screens/trainer_subscribe_follow.dart';
 import 'package:horse_app/screens/trainer_subscrip_screen.dart';
 import 'package:transitioner/transitioner.dart';
 
@@ -106,7 +106,7 @@ class TrainerReservationListScreen extends StatelessWidget {
                                   onPressed: () {
                                     Transitioner(
                                       context: context,
-                                      child: ProfileScreen(),
+                                      child: TrainerSubscribeFollow(),
                                       animation: AnimationType
                                           .fadeIn, // Optional value
                                       duration: Duration(

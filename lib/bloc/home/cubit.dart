@@ -7,6 +7,8 @@ import 'package:horse_app/helpers/shared_helper_Screen.dart';
 import 'package:horse_app/models/categories_model.dart';
 import 'package:horse_app/models/ind_reservation_model.dart';
 import 'package:horse_app/models/login_model.dart';
+import 'package:horse_app/models/my_ind_subscribe_model.dart';
+import 'package:horse_app/models/my_trainer_subscribe_model.dart';
 import 'package:horse_app/models/packages_model.dart';
 import 'package:horse_app/models/posts_model.dart';
 import 'package:horse_app/models/trainers_model.dart';
@@ -247,5 +249,44 @@ class HomeCubit extends Cubit<HomeStates> {
       print(e.toString());
       emit(PostSubscribIndError());
     });
+  }
+
+  // GET MY TRAINER SUBSCRIBE
+  MyTrainerSubscribeModel? myTrainerSubscribeModel;
+  void getMyTrainerSubscribe() {
+    emit(GetMySubscribTrainerLoading());
+    DioHelper.getData(
+            url: '$GETORDERS=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        myTrainerSubscribeModel = MyTrainerSubscribeModel.fromJson(value.data);
+        emit(GetMySubscribTrainerSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetMySubscribTrainerError());
+      },
+    );
+  }
+
+  // GET MY IND SUBSCRIBE
+  MyIndSubscribeModel? myIndSubscribeModel;
+  void getMyIndSubscribe() {
+    emit(GetMySubscribIndLoading());
+    DioHelper.getData(
+            url:
+                '$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        myIndSubscribeModel = MyIndSubscribeModel.fromJson(value.data);
+        emit(GetMySubscribIndSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetMySubscribIndError());
+      },
+    );
   }
 }
