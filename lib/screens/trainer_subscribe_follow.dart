@@ -5,6 +5,7 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
+import 'package:horse_app/screens/confirm_trainer_subscribe_screen.dart';
 import 'package:transitioner/transitioner.dart';
 import 'profile_screen.dart';
 import 'trainer_reservation_list_screen.dart';
@@ -201,11 +202,14 @@ class TrainerSubscribeFollow extends StatelessWidget {
                                                   height: double.infinity,
                                                   // height: 500,
                                                   child: ListView.builder(
-                                                    itemBuilder: (context,
-                                                            index) =>
-                                                        _buildItem(_cubit
-                                                            .myTrainerSubscribeModel!
-                                                            .data![index]),
+                                                    itemBuilder:
+                                                        (context, index) =>
+                                                            _buildItem(
+                                                      _cubit
+                                                          .myTrainerSubscribeModel!
+                                                          .data![index],
+                                                      context,
+                                                    ),
                                                     itemCount: _cubit
                                                         .myTrainerSubscribeModel!
                                                         .data!
@@ -241,7 +245,7 @@ class TrainerSubscribeFollow extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(item) {
+  Widget _buildItem(item, context) {
     return Row(
       children: [
         Container(
@@ -341,7 +345,16 @@ class TrainerSubscribeFollow extends StatelessWidget {
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
           child: MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              Transitioner(
+                context: context,
+                child: ConfirmTrainerSubscribeScreen(),
+                animation: AnimationType.fadeIn, // Optional value
+                duration: Duration(milliseconds: 300), // Optional value
+                replacement: true, // Optional value
+                curveType: CurveType.decelerate, // Optional value
+              );
+            },
             child: Text(
               'بيانات الدفع',
               style: TextStyle(

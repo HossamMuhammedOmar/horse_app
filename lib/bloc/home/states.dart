@@ -114,3 +114,21 @@ class GetMySubscribIndSuccess extends HomeStates {}
 
 // GET MY SUBSCRIBE IND
 class GetMySubscribIndError extends HomeStates {}
+
+// GET USER NOTIFICATION
+class GetUserNotificationLoading extends HomeStates {}
+
+// GET USER NOTIFICATION
+class GetUserNotificationSuccess extends HomeStates {}
+
+// GET USER NOTIFICATION
+class GetUserNotificationError extends HomeStates {}
+
+// CREATE NEW PACKAGE REQUEST
+class CreatePackageRequestLoading extends HomeStates {}
+
+// CREATE NEW PACKAGE REQUEST
+class CreatePackageRequestSuccess extends HomeStates {}
+
+// CREATE NEW PACKAGE REQUEST
+class CreatePackageRequestError extends HomeStates {}

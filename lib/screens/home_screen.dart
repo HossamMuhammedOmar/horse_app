@@ -12,508 +12,557 @@ import 'package:horse_app/screens/posts_detail_screen.dart';
 import 'package:horse_app/screens/profile_screen.dart';
 import 'package:horse_app/screens/reservation_screen.dart';
 import 'package:transitioner/transitioner.dart';
-
+import 'package:loading_animations/loading_animations.dart';
 import 'notification_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        HomeCubit _cubit = HomeCubit.get(context);
+    return Builder(
+      builder: (BuildContext context) {
+        HomeCubit.get(context).getUserNotification();
+        return BlocConsumer<HomeCubit, HomeStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            HomeCubit _cubit = HomeCubit.get(context);
 
-        var catId;
-        return Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            toolbarHeight: 110,
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: Container(
-              margin: const EdgeInsets.only(right: 15, top: 15),
-              child: Image.asset(
-                'assets/images/logo.png',
-                width: 140,
-              ),
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Container(
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Transitioner(
-                          context: context,
-                          child: NotificationScreen(),
-                          animation: AnimationType.fadeIn, // Optional value
-                          duration:
-                              Duration(milliseconds: 300), // Optional value
-                          replacement: true, // Optional value
-                          curveType: CurveType.decelerate, // Optional value
-                        );
-                      },
-                      icon: Icon(
-                        Icons.notifications_none,
-                        size: 30,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(2),
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          color: Color(0xff707070),
+            var catId;
+            return state is! GetUserNotificationLoading &&
+                    _cubit.categoriesModel != null &&
+                    _cubit.postsModel != null
+                ? Scaffold(
+                    backgroundColor: Colors.white,
+                    appBar: AppBar(
+                      toolbarHeight: 110,
+                      centerTitle: true,
+                      backgroundColor: Colors.white,
+                      elevation: 0,
+                      title: Container(
+                        margin: const EdgeInsets.only(right: 15, top: 15),
+                        child: Image.asset(
+                          'assets/images/logo.png',
+                          width: 140,
                         ),
                       ),
-                      child: Center(
-                        child: Text(
-                          '0',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
-                  child: ClipRRect(
-                    child: Image.asset(
-                      'assets/images/hore_image.jpeg',
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(60.0),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: Container(
-            height: 65.0,
-            width: 65.0,
-            child: FittedBox(
-              child: FloatingActionButton(
-                elevation: 0,
-                backgroundColor: Colors.white,
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Image.asset('assets/images/home.png'),
-                ),
-              ),
-            ),
-          ),
-          // bottomNavigationBar: Container(
-          //   height: 60,
-          //   child: BottomAppBar(
-          //     color: mPrimaryColor,
-          //     child: Padding(
-          //       padding: const EdgeInsets.symmetric(
-          //         horizontal: 20,
-          //       ),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         crossAxisAlignment: CrossAxisAlignment.center,
-          //         children: [
-          //           GestureDetector(
-          //             onTap: () {
-          //               print('Contact Us');
-          //             },
-          //             child: Image.asset(
-          //               'assets/images/mail_bulk.png',
-          //               width: 30,
-          //             ),
-          //           ),
-          //           GestureDetector(
-          //             onTap: () {
-          //               _cubit.getUserDataById();
-          //               print('Account Info');
-          //             },
-          //             child: Image.asset(
-          //               'assets/images/chalkboard.png',
-          //               width: 30,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          body: _cubit.categoriesModel != null && _cubit.postsModel != null
-              ? Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/bg.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: LayoutBuilder(
-                          builder: (context, constraint) {
-                            var topHeight = constraint.maxHeight;
-                            var topWidht = constraint.maxWidth;
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: Center(
-                                    child: RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                        text: 'إشتراك ',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: mPrimaryArabicFont,
-                                          color: mPrimaryColor,
-                                        ),
-                                        children: const <TextSpan>[
-                                          TextSpan(
-                                            text: 'فعال',
-                                            style: TextStyle(
-                                              color: Color(0xff079606),
-                                            ),
-                                          ),
-                                          TextSpan(text: ' ( 0 )'),
-                                          TextSpan(text: ' '),
-                                          TextSpan(text: ' إشتراك '),
-                                          TextSpan(
-                                            text: 'منتهي ',
-                                            style: TextStyle(
-                                              color: Color(0xffEE1313),
-                                            ),
-                                          ),
-                                          TextSpan(text: '( 0 )'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 5),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 0.5,
-                                    color: Color(0xff707070),
-                                  ),
-                                ),
-                                SizedBox(height: 20),
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          child: Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                width: 1,
-                                                color: Colors.grey
-                                                    .withOpacity(0.9),
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: DecoratedBox(
-                                              decoration: ShapeDecoration(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(3.0),
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 20,
-                                                ),
-                                                child:
-                                                    DropdownButtonHideUnderline(
-                                                  child: DropdownButton(
-                                                    icon: Icon(Icons
-                                                        .keyboard_arrow_down_sharp),
-                                                    iconEnabledColor:
-                                                        mPrimaryColor,
-                                                    items: _cubit.service.map(
-                                                      (s) {
-                                                        return DropdownMenuItem(
-                                                          onTap: () {
-                                                            catId = s.id;
-                                                            _cubit
-                                                                .getAllCategoriesPackage(
-                                                              catId: s.id,
-                                                            );
-                                                          },
-                                                          value: s.name,
-                                                          child: Container(
-                                                            child: AutoSizeText(
-                                                              s.name,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              maxLines: 1,
-                                                              style: TextStyle(
-                                                                color:
-                                                                    mPrimaryColor,
-                                                                fontFamily:
-                                                                    mPrimaryArabicFont,
-                                                                fontSize: 13,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ).toList(),
-                                                    value:
-                                                        _cubit.selectedService,
-                                                    onChanged: (value) {
-                                                      _cubit.selecteService(
-                                                          value);
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 30),
-                                        Container(
-                                          // color: Colors.black,
-                                          width: double.infinity,
-                                          height: topHeight / 2.6,
-                                          child: ListView.separated(
-                                            physics: BouncingScrollPhysics(),
-                                            reverse: true,
-                                            scrollDirection: Axis.horizontal,
-                                            itemBuilder: (context, index) {
-                                              if (index == 3) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    left: 20.0,
-                                                  ),
-                                                  child: _buildHorizontalItem(
-                                                    topWidht,
-                                                    topHeight,
-                                                    _cubit.packagesModel != null
-                                                        ? _cubit
-                                                            .packagesModel!
-                                                            .data!
-                                                            .packages![index]
-                                                        : null,
-                                                    _cubit.packagesModel != null
-                                                        ? _cubit
-                                                            .packagesModel!.data
-                                                        : null,
-                                                    _cubit.categoriesModel!,
-                                                    _cubit
-                                                        .categoriesModel!
-                                                        .data!
-                                                        .first
-                                                        .packages![index]
-                                                        .title,
-                                                    index,
-                                                    context,
-                                                  ),
-                                                );
-                                              } else if (index == 0) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 20.0),
-                                                  child: _buildHorizontalItem(
-                                                    topWidht,
-                                                    topHeight,
-                                                    _cubit.packagesModel != null
-                                                        ? _cubit
-                                                            .packagesModel!
-                                                            .data!
-                                                            .packages![index]
-                                                        : null,
-                                                    _cubit.packagesModel != null
-                                                        ? _cubit
-                                                            .packagesModel!.data
-                                                        : null,
-                                                    _cubit.categoriesModel!,
-                                                    _cubit
-                                                        .categoriesModel!
-                                                        .data!
-                                                        .first
-                                                        .packages![index]
-                                                        .title,
-                                                    index,
-                                                    context,
-                                                  ),
-                                                );
-                                              } else {
-                                                return _buildHorizontalItem(
-                                                  topWidht,
-                                                  topHeight,
-                                                  _cubit.packagesModel != null
-                                                      ? _cubit
-                                                          .packagesModel!
-                                                          .data!
-                                                          .packages![index]
-                                                      : null,
-                                                  _cubit.packagesModel != null
-                                                      ? _cubit
-                                                          .packagesModel!.data
-                                                      : null,
-                                                  _cubit.categoriesModel!,
-                                                  _cubit
-                                                      .categoriesModel!
-                                                      .data!
-                                                      .first
-                                                      .packages![index]
-                                                      .title,
-                                                  index,
-                                                  context,
-                                                );
-                                              }
-                                            },
-                                            separatorBuilder:
-                                                (context, index) =>
-                                                    SizedBox(width: 20),
-                                            itemCount:
-                                                _cubit.packagesModel != null
-                                                    ? _cubit.packagesModel!
-                                                        .data!.packages!.length
-                                                    : _cubit
-                                                        .categoriesModel!
-                                                        .data!
-                                                        .first
-                                                        .packages!
-                                                        .length,
-                                          ),
-                                        ),
-                                        SizedBox(height: 40),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                          ),
-                                          child: Container(
-                                            width: double.infinity,
-                                            // color: Colors.black,
-                                            child: ListView.separated(
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              itemBuilder: (conext, index) =>
-                                                  _buildVerticalItem(
-                                                topHeight,
-                                                topWidht,
-                                                _cubit.postsModel!.data![index],
-                                                context,
-                                              ),
-                                              separatorBuilder:
-                                                  (context, index) =>
-                                                      SizedBox(height: 10),
-                                              itemCount: 1,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                      leading: Padding(
+                        padding: const EdgeInsets.only(top: 40),
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: mPrimaryColor,
-                            borderRadius: BorderRadius.circular(12),
+                          child: Stack(
+                            alignment: Alignment.topRight,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  _cubit.getUserNotification();
+                                  Transitioner(
+                                    context: context,
+                                    child: NotificationScreen(),
+                                    animation:
+                                        AnimationType.fadeIn, // Optional value
+                                    duration: Duration(
+                                        milliseconds: 300), // Optional value
+                                    replacement: true, // Optional value
+                                    curveType:
+                                        CurveType.decelerate, // Optional value
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.notifications_none,
+                                  size: 30,
+                                ),
+                              ),
+                              if (_cubit.notificationModel != null)
+                                if (_cubit.notificationModel!.data!
+                                        .where((element) => element.seen == '0')
+                                        .length !=
+                                    0)
+                                  Positioned(
+                                    right: 7,
+                                    top: 7,
+                                    child: Container(
+                                      // padding: const EdgeInsets.all(2),
+                                      height: 15,
+                                      width: 15,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(30),
+                                        // border: Border.all(
+                                        //   color: Color(0xff707070),
+                                        // ),
+                                      ),
+                                      // child: Center(
+                                      //   child: Text(
+                                      //     '0',
+                                      //     style: TextStyle(color: Colors.red),
+                                      //   ),
+                                      // ),
+                                    ),
+                                  ),
+                            ],
                           ),
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height / 13.5,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Transitioner(
-                                      context: context,
-                                      child: ContactScreen(),
-                                      animation: AnimationType
-                                          .fadeIn, // Optional value
-                                      duration: Duration(
-                                          milliseconds: 300), // Optional value
-                                      replacement: true, // Optional value
-                                      curveType: CurveType
-                                          .decelerate, // Optional value
-                                    );
-                                  },
-                                  child: Image.asset(
-                                    'assets/images/mail_bulk.png',
-                                    width: 30,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _cubit.getUserDataById();
-                                    Transitioner(
-                                      context: context,
-                                      child: ProfileScreen(),
-                                      animation: AnimationType
-                                          .fadeIn, // Optional value
-                                      duration: Duration(
-                                          milliseconds: 300), // Optional value
-                                      replacement: true, // Optional value
-                                      curveType: CurveType
-                                          .decelerate, // Optional value
-                                    );
-                                  },
-                                  child: Image.asset(
-                                    'assets/images/chalkboard.png',
-                                    width: 30,
-                                  ),
-                                ),
-                              ],
+                        ),
+                      ),
+                      actions: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 30.0,
+                            child: ClipRRect(
+                              child: Image.asset(
+                                'assets/images/hore_image.jpeg',
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius: BorderRadius.circular(60.0),
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                    floatingActionButtonLocation:
+                        FloatingActionButtonLocation.centerDocked,
+                    floatingActionButton: Container(
+                      height: 65.0,
+                      width: 65.0,
+                      child: FittedBox(
+                        child: FloatingActionButton(
+                          elevation: 0,
+                          backgroundColor: Colors.white,
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.all(14.0),
+                            child: Image.asset('assets/images/home.png'),
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                )
-              : Center(
-                  child: CircularProgressIndicator(
-                    color: mPrimaryColor,
-                  ),
-                ),
+                    ),
+                    // bottomNavigationBar: Container(
+                    //   height: 60,
+                    //   child: BottomAppBar(
+                    //     color: mPrimaryColor,
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.symmetric(
+                    //         horizontal: 20,
+                    //       ),
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         crossAxisAlignment: CrossAxisAlignment.center,
+                    //         children: [
+                    //           GestureDetector(
+                    //             onTap: () {
+                    //               print('Contact Us');
+                    //             },
+                    //             child: Image.asset(
+                    //               'assets/images/mail_bulk.png',
+                    //               width: 30,
+                    //             ),
+                    //           ),
+                    //           GestureDetector(
+                    //             onTap: () {
+                    //               _cubit.getUserDataById();
+                    //               print('Account Info');
+                    //             },
+                    //             child: Image.asset(
+                    //               'assets/images/chalkboard.png',
+                    //               width: 30,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+
+                    body: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/bg.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: LayoutBuilder(
+                              builder: (context, constraint) {
+                                var topHeight = constraint.maxHeight;
+                                var topWidht = constraint.maxWidth;
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Center(
+                                        child: RichText(
+                                          textAlign: TextAlign.center,
+                                          text: TextSpan(
+                                            text: 'إشتراك ',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: mPrimaryArabicFont,
+                                              color: mPrimaryColor,
+                                            ),
+                                            children: const <TextSpan>[
+                                              TextSpan(
+                                                text: 'فعال',
+                                                style: TextStyle(
+                                                  color: Color(0xff079606),
+                                                ),
+                                              ),
+                                              TextSpan(text: ' ( 0 )'),
+                                              TextSpan(text: ' '),
+                                              TextSpan(text: ' إشتراك '),
+                                              TextSpan(
+                                                text: 'منتهي ',
+                                                style: TextStyle(
+                                                  color: Color(0xffEE1313),
+                                                ),
+                                              ),
+                                              TextSpan(text: '( 0 )'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 0.5,
+                                        color: Color(0xff707070),
+                                      ),
+                                    ),
+                                    SizedBox(height: 20),
+                                    Expanded(
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                              child: Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    width: 1,
+                                                    color: Colors.grey
+                                                        .withOpacity(0.9),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: DecoratedBox(
+                                                  decoration: ShapeDecoration(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                        Radius.circular(3.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                      horizontal: 20,
+                                                    ),
+                                                    child:
+                                                        DropdownButtonHideUnderline(
+                                                      child: DropdownButton(
+                                                        icon: Icon(Icons
+                                                            .keyboard_arrow_down_sharp),
+                                                        iconEnabledColor:
+                                                            mPrimaryColor,
+                                                        items:
+                                                            _cubit.service.map(
+                                                          (s) {
+                                                            return DropdownMenuItem(
+                                                              onTap: () {
+                                                                catId = s.id;
+                                                                _cubit
+                                                                    .getAllCategoriesPackage(
+                                                                  catId: s.id,
+                                                                );
+                                                              },
+                                                              value: s.name,
+                                                              child: Container(
+                                                                child:
+                                                                    AutoSizeText(
+                                                                  s.name,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  maxLines: 1,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color:
+                                                                        mPrimaryColor,
+                                                                    fontFamily:
+                                                                        mPrimaryArabicFont,
+                                                                    fontSize:
+                                                                        13,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ).toList(),
+                                                        value: _cubit
+                                                            .selectedService,
+                                                        onChanged: (value) {
+                                                          _cubit.selecteService(
+                                                              value);
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 30),
+                                            Container(
+                                              // color: Colors.black,
+                                              width: double.infinity,
+                                              height: topHeight / 2.6,
+                                              child: ListView.separated(
+                                                physics:
+                                                    BouncingScrollPhysics(),
+                                                reverse: true,
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemBuilder: (context, index) {
+                                                  if (index == 3) {
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        left: 20.0,
+                                                      ),
+                                                      child:
+                                                          _buildHorizontalItem(
+                                                        topWidht,
+                                                        topHeight,
+                                                        _cubit.packagesModel !=
+                                                                null
+                                                            ? _cubit
+                                                                .packagesModel!
+                                                                .data!
+                                                                .packages![index]
+                                                            : null,
+                                                        _cubit.packagesModel !=
+                                                                null
+                                                            ? _cubit
+                                                                .packagesModel!
+                                                                .data
+                                                            : null,
+                                                        _cubit.categoriesModel!,
+                                                        _cubit
+                                                            .categoriesModel!
+                                                            .data!
+                                                            .first
+                                                            .packages![index]
+                                                            .title,
+                                                        index,
+                                                        context,
+                                                      ),
+                                                    );
+                                                  } else if (index == 0) {
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 20.0),
+                                                      child:
+                                                          _buildHorizontalItem(
+                                                        topWidht,
+                                                        topHeight,
+                                                        _cubit.packagesModel !=
+                                                                null
+                                                            ? _cubit
+                                                                .packagesModel!
+                                                                .data!
+                                                                .packages![index]
+                                                            : null,
+                                                        _cubit.packagesModel !=
+                                                                null
+                                                            ? _cubit
+                                                                .packagesModel!
+                                                                .data
+                                                            : null,
+                                                        _cubit.categoriesModel!,
+                                                        _cubit
+                                                            .categoriesModel!
+                                                            .data!
+                                                            .first
+                                                            .packages![index]
+                                                            .title,
+                                                        index,
+                                                        context,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    return _buildHorizontalItem(
+                                                      topWidht,
+                                                      topHeight,
+                                                      _cubit.packagesModel !=
+                                                              null
+                                                          ? _cubit
+                                                              .packagesModel!
+                                                              .data!
+                                                              .packages![index]
+                                                          : null,
+                                                      _cubit.packagesModel !=
+                                                              null
+                                                          ? _cubit
+                                                              .packagesModel!
+                                                              .data
+                                                          : null,
+                                                      _cubit.categoriesModel!,
+                                                      _cubit
+                                                          .categoriesModel!
+                                                          .data!
+                                                          .first
+                                                          .packages![index]
+                                                          .title,
+                                                      index,
+                                                      context,
+                                                    );
+                                                  }
+                                                },
+                                                separatorBuilder:
+                                                    (context, index) =>
+                                                        SizedBox(width: 20),
+                                                itemCount:
+                                                    _cubit.packagesModel != null
+                                                        ? _cubit
+                                                            .packagesModel!
+                                                            .data!
+                                                            .packages!
+                                                            .length
+                                                        : _cubit
+                                                            .categoriesModel!
+                                                            .data!
+                                                            .first
+                                                            .packages!
+                                                            .length,
+                                              ),
+                                            ),
+                                            SizedBox(height: 40),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 20,
+                                              ),
+                                              child: Container(
+                                                width: double.infinity,
+                                                // color: Colors.black,
+                                                child: ListView.separated(
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                  itemBuilder:
+                                                      (conext, index) =>
+                                                          _buildVerticalItem(
+                                                    topHeight,
+                                                    topWidht,
+                                                    _cubit.postsModel!
+                                                        .data![index],
+                                                    context,
+                                                  ),
+                                                  separatorBuilder:
+                                                      (context, index) =>
+                                                          SizedBox(height: 10),
+                                                  itemCount: 1,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: mPrimaryColor,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height / 13.5,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Transitioner(
+                                          context: context,
+                                          child: ContactScreen(),
+                                          animation: AnimationType
+                                              .fadeIn, // Optional value
+                                          duration: Duration(
+                                              milliseconds:
+                                                  300), // Optional value
+                                          replacement: true, // Optional value
+                                          curveType: CurveType
+                                              .decelerate, // Optional value
+                                        );
+                                      },
+                                      child: Image.asset(
+                                        'assets/images/mail_bulk.png',
+                                        width: 30,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        _cubit.getUserDataById();
+                                        Transitioner(
+                                          context: context,
+                                          child: ProfileScreen(),
+                                          animation: AnimationType
+                                              .fadeIn, // Optional value
+                                          duration: Duration(
+                                              milliseconds:
+                                                  300), // Optional value
+                                          replacement: true, // Optional value
+                                          curveType: CurveType
+                                              .decelerate, // Optional value
+                                        );
+                                      },
+                                      child: Image.asset(
+                                        'assets/images/chalkboard.png',
+                                        width: 30,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))
+                : Scaffold(
+                    body: LoadingRotating.square(
+                      backgroundColor: mPrimaryColor,
+                    ),
+                  );
+          },
         );
       },
     );

@@ -9,6 +9,7 @@ import 'package:horse_app/models/ind_reservation_model.dart';
 import 'package:horse_app/models/login_model.dart';
 import 'package:horse_app/models/my_ind_subscribe_model.dart';
 import 'package:horse_app/models/my_trainer_subscribe_model.dart';
+import 'package:horse_app/models/notification_model.dart';
 import 'package:horse_app/models/packages_model.dart';
 import 'package:horse_app/models/posts_model.dart';
 import 'package:horse_app/models/trainers_model.dart';
@@ -286,6 +287,56 @@ class HomeCubit extends Cubit<HomeStates> {
       (e) {
         print(e.toString());
         emit(GetMySubscribIndError());
+      },
+    );
+  }
+
+  // GET NOTIFICATION
+  NotificationModel? notificationModel;
+  var notSeen;
+  void getUserNotification() {
+    emit(GetUserNotificationLoading());
+    DioHelper.getData(
+            url: 'user/${SharedHelper.getCacheData(key: TOKEN)}/notes')
+        .then(
+      (value) {
+        notificationModel = NotificationModel.fromJson(value.data);
+        notificationModel!.data!.where((element) => element.seen == '1');
+
+        emit(GetUserNotificationSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetUserNotificationError());
+      },
+    );
+  }
+
+  // NEW SUBSCRIBE
+  void packageRequest({
+    required attendAt,
+    required packageId,
+    required trainerId,
+  }) {
+    emit(CreatePackageRequestLoading());
+    DioHelper.postData(
+      url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}',
+      data: {
+        'agree': 'true',
+        'attendAt': attendAt,
+        'package_id': packageId,
+        'trainer_id': trainerId,
+      },
+    ).then(
+      (value) {
+        print(value.data);
+        emit(CreatePackageRequestSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(CreatePackageRequestError());
       },
     );
   }

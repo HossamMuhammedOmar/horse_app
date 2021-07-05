@@ -5,6 +5,7 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
+import 'package:horse_app/screens/confirm_ind_subscribe_screen.dart';
 import 'package:horse_app/screens/ind_reservations_list_screen.dart';
 import 'package:transitioner/transitioner.dart';
 
@@ -202,11 +203,14 @@ class MyIndSubscribeFollow extends StatelessWidget {
 
                                                   // height: 500,
                                                   child: ListView.builder(
-                                                    itemBuilder: (context,
-                                                            index) =>
-                                                        _buildItem(_cubit
-                                                            .myIndSubscribeModel!
-                                                            .data![index]),
+                                                    itemBuilder:
+                                                        (context, index) =>
+                                                            _buildItem(
+                                                      _cubit
+                                                          .myIndSubscribeModel!
+                                                          .data![index],
+                                                      context,
+                                                    ),
                                                     itemCount: _cubit
                                                         .myIndSubscribeModel!
                                                         .data!
@@ -242,7 +246,7 @@ class MyIndSubscribeFollow extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(item) {
+  Widget _buildItem(item, context) {
     return Row(
       children: [
         Container(
@@ -328,7 +332,16 @@ class MyIndSubscribeFollow extends StatelessWidget {
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
           child: MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              Transitioner(
+                context: context,
+                child: ConfirmIndSubscribeScreen(),
+                animation: AnimationType.fadeIn, // Optional value
+                duration: Duration(milliseconds: 300), // Optional value
+                replacement: true, // Optional value
+                curveType: CurveType.decelerate, // Optional value
+              );
+            },
             child: Text(
               'بيانات الدفع',
               style: TextStyle(
