@@ -247,6 +247,7 @@ class MyIndSubscribeFollow extends StatelessWidget {
   }
 
   Widget _buildItem(item, context) {
+    print(item.id);
     return Row(
       children: [
         Container(
@@ -335,7 +336,9 @@ class MyIndSubscribeFollow extends StatelessWidget {
             onPressed: () {
               Transitioner(
                 context: context,
-                child: ConfirmIndSubscribeScreen(),
+                child: ConfirmIndSubscribeScreen(
+                  id: item.id,
+                ),
                 animation: AnimationType.fadeIn, // Optional value
                 duration: Duration(milliseconds: 300), // Optional value
                 replacement: true, // Optional value

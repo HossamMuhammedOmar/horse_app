@@ -46,14 +46,14 @@ class ReservationScreen extends StatelessWidget {
               fontSize: 16.0);
 
           HomeCubit.get(context).getUserNotification();
-          Transitioner(
-            context: context,
-            child: HomeScreen(),
-            animation: AnimationType.fadeIn, // Optional value
-            duration: Duration(milliseconds: 300), // Optional value
-            replacement: true, // Optional value
-            curveType: CurveType.decelerate, // Optional value
-          );
+          // Transitioner(
+          //   context: context,
+          //   child: HomeScreen(),
+          //   animation: AnimationType.fadeIn, // Optional value
+          //   duration: Duration(milliseconds: 300), // Optional value
+          //   replacement: true, // Optional value
+          //   curveType: CurveType.decelerate, // Optional value
+          // );
         }
 
         if (state is CreatePackageRequestError) {
@@ -635,7 +635,8 @@ class ReservationScreen extends StatelessWidget {
                                               : Center(
                                                   child:
                                                       CircularProgressIndicator(
-                                                          color: Colors.white)),
+                                                          color: Colors.white),
+                                                ),
                                           color: Color(0xff7AB861),
                                         ),
                                         width: double.infinity,

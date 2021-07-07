@@ -132,3 +132,57 @@ class CreatePackageRequestSuccess extends HomeStates {}
 
 // CREATE NEW PACKAGE REQUEST
 class CreatePackageRequestError extends HomeStates {}
+
+// GET MY PACKAGES
+class GetMyPackageLoading extends HomeStates {}
+
+// GET MY PACKAGES
+class GetMyPackageSuccess extends HomeStates {}
+
+// GET MY PACKAGES
+class GetMyPackageError extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendPackagePaymentLoading extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendPackagePaymentSuccess extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendPackagePaymentError extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendTrainerPaymentLoading extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendTrainerPaymentSuccess extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendTrainerPaymentError extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendIndPaymentLoading extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendIndPaymentSuccess extends HomeStates {}
+
+// SEND PACKAGE PAYMENT INFO
+class SendIndPaymentError extends HomeStates {}
+
+// PICKED PACKAGE IMAGE
+class PickedPackageImageSuccess extends HomeStates {}
+
+// PICKED PACKAGE IMAGE
+class PickedPackageImageError extends HomeStates {}
+
+// PICKED PACKAGE IMAGE
+class PickedIndImageSuccess extends HomeStates {}
+
+// PICKED PACKAGE IMAGE
+class PickedIndImageError extends HomeStates {}
+
+// PICKED PACKAGE IMAGE
+class PickedTrainerImageSuccess extends HomeStates {}
+
+// PICKED PACKAGE IMAGE
+class PickedTrainerImageError extends HomeStates {}

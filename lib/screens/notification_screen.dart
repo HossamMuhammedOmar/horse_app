@@ -163,10 +163,15 @@ class NotificationScreen extends StatelessWidget {
                                           _buildItem(_cubit
                                               .notificationModel!.data![index]),
                                       separatorBuilder: (context, index) =>
-                                          Container(
-                                              width: 100,
-                                              height: 1,
-                                              color: Colors.grey),
+                                          Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 20),
+                                        child: Container(
+                                            width: 100,
+                                            height: 1,
+                                            color:
+                                                Colors.grey.withOpacity(0.3)),
+                                      ),
                                       itemCount: _cubit
                                           .notificationModel!.data!.length,
                                     ),
@@ -188,62 +193,66 @@ class NotificationScreen extends StatelessWidget {
   }
 
   Widget _buildItem(item) {
-    return Container(
-      child: Row(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            textDirection: TextDirection.rtl,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                textDirection: TextDirection.rtl,
-                children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.blueAccent,
-                  ),
-                ],
-              ),
-              SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                textDirection: TextDirection.rtl,
-                children: [
-                  AutoSizeText(
-                    '${item.content}',
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: mPrimaryArabicFont,
+    return SingleChildScrollView(
+      reverse: true,
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        child: Row(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              textDirection: TextDirection.rtl,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: mPrimaryColor.withOpacity(0.5),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  AutoSizeText(
-                    '${item.createdAt.toString().substring(0, 10)}',
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 14,
+                  ],
+                ),
+                SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    AutoSizeText(
+                      '${item.content}',
+                      maxLines: 3,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: mPrimaryArabicFont,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          if (item.seen == '0')
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: TextButton(
-                child: AutoSizeText('تعليم كمقروء'),
-                onPressed: () {
-                  print(item.seen);
-                },
-              ),
+                    SizedBox(height: 10),
+                    AutoSizeText(
+                      '${item.createdAt.toString().substring(0, 10)}',
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-        ],
-        crossAxisAlignment: CrossAxisAlignment.center,
-        textDirection: TextDirection.rtl,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            if (item.seen == '0')
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: TextButton(
+                  child: AutoSizeText('تعليم كمقروء'),
+                  onPressed: () {
+                    print(item.id);
+                  },
+                ),
+              ),
+          ],
+          crossAxisAlignment: CrossAxisAlignment.center,
+          textDirection: TextDirection.rtl,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        ),
       ),
     );
   }

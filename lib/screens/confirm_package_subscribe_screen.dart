@@ -7,25 +7,24 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
-import 'package:horse_app/screens/my_ind_subscribe_follow.dart';
+import 'package:horse_app/screens/subscribe_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:transitioner/transitioner.dart';
 import 'package:flutter/material.dart' as ui;
 
-class ConfirmIndSubscribeScreen extends StatelessWidget {
+class ConfirmPackageSubscribeScreen extends StatelessWidget {
   final _dateteController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final id;
 
-  ConfirmIndSubscribeScreen({required this.id});
+  ConfirmPackageSubscribeScreen({required this.id});
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        print(state);
-        if (state is SendIndPaymentSuccess) {
+        if (state is SendPackagePaymentSuccess) {
           _dateteController.text = '';
-          HomeCubit.get(context).iImage = null;
+          HomeCubit.get(context).pImage = null;
           Fluttertoast.showToast(
               msg: "تم الإرسال بنجاح",
               toastLength: Toast.LENGTH_SHORT,
@@ -35,7 +34,7 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
               textColor: Colors.white,
               fontSize: 16.0);
         }
-        if (state is SendIndPaymentError) {
+        if (state is SendPackagePaymentError) {
           Fluttertoast.showToast(
               msg: "فشل الإرسال، الرجاء إعاده المحاوله",
               toastLength: Toast.LENGTH_SHORT,
@@ -47,7 +46,8 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        var indImage = HomeCubit.get(context).iImage;
+        var packageImage = HomeCubit.get(context).pImage;
+
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -139,10 +139,11 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 8.0),
                               child: IconButton(
                                   onPressed: () {
-                                    HomeCubit.get(context).iImage = null;
+                                    HomeCubit.get(context).pImage = null;
+
                                     Transitioner(
                                       context: context,
-                                      child: MyIndSubscribeFollow(),
+                                      child: SubscibeScreen(),
                                       animation: AnimationType
                                           .fadeIn, // Optional value
                                       duration: Duration(
@@ -249,16 +250,15 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  indImage == null
+                                  packageImage == null
                                       ? GestureDetector(
                                           child: Image.asset(
                                               'assets/images/choose.jpg'),
                                           onTap: () {
-                                            HomeCubit.get(context).iGetImage();
-                                          },
-                                        )
+                                            HomeCubit.get(context).getImage();
+                                          })
                                       : AutoSizeText(
-                                          indImage.path,
+                                          packageImage.path,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                 ],
@@ -270,7 +270,7 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                                 child: MaterialButton(
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
-                                      if (indImage == null) {
+                                      if (packageImage == null) {
                                         Fluttertoast.showToast(
                                             msg: "لم تحدد أي صور",
                                             toastLength: Toast.LENGTH_SHORT,
@@ -281,22 +281,19 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                                             fontSize: 16.0);
                                       } else {
                                         String fileName =
-                                            indImage.path.split('/').last;
+                                            packageImage.path.split('/').last;
                                         Map<String, MultipartFile> fileMap;
                                         var formData = FormData.fromMap(
                                           {
-                                            'transaction_image':
+                                            'image':
                                                 await MultipartFile.fromFile(
-                                              indImage.path,
+                                              packageImage.path,
                                               filename: fileName,
                                             ),
-                                            'transaction_date':
-                                                _dateteController.text,
+                                            'date': _dateteController.text,
                                           },
                                         );
-                                        print(id);
-                                        HomeCubit.get(context)
-                                            .sendIndPaymentInfo(
+                                        HomeCubit.get(context).sendPaymentInfo(
                                           formData: formData,
                                           id: id,
                                         );
@@ -305,7 +302,7 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                                   },
                                   minWidth: double.infinity,
                                   height: 50,
-                                  child: state is! SendIndPaymentLoading
+                                  child: state is! SendPackagePaymentLoading
                                       ? AutoSizeText(
                                           'إرسال',
                                           style: TextStyle(
@@ -316,8 +313,7 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                                         )
                                       : Center(
                                           child: CircularProgressIndicator(
-                                              color: Colors.white),
-                                        ),
+                                              color: Colors.white)),
                                   color: Color(0xff157347),
                                 ),
                               ),

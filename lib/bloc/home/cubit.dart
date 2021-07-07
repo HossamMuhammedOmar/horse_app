@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horse_app/bloc/home/states.dart';
@@ -12,8 +14,10 @@ import 'package:horse_app/models/my_trainer_subscribe_model.dart';
 import 'package:horse_app/models/notification_model.dart';
 import 'package:horse_app/models/packages_model.dart';
 import 'package:horse_app/models/posts_model.dart';
+import 'package:horse_app/models/sub_package_model.dart';
 import 'package:horse_app/models/trainers_model.dart';
 import 'package:horse_app/networking/dio_helper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(HomeInitState());
@@ -181,6 +185,7 @@ class HomeCubit extends Cubit<HomeStates> {
     DioHelper.getData(url: INDRESERVATIONS).then(
       (value) {
         indReservationModel = IndReservationModel.fromJson(value.data);
+
         emit(GetIndReservationSuccess());
       },
     ).catchError(
@@ -337,6 +342,116 @@ class HomeCubit extends Cubit<HomeStates> {
       (e) {
         print(e.toString());
         emit(CreatePackageRequestError());
+      },
+    );
+  }
+
+  // GET MY PACKAGES
+  SubPackageModel? subPackageModel;
+  void getMyPackages() {
+    emit(GetMyPackageLoading());
+    DioHelper.getData(
+            url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        subPackageModel = SubPackageModel.fromJson(value.data);
+        print(subPackageModel!.data!.first);
+        emit(GetMyPackageSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetMyPackageError());
+      },
+    );
+  }
+
+  // CONFIRM PACKAGE SUBSCRIBE
+  File? pImage;
+  var pPicker = ImagePicker();
+  Future<void> getImage() async {
+    final pPickedFile = await pPicker.getImage(source: ImageSource.gallery);
+
+    if (pPickedFile != null) {
+      pImage = File(pPickedFile.path);
+      emit(PickedPackageImageSuccess());
+    } else {
+      print('No image selected.');
+      emit(PickedPackageImageError());
+    }
+  }
+
+  void sendPaymentInfo({required formData, required id}) {
+    emit(SendPackagePaymentLoading());
+    DioHelper.putData(url: '$CONFIRMPACKAGEREQUEST/$id', data: formData).then(
+      (value) {
+        print(value.toString());
+        emit(SendPackagePaymentSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(SendPackagePaymentError());
+      },
+    );
+  }
+
+  // CONFIRM TRAINER SUBSCRIBE
+  File? tImage;
+  var tPicker = ImagePicker();
+  Future<void> tGetImage() async {
+    final tPickedFile = await pPicker.getImage(source: ImageSource.gallery);
+
+    if (tPickedFile != null) {
+      tImage = File(tPickedFile.path);
+      emit(PickedTrainerImageSuccess());
+    } else {
+      print('No image selected.');
+      emit(PickedTrainerImageError());
+    }
+  }
+
+  void sendTrainerPaymentInfo({required formData, required id}) {
+    emit(SendTrainerPaymentLoading());
+    DioHelper.putData(url: '$RESRVATIONREQUESTS/$id', data: formData).then(
+      (value) {
+        print(value.toString());
+        emit(SendTrainerPaymentSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(SendTrainerPaymentError());
+      },
+    );
+  }
+
+  // CONFIRM IND SUBSCRIBE
+  File? iImage;
+  var iPicker = ImagePicker();
+  Future<void> iGetImage() async {
+    final iPickedFile = await pPicker.getImage(source: ImageSource.gallery);
+
+    if (iPickedFile != null) {
+      iImage = File(iPickedFile.path);
+      emit(PickedIndImageSuccess());
+    } else {
+      print('No image selected.');
+      emit(PickedIndImageError());
+    }
+  }
+
+  void sendIndPaymentInfo({required formData, required id}) {
+    emit(SendIndPaymentLoading());
+    DioHelper.putData(url: '$RESRVATIONREQUESTSIND/$id', data: formData).then(
+      (value) {
+        print(value.toString());
+        emit(SendIndPaymentSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(SendIndPaymentError());
       },
     );
   }

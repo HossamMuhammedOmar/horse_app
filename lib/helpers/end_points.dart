@@ -26,3 +26,8 @@ const GETORDERS = 'orders?user_id';
 
 // NEED ID IN THE END OF URL
 const RESERVATIONREQUESTSWITHID = 'reservationRequests?user_id';
+
+const CONFIRMPACKAGEREQUEST = 'packageRequest';
+
+const RESRVATIONREQUESTS = 'orders';
+const RESRVATIONREQUESTSIND = 'reservationRequests';

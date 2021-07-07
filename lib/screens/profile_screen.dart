@@ -5,8 +5,11 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
+import 'package:horse_app/constants/keys.dart';
+import 'package:horse_app/helpers/shared_helper_Screen.dart';
 import 'package:horse_app/screens/home_screen.dart';
 import 'package:horse_app/screens/ind_reservations_list_screen.dart';
+import 'package:horse_app/screens/login_screen.dart';
 import 'package:horse_app/screens/my_ind_subscribe_follow.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
 import 'package:horse_app/screens/trainer_reservation_list_screen.dart';
@@ -261,6 +264,7 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               onTap: () {
+                                                _cubit.getMyPackages();
                                                 // _cubit.getPackageRequestById();
                                                 Transitioner(
                                                   context: context,
@@ -435,7 +439,20 @@ class ProfileScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 20),
                             child: MaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                SharedHelper.removeCacheData(key: TOKEN);
+                                Transitioner(
+                                  context: context,
+                                  child: LoginScreen(),
+                                  animation:
+                                      AnimationType.fadeIn, // Optional value
+                                  duration: Duration(
+                                      milliseconds: 300), // Optional value
+                                  replacement: true, // Optional value
+                                  curveType:
+                                      CurveType.decelerate, // Optional value
+                                );
+                              },
                               color: Color(0xffD82E37),
                               minWidth: double.infinity,
                               height: 50,

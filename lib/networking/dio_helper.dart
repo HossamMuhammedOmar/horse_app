@@ -27,6 +27,20 @@ class DioHelper {
     );
   }
 
+  static Future<Response> putData({
+    required String url,
+    required data,
+    String? token,
+  }) async {
+    dio!.options.headers = {
+      'Content-Type': 'multipart/form-data',
+    };
+    return dio!.put(
+      url,
+      data: data,
+    );
+  }
+
   static Future<Response> getData({
     required String url,
     String? token,
