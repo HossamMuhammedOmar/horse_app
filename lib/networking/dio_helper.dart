@@ -15,7 +15,7 @@ class DioHelper {
 
   static Future<Response> postData({
     required String url,
-    required Map<String, dynamic> data,
+    required dynamic data,
     String? token,
   }) async {
     dio!.options.headers = {

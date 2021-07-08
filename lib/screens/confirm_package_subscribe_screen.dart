@@ -121,8 +121,7 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           body: Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -149,13 +148,10 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                     Transitioner(
                                       context: context,
                                       child: SubscibeScreen(),
-                                      animation: AnimationType
-                                          .fadeIn, // Optional value
-                                      duration: Duration(
-                                          milliseconds: 300), // Optional value
+                                      animation: AnimationType.fadeIn, // Optional value
+                                      duration: Duration(milliseconds: 300), // Optional value
                                       replacement: true, // Optional value
-                                      curveType: CurveType
-                                          .decelerate, // Optional value
+                                      curveType: CurveType.decelerate, // Optional value
                                     );
                                   },
                                   icon: Icon(
@@ -164,8 +160,7 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                   )),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
                               child: Center(
                                 child: AutoSizeText(
                                   'بيانات الدفع',
@@ -230,9 +225,7 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                               firstDate: DateTime.now(),
                                               lastDate: DateTime(2222))
                                           .then((value) =>
-                                              _dateteController.text =
-                                                  DateFormat('yyyy-MM-dd')
-                                                      .format(value!));
+                                              _dateteController.text = DateFormat('yyyy-MM-dd').format(value!));
                                     },
                                     textInputAction: TextInputAction.done,
                                     keyboardType: TextInputType.number,
@@ -257,8 +250,7 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                   SizedBox(height: 5),
                                   packageImage == null
                                       ? GestureDetector(
-                                          child: Image.asset(
-                                              'assets/images/choose.jpg'),
+                                          child: Image.asset('assets/images/choose.jpg'),
                                           onTap: () {
                                             HomeCubit.get(context).getImage();
                                           })
@@ -277,31 +269,29 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                     if (_formKey.currentState!.validate()) {
                                       if (packageImage == null) {
                                         Fluttertoast.showToast(
-                                            msg: "لم تحدد أي صور",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
+                                          msg: "لم تحدد أي صور",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
                                       } else {
-                                        String fileName =
-                                            packageImage.path.split('/').last;
+                                        final _image = await MultipartFile.fromFile(packageImage.path);
 
-                                        var formData = FormData.fromMap(
+                                        final formData = FormData.fromMap(
                                           {
                                             'date': _dateteController.text,
-                                            'image': MultipartFile.fromFileSync(
-                                              packageImage.path,
-                                              filename: 'payment_info',
-                                              contentType: MediaType("image",
-                                                  fileName.split(".").last),
-                                            ),
+                                            'image': _image,
+                                            '_method': 'put',
                                           },
                                         );
 
                                         HomeCubit.get(context).sendPaymentInfo(
-                                            formData: formData, id: id);
+                                          formData: formData,
+                                          id: id,
+                                        );
                                       }
                                     }
                                   },
@@ -316,9 +306,7 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                             fontSize: 16,
                                           ),
                                         )
-                                      : Center(
-                                          child: CircularProgressIndicator(
-                                              color: Colors.white)),
+                                      : Center(child: CircularProgressIndicator(color: Colors.white)),
                                   color: Color(0xff157347),
                                 ),
                               ),

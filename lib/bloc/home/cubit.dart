@@ -73,9 +73,7 @@ class HomeCubit extends Cubit<HomeStates> {
   LoginModel? profileModel;
   void getUserDataById() {
     emit(GetUserDataLoading());
-    DioHelper.getData(
-            url: '$GETUSERBYID/${SharedHelper.getCacheData(key: TOKEN)}')
-        .then(
+    DioHelper.getData(url: '$GETUSERBYID/${SharedHelper.getCacheData(key: TOKEN)}').then(
       (value) {
         profileModel = LoginModel.fromJson(value.data);
         emit(GetUserDataSuccess());
@@ -164,9 +162,7 @@ class HomeCubit extends Cubit<HomeStates> {
   void getPackageRequestById() {
     print(SharedHelper.getCacheData(key: TOKEN));
     emit(GetPackageRequestLoading());
-    DioHelper.getData(
-            url: '$PACKAGEREQUEST/${SharedHelper.getCacheData(key: TOKEN)}')
-        .then(
+    DioHelper.getData(url: '$PACKAGEREQUEST/${SharedHelper.getCacheData(key: TOKEN)}').then(
       (value) {
         print(value.data);
         emit(GetPackageRequestSuccess());
@@ -241,8 +237,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }) {
     emit(PostSubscribIndLoading());
     DioHelper.postData(
-      url:
-          "$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}",
+      url: "$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}",
       data: {
         'user_id': userId,
         'ind_reservation_id': indReservationId,
@@ -262,9 +257,7 @@ class HomeCubit extends Cubit<HomeStates> {
   MyTrainerSubscribeModel? myTrainerSubscribeModel;
   void getMyTrainerSubscribe() {
     emit(GetMySubscribTrainerLoading());
-    DioHelper.getData(
-            url: '$GETORDERS=${SharedHelper.getCacheData(key: TOKEN)}')
-        .then(
+    DioHelper.getData(url: '$GETORDERS=${SharedHelper.getCacheData(key: TOKEN)}').then(
       (value) {
         myTrainerSubscribeModel = MyTrainerSubscribeModel.fromJson(value.data);
         emit(GetMySubscribTrainerSuccess());
@@ -281,10 +274,7 @@ class HomeCubit extends Cubit<HomeStates> {
   MyIndSubscribeModel? myIndSubscribeModel;
   void getMyIndSubscribe() {
     emit(GetMySubscribIndLoading());
-    DioHelper.getData(
-            url:
-                '$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}')
-        .then(
+    DioHelper.getData(url: '$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}').then(
       (value) {
         myIndSubscribeModel = MyIndSubscribeModel.fromJson(value.data);
         emit(GetMySubscribIndSuccess());
@@ -302,9 +292,7 @@ class HomeCubit extends Cubit<HomeStates> {
   var notSeen;
   void getUserNotification() {
     emit(GetUserNotificationLoading());
-    DioHelper.getData(
-            url: 'user/${SharedHelper.getCacheData(key: TOKEN)}/notes')
-        .then(
+    DioHelper.getData(url: 'user/${SharedHelper.getCacheData(key: TOKEN)}/notes').then(
       (value) {
         notificationModel = NotificationModel.fromJson(value.data);
         notificationModel!.data!.where((element) => element.seen == '1');
@@ -351,9 +339,7 @@ class HomeCubit extends Cubit<HomeStates> {
   SubPackageModel? subPackageModel;
   void getMyPackages() {
     emit(GetMyPackageLoading());
-    DioHelper.getData(
-            url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
-        .then(
+    DioHelper.getData(url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}').then(
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
         print(subPackageModel!.data!.first);
@@ -384,7 +370,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void sendPaymentInfo({required formData, required id}) {
     emit(SendPackagePaymentLoading());
-    DioHelper.putData(
+    DioHelper.postData(
       url: '$CONFIRMPACKAGEREQUEST/$id',
       data: formData,
     ).then(
@@ -410,9 +396,7 @@ class HomeCubit extends Cubit<HomeStates> {
     for (MapEntry fileEntry in files.entries) {
       File file = fileEntry.value;
       String fileName = basename(file.path);
-      fileMap[fileEntry.key] = MultipartFile(
-          file.openRead(), await file.length(),
-          filename: fileName);
+      fileMap[fileEntry.key] = MultipartFile(file.openRead(), await file.length(), filename: fileName);
     }
     data.addAll(fileMap);
     var formData = FormData.fromMap(data);
