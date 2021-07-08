@@ -31,10 +31,10 @@ class DioHelper {
     required String url,
     required data,
     String? token,
+    Options? options,
   }) async {
-    dio!.options.headers = {
-      'Content-Type': 'multipart/form-data',
-    };
+    // dio!.options.contentType = 'multipart/form-data';
+    dio!.options.contentType = 'multipart/form-data';
     return dio!.put(
       url,
       data: data,

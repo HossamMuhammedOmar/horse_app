@@ -22,7 +22,6 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        print(state);
         if (state is SendIndPaymentSuccess) {
           _dateteController.text = '';
           HomeCubit.get(context).iImage = null;
@@ -282,7 +281,6 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                                       } else {
                                         String fileName =
                                             indImage.path.split('/').last;
-                                        Map<String, MultipartFile> fileMap;
                                         var formData = FormData.fromMap(
                                           {
                                             'transaction_image':
@@ -294,10 +292,10 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                                                 _dateteController.text,
                                           },
                                         );
-                                        print(id);
+
                                         HomeCubit.get(context)
                                             .sendIndPaymentInfo(
-                                          formData: formData,
+                                          formData: formData.fields,
                                           id: id,
                                         );
                                       }

@@ -5,7 +5,6 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
-import 'package:horse_app/models/ind_reservation_model.dart';
 import 'package:horse_app/screens/ind_subscribe_screen.dart';
 import 'package:horse_app/screens/profile_screen.dart';
 import 'package:transitioner/transitioner.dart';

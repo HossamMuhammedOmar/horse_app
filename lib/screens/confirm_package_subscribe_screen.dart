@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'package:horse_app/helpers/end_points.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +12,7 @@ import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:transitioner/transitioner.dart';
 import 'package:flutter/material.dart' as ui;
@@ -282,21 +287,21 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                       } else {
                                         String fileName =
                                             packageImage.path.split('/').last;
-                                        Map<String, MultipartFile> fileMap;
+
                                         var formData = FormData.fromMap(
                                           {
-                                            'image':
-                                                await MultipartFile.fromFile(
-                                              packageImage.path,
-                                              filename: fileName,
-                                            ),
                                             'date': _dateteController.text,
+                                            'image': MultipartFile.fromFileSync(
+                                              packageImage.path,
+                                              filename: 'payment_info',
+                                              contentType: MediaType("image",
+                                                  fileName.split(".").last),
+                                            ),
                                           },
                                         );
+
                                         HomeCubit.get(context).sendPaymentInfo(
-                                          formData: formData,
-                                          id: id,
-                                        );
+                                            formData: formData, id: id);
                                       }
                                     }
                                   },
@@ -331,4 +336,19 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
       },
     );
   }
+
+  // void _upload(packageImage) {
+  //   if (packageImage == null) return;
+  //   String base64Image = packageImage!.readAsBytesSync();
+  //   String fileName = packageImage.path.split("/").last;
+  //
+  //   http.put(Uri.parse('$RESRVATIONREQUESTSIND/$id'), body: {
+  //     "image": base64Image,
+  //     "name": fileName,
+  //   }).then((res) {
+  //     print(res);
+  //   }).catchError((err) {
+  //     print(err);
+  //   });
+  // }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
-
+import 'package:path/path.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/keys.dart';
@@ -383,7 +384,10 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void sendPaymentInfo({required formData, required id}) {
     emit(SendPackagePaymentLoading());
-    DioHelper.putData(url: '$CONFIRMPACKAGEREQUEST/$id', data: formData).then(
+    DioHelper.putData(
+      url: '$CONFIRMPACKAGEREQUEST/$id',
+      data: formData,
+    ).then(
       (value) {
         print(value.toString());
         emit(SendPackagePaymentSuccess());
@@ -393,6 +397,29 @@ class HomeCubit extends Cubit<HomeStates> {
         print(e.toString());
         emit(SendPackagePaymentError());
       },
+    );
+  }
+
+  Future<Response> sendPaymentInfoV2({
+    required id,
+    required Map<String, dynamic> data,
+    required Map<String, File> files,
+  }) async {
+    // emit(SendPackagePaymentLoading());
+    Map<String, MultipartFile> fileMap = {};
+    for (MapEntry fileEntry in files.entries) {
+      File file = fileEntry.value;
+      String fileName = basename(file.path);
+      fileMap[fileEntry.key] = MultipartFile(
+          file.openRead(), await file.length(),
+          filename: fileName);
+    }
+    data.addAll(fileMap);
+    var formData = FormData.fromMap(data);
+
+    return await DioHelper.putData(
+      url: '$CONFIRMPACKAGEREQUEST/$id',
+      data: formData,
     );
   }
 
@@ -441,7 +468,7 @@ class HomeCubit extends Cubit<HomeStates> {
     }
   }
 
-  void sendIndPaymentInfo({required formData, required id}) {
+  sendIndPaymentInfo({required formData, required id}) {
     emit(SendIndPaymentLoading());
     DioHelper.putData(url: '$RESRVATIONREQUESTSIND/$id', data: formData).then(
       (value) {
