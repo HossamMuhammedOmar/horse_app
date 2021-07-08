@@ -279,23 +279,33 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                                             textColor: Colors.white,
                                             fontSize: 16.0);
                                       } else {
-                                        String fileName =
-                                            indImage.path.split('/').last;
-                                        var formData = FormData.fromMap(
+                                        final _image =
+                                            await MultipartFile.fromFile(
+                                                indImage.path);
+
+                                        final formData = FormData.fromMap(
                                           {
-                                            'transaction_image':
-                                                await MultipartFile.fromFile(
-                                              indImage.path,
-                                              filename: fileName,
-                                            ),
                                             'transaction_date':
                                                 _dateteController.text,
+                                            'transaction_image': _image,
+                                            '_method': 'put',
                                           },
                                         );
+                                        // var formData = FormData.fromMap(
+                                        //   {
+                                        //     'transaction_image':
+                                        //         await MultipartFile.fromFile(
+                                        //       indImage.path,
+                                        //       filename: fileName,
+                                        //     ),
+                                        //     'transaction_date':
+                                        //         _dateteController.text,
+                                        //   },
+                                        // );
 
                                         HomeCubit.get(context)
                                             .sendIndPaymentInfo(
-                                          formData: formData.fields,
+                                          formData: formData,
                                           id: id,
                                         );
                                       }

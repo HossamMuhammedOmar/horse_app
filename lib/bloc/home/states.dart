@@ -186,3 +186,12 @@ class PickedTrainerImageSuccess extends HomeStates {}
 
 // PICKED PACKAGE IMAGE
 class PickedTrainerImageError extends HomeStates {}
+
+// SEND CONTACT
+class SendContactLoading extends HomeStates {}
+
+// SEND CONTACT
+class SendContactSuccess extends HomeStates {}
+
+// SEND CONTACT
+class SendContactError extends HomeStates {}

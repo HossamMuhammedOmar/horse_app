@@ -16,7 +16,9 @@ class SubscibeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        print(state);
+      },
       builder: (context, state) {
         HomeCubit _cubit = HomeCubit.get(context);
         return state is! GetMyPackageLoading
@@ -355,7 +357,7 @@ class SubscibeScreen extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(15),
         ),
-        if (item.date == null)
+        if (item.transaction.date == null)
           Container(
             width: 112,
             decoration: BoxDecoration(
@@ -368,14 +370,14 @@ class SubscibeScreen extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(14),
           ),
-        if (item.date != null)
+        if (item.transaction.date != null)
           Container(
             width: 112,
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xffDEE2E6)),
             ),
             child: Text(
-              '${item.date.toString()}',
+              '${item.transaction.date.toString()}',
               style: TextStyle(),
               textDirection: TextDirection.rtl,
             ),

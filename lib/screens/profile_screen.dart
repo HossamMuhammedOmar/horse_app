@@ -8,15 +8,14 @@ import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/constants/keys.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
 import 'package:horse_app/screens/home_screen.dart';
-import 'package:horse_app/screens/ind_reservations_list_screen.dart';
 import 'package:horse_app/screens/login_screen.dart';
 import 'package:horse_app/screens/my_ind_subscribe_follow.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
-import 'package:horse_app/screens/trainer_reservation_list_screen.dart';
 import 'package:horse_app/screens/trainer_subscribe_follow.dart';
 import 'package:transitioner/transitioner.dart';
 
 import 'contact_screen.dart';
+import 'notification_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -46,30 +45,50 @@ class ProfileScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _cubit.getUserNotification();
+                        Transitioner(
+                          context: context,
+                          child: NotificationScreen(),
+                          animation: AnimationType.fadeIn, // Optional value
+                          duration:
+                              Duration(milliseconds: 300), // Optional value
+                          replacement: true, // Optional value
+                          curveType: CurveType.decelerate, // Optional value
+                        );
+                      },
                       icon: Icon(
                         Icons.notifications_none,
                         size: 30,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(2),
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          color: Color(0xff707070),
+                    if (_cubit.notificationModel != null)
+                      if (_cubit.notificationModel!.data!
+                              .where((element) => element.seen == '0')
+                              .length !=
+                          0)
+                        Positioned(
+                          right: 7,
+                          top: 7,
+                          child: Container(
+                            // padding: const EdgeInsets.all(2),
+                            height: 15,
+                            width: 15,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(30),
+                              // border: Border.all(
+                              //   color: Color(0xff707070),
+                              // ),
+                            ),
+                            // child: Center(
+                            //   child: Text(
+                            //     '0',
+                            //     style: TextStyle(color: Colors.red),
+                            //   ),
+                            // ),
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '0',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -172,7 +191,7 @@ class ProfileScreen extends StatelessWidget {
                                     SizedBox(height: 20),
                                     Center(
                                       child: AutoSizeText(
-                                        'hossam test1',
+                                        '${HomeCubit.get(context).profileModel!.data!.name}',
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontFamily: mPrimaryArabicFont,

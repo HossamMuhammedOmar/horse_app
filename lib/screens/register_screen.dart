@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:horse_app/bloc/register/cubit.dart';
 import 'package:horse_app/bloc/register/states.dart';
+import 'package:transitioner/transitioner.dart';
 import '../constants/colors.dart';
 import '../constants/fonts.dart';
 import '../widgets/reusable_widgets.dart';
+import 'welcome_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   final _emailController = TextEditingController();
@@ -197,6 +199,7 @@ class RegisterScreen extends StatelessWidget {
                                     },
                                     textAlign: TextAlign.right,
                                     textDirection: TextDirection.rtl,
+                                    keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       hintText: 'البريد الإلكتروني',
@@ -234,6 +237,8 @@ class RegisterScreen extends StatelessWidget {
                                   SizedBox(height: 15),
                                   TextFormField(
                                     controller: _passwordController,
+                                    keyboardType: TextInputType.visiblePassword,
+                                    obscureText: true,
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return 'من فضلك أدخل هذا الحقل';
@@ -256,6 +261,8 @@ class RegisterScreen extends StatelessWidget {
                                   SizedBox(height: 15),
                                   TextFormField(
                                     controller: _confirmPasswordController,
+                                    keyboardType: TextInputType.visiblePassword,
+                                    obscureText: true,
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return 'من فضلك أدخل هذا الحقل';
@@ -317,6 +324,22 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                           ],
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 70, left: 20),
+                      child: IconButton(
+                        onPressed: () {
+                          Transitioner(
+                            context: context,
+                            child: WelcomeScreen(),
+                            animation: AnimationType.fadeIn,
+                            duration: Duration(milliseconds: 300),
+                            replacement: true,
+                            curveType: CurveType.decelerate,
+                          );
+                        },
+                        icon: Icon(Icons.arrow_back_ios),
                       ),
                     ),
                   ],

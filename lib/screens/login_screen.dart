@@ -9,6 +9,7 @@ import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/constants/keys.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
 import 'package:horse_app/screens/home_screen.dart';
+import 'package:horse_app/screens/welcome_screen.dart';
 import 'package:horse_app/widgets/reusable_widgets.dart';
 import 'package:transitioner/transitioner.dart';
 
@@ -65,6 +66,22 @@ class LoginScreen extends StatelessWidget {
                       child: Image.asset(
                         'assets/images/bg.jpg',
                         fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 70, left: 20),
+                      child: IconButton(
+                        onPressed: () {
+                          Transitioner(
+                            context: context,
+                            child: WelcomeScreen(),
+                            animation: AnimationType.fadeIn,
+                            duration: Duration(milliseconds: 300),
+                            replacement: true,
+                            curveType: CurveType.decelerate,
+                          );
+                        },
+                        icon: Icon(Icons.arrow_back_ios),
                       ),
                     ),
                     Center(

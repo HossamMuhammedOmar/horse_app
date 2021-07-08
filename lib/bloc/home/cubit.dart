@@ -73,7 +73,9 @@ class HomeCubit extends Cubit<HomeStates> {
   LoginModel? profileModel;
   void getUserDataById() {
     emit(GetUserDataLoading());
-    DioHelper.getData(url: '$GETUSERBYID/${SharedHelper.getCacheData(key: TOKEN)}').then(
+    DioHelper.getData(
+            url: '$GETUSERBYID/${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
       (value) {
         profileModel = LoginModel.fromJson(value.data);
         emit(GetUserDataSuccess());
@@ -162,7 +164,9 @@ class HomeCubit extends Cubit<HomeStates> {
   void getPackageRequestById() {
     print(SharedHelper.getCacheData(key: TOKEN));
     emit(GetPackageRequestLoading());
-    DioHelper.getData(url: '$PACKAGEREQUEST/${SharedHelper.getCacheData(key: TOKEN)}').then(
+    DioHelper.getData(
+            url: '$PACKAGEREQUEST/${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
       (value) {
         print(value.data);
         emit(GetPackageRequestSuccess());
@@ -237,7 +241,8 @@ class HomeCubit extends Cubit<HomeStates> {
   }) {
     emit(PostSubscribIndLoading());
     DioHelper.postData(
-      url: "$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}",
+      url:
+          "$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}",
       data: {
         'user_id': userId,
         'ind_reservation_id': indReservationId,
@@ -257,7 +262,9 @@ class HomeCubit extends Cubit<HomeStates> {
   MyTrainerSubscribeModel? myTrainerSubscribeModel;
   void getMyTrainerSubscribe() {
     emit(GetMySubscribTrainerLoading());
-    DioHelper.getData(url: '$GETORDERS=${SharedHelper.getCacheData(key: TOKEN)}').then(
+    DioHelper.getData(
+            url: '$GETORDERS=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
       (value) {
         myTrainerSubscribeModel = MyTrainerSubscribeModel.fromJson(value.data);
         emit(GetMySubscribTrainerSuccess());
@@ -274,7 +281,10 @@ class HomeCubit extends Cubit<HomeStates> {
   MyIndSubscribeModel? myIndSubscribeModel;
   void getMyIndSubscribe() {
     emit(GetMySubscribIndLoading());
-    DioHelper.getData(url: '$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}').then(
+    DioHelper.getData(
+            url:
+                '$RESERVATIONREQUESTSWITHID=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
       (value) {
         myIndSubscribeModel = MyIndSubscribeModel.fromJson(value.data);
         emit(GetMySubscribIndSuccess());
@@ -292,7 +302,9 @@ class HomeCubit extends Cubit<HomeStates> {
   var notSeen;
   void getUserNotification() {
     emit(GetUserNotificationLoading());
-    DioHelper.getData(url: 'user/${SharedHelper.getCacheData(key: TOKEN)}/notes').then(
+    DioHelper.getData(
+            url: 'user/${SharedHelper.getCacheData(key: TOKEN)}/notes')
+        .then(
       (value) {
         notificationModel = NotificationModel.fromJson(value.data);
         notificationModel!.data!.where((element) => element.seen == '1');
@@ -338,11 +350,14 @@ class HomeCubit extends Cubit<HomeStates> {
   // GET MY PACKAGES
   SubPackageModel? subPackageModel;
   void getMyPackages() {
+    print('TOKEN' + SharedHelper.getCacheData(key: TOKEN));
     emit(GetMyPackageLoading());
-    DioHelper.getData(url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}').then(
+    DioHelper.getData(
+            url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
-        print(subPackageModel!.data!.first);
+        // print(subPackageModel!.data!.first);
         emit(GetMyPackageSuccess());
       },
     ).catchError(
@@ -386,27 +401,6 @@ class HomeCubit extends Cubit<HomeStates> {
     );
   }
 
-  Future<Response> sendPaymentInfoV2({
-    required id,
-    required Map<String, dynamic> data,
-    required Map<String, File> files,
-  }) async {
-    // emit(SendPackagePaymentLoading());
-    Map<String, MultipartFile> fileMap = {};
-    for (MapEntry fileEntry in files.entries) {
-      File file = fileEntry.value;
-      String fileName = basename(file.path);
-      fileMap[fileEntry.key] = MultipartFile(file.openRead(), await file.length(), filename: fileName);
-    }
-    data.addAll(fileMap);
-    var formData = FormData.fromMap(data);
-
-    return await DioHelper.putData(
-      url: '$CONFIRMPACKAGEREQUEST/$id',
-      data: formData,
-    );
-  }
-
   // CONFIRM TRAINER SUBSCRIBE
   File? tImage;
   var tPicker = ImagePicker();
@@ -424,7 +418,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void sendTrainerPaymentInfo({required formData, required id}) {
     emit(SendTrainerPaymentLoading());
-    DioHelper.putData(url: '$RESRVATIONREQUESTS/$id', data: formData).then(
+    DioHelper.postData(url: '$RESRVATIONREQUESTS/$id', data: formData).then(
       (value) {
         print(value.toString());
         emit(SendTrainerPaymentSuccess());
@@ -454,7 +448,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   sendIndPaymentInfo({required formData, required id}) {
     emit(SendIndPaymentLoading());
-    DioHelper.putData(url: '$RESRVATIONREQUESTSIND/$id', data: formData).then(
+    DioHelper.postData(url: '$RESRVATIONREQUESTSIND/$id', data: formData).then(
       (value) {
         print(value.toString());
         emit(SendIndPaymentSuccess());
@@ -463,6 +457,32 @@ class HomeCubit extends Cubit<HomeStates> {
       (e) {
         print(e.toString());
         emit(SendIndPaymentError());
+      },
+    );
+  }
+
+  // CONTACT US
+  void contactUs({
+    required name,
+    required email,
+    required title,
+    required content,
+  }) {
+    emit(SendContactLoading());
+    DioHelper.postData(url: '$CONTACTS', data: {
+      'name': name,
+      'email': email,
+      'title': title,
+      'content': content,
+    }).then(
+      (value) {
+        print(value.data);
+        emit(SendContactSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(SendContactError());
       },
     );
   }

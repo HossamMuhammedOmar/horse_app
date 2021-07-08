@@ -6,7 +6,7 @@ import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:transitioner/transitioner.dart';
-
+import 'package:flutter/material.dart' as ui;
 import 'contact_screen.dart';
 import 'home_screen.dart';
 
@@ -129,72 +129,74 @@ class PostsDetailScreen extends StatelessWidget {
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: LayoutBuilder(
-                        builder: (context, constraint) {
-                          var topHeight = constraint.maxHeight;
-                          var topWidht = constraint.maxWidth;
-                          return Column(
-                            textDirection: TextDirection.rtl,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          Transitioner(
-                                            context: context,
-                                            child: HomeScreen(),
-                                            animation: AnimationType
-                                                .fadeIn, // Optional value
-                                            duration: Duration(
-                                                milliseconds:
-                                                    300), // Optional value
-                                            replacement: true, // Optional value
-                                            curveType: CurveType
-                                                .decelerate, // Optional value
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.double_arrow,
-                                          color: mPrimaryColor,
-                                        )),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Center(
-                                      child: AutoSizeText(
-                                        'العروض والفعاليات الإسبوعيه',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: mPrimaryArabicFont,
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: LayoutBuilder(
+                          builder: (context, constraint) {
+                            var topHeight = constraint.maxHeight;
+                            var topWidht = constraint.maxWidth;
+                            return Column(
+                              textDirection: TextDirection.rtl,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Stack(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: IconButton(
+                                          onPressed: () {
+                                            Transitioner(
+                                              context: context,
+                                              child: HomeScreen(),
+                                              animation: AnimationType
+                                                  .fadeIn, // Optional value
+                                              duration: Duration(
+                                                  milliseconds:
+                                                      300), // Optional value
+                                              replacement:
+                                                  true, // Optional value
+                                              curveType: CurveType
+                                                  .decelerate, // Optional value
+                                            );
+                                          },
+                                          icon: Icon(
+                                            Icons.double_arrow,
+                                            color: mPrimaryColor,
+                                          )),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Center(
+                                        child: AutoSizeText(
+                                          'العروض والفعاليات الإسبوعيه',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: mPrimaryArabicFont,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                                alignment: Alignment.centerRight,
-                              ),
-                              SizedBox(height: 5),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 0.5,
-                                  color: Color(0xff707070),
+                                  ],
+                                  alignment: Alignment.centerRight,
                                 ),
-                              ),
-                              SizedBox(height: 20),
-                              SingleChildScrollView(
-                                child: Padding(
+                                SizedBox(height: 5),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 0.5,
+                                    color: Color(0xff707070),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Padding(
                                   padding: const EdgeInsets.only(
                                       right: 30, left: 30),
                                   child: Column(
@@ -205,7 +207,8 @@ class PostsDetailScreen extends StatelessWidget {
                                       AutoSizeText(
                                         '$name',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
                                           fontFamily: mPrimaryArabicFont,
                                         ),
                                       ),
@@ -219,26 +222,30 @@ class PostsDetailScreen extends StatelessWidget {
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                      SizedBox(height: 10),
-                                      AutoSizeText(
-                                        '$content',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          fontFamily: mPrimaryArabicFont,
+                                      SizedBox(height: 20),
+                                      Container(
+                                        padding: EdgeInsets.only(bottom: 120),
+                                        child: AutoSizeText(
+                                          '$content',
+                                          style: TextStyle(
+                                            fontSize: 19,
+                                            fontFamily: mPrimaryArabicFont,
+                                          ),
+                                          textDirection: TextDirection.rtl,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 300,
                                         ),
-                                        maxLines: 5,
-                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
+                              ],
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
