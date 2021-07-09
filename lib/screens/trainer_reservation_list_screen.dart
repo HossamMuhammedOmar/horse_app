@@ -9,6 +9,8 @@ import 'package:horse_app/screens/trainer_subscribe_follow.dart';
 import 'package:horse_app/screens/trainer_subscrip_screen.dart';
 import 'package:transitioner/transitioner.dart';
 
+import 'notification_screen.dart';
+
 class TrainerReservationListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -37,30 +39,44 @@ class TrainerReservationListScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _cubit.getUserNotification();
+                        Transitioner(
+                          context: context,
+                          child: NotificationScreen(),
+                          animation: AnimationType.fadeIn, // Optional value
+                          duration:
+                              Duration(milliseconds: 300), // Optional value
+                          replacement: true, // Optional value
+                          curveType: CurveType.decelerate, // Optional value
+                        );
+                      },
                       icon: Icon(
                         Icons.notifications_none,
                         size: 30,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(2),
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          color: Color(0xff707070),
+                    if (_cubit.notificationModel != null)
+                      if (_cubit.notificationModel!.data!
+                              .where((element) => element.seen == '0')
+                              .length !=
+                          0)
+                        Positioned(
+                          right: 7,
+                          top: 7,
+                          child: Container(
+                            // padding: const EdgeInsets.all(2),
+                            height: 15,
+                            width: 15,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(30),
+                              // border: Border.all(
+                              //   color: Color(0xff707070),
+                              // ),
+                            ),
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '0',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -201,8 +217,9 @@ class TrainerReservationListScreen extends StatelessWidget {
         ),
         SizedBox(height: 5),
         Container(
-          child: Image.asset(
-            'assets/images/1621245854.png',
+          child: Image.network(
+            '${item.image}',
+            filterQuality: FilterQuality.low,
             fit: BoxFit.cover,
             width: double.infinity,
             height: 250,

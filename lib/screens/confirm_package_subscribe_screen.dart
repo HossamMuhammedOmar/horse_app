@@ -17,6 +17,8 @@ import 'package:intl/intl.dart';
 import 'package:transitioner/transitioner.dart';
 import 'package:flutter/material.dart' as ui;
 
+import 'notification_screen.dart';
+
 class ConfirmPackageSubscribeScreen extends StatelessWidget {
   final _dateteController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -52,7 +54,7 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
       },
       builder: (context, state) {
         var packageImage = HomeCubit.get(context).pImage;
-
+        HomeCubit _cubit = HomeCubit.get(context);
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -74,30 +76,44 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _cubit.getUserNotification();
+                        Transitioner(
+                          context: context,
+                          child: NotificationScreen(),
+                          animation: AnimationType.fadeIn, // Optional value
+                          duration:
+                              Duration(milliseconds: 300), // Optional value
+                          replacement: true, // Optional value
+                          curveType: CurveType.decelerate, // Optional value
+                        );
+                      },
                       icon: Icon(
                         Icons.notifications_none,
                         size: 30,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(2),
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          color: Color(0xff707070),
+                    if (_cubit.notificationModel != null)
+                      if (_cubit.notificationModel!.data!
+                              .where((element) => element.seen == '0')
+                              .length !=
+                          0)
+                        Positioned(
+                          right: 7,
+                          top: 7,
+                          child: Container(
+                            // padding: const EdgeInsets.all(2),
+                            height: 15,
+                            width: 15,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(30),
+                              // border: Border.all(
+                              //   color: Color(0xff707070),
+                              // ),
+                            ),
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '0',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -121,7 +137,8 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           body: Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -148,10 +165,13 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                     Transitioner(
                                       context: context,
                                       child: SubscibeScreen(),
-                                      animation: AnimationType.fadeIn, // Optional value
-                                      duration: Duration(milliseconds: 300), // Optional value
+                                      animation: AnimationType
+                                          .fadeIn, // Optional value
+                                      duration: Duration(
+                                          milliseconds: 300), // Optional value
                                       replacement: true, // Optional value
-                                      curveType: CurveType.decelerate, // Optional value
+                                      curveType: CurveType
+                                          .decelerate, // Optional value
                                     );
                                   },
                                   icon: Icon(
@@ -160,7 +180,8 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                   )),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               child: Center(
                                 child: AutoSizeText(
                                   'بيانات الدفع',
@@ -225,7 +246,9 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                               firstDate: DateTime.now(),
                                               lastDate: DateTime(2222))
                                           .then((value) =>
-                                              _dateteController.text = DateFormat('yyyy-MM-dd').format(value!));
+                                              _dateteController.text =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(value!));
                                     },
                                     textInputAction: TextInputAction.done,
                                     keyboardType: TextInputType.number,
@@ -250,7 +273,8 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                   SizedBox(height: 5),
                                   packageImage == null
                                       ? GestureDetector(
-                                          child: Image.asset('assets/images/choose.jpg'),
+                                          child: Image.asset(
+                                              'assets/images/choose.jpg'),
                                           onTap: () {
                                             HomeCubit.get(context).getImage();
                                           })
@@ -278,7 +302,9 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                           fontSize: 16.0,
                                         );
                                       } else {
-                                        final _image = await MultipartFile.fromFile(packageImage.path);
+                                        final _image =
+                                            await MultipartFile.fromFile(
+                                                packageImage.path);
 
                                         final formData = FormData.fromMap(
                                           {
@@ -306,7 +332,9 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                             fontSize: 16,
                                           ),
                                         )
-                                      : Center(child: CircularProgressIndicator(color: Colors.white)),
+                                      : Center(
+                                          child: CircularProgressIndicator(
+                                              color: Colors.white)),
                                   color: Color(0xff157347),
                                 ),
                               ),

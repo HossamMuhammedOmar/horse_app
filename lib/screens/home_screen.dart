@@ -137,43 +137,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // bottomNavigationBar: Container(
-                    //   height: 60,
-                    //   child: BottomAppBar(
-                    //     color: mPrimaryColor,
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.symmetric(
-                    //         horizontal: 20,
-                    //       ),
-                    //       child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //         crossAxisAlignment: CrossAxisAlignment.center,
-                    //         children: [
-                    //           GestureDetector(
-                    //             onTap: () {
-                    //               print('Contact Us');
-                    //             },
-                    //             child: Image.asset(
-                    //               'assets/images/mail_bulk.png',
-                    //               width: 30,
-                    //             ),
-                    //           ),
-                    //           GestureDetector(
-                    //             onTap: () {
-                    //               _cubit.getUserDataById();
-                    //               print('Account Info');
-                    //             },
-                    //             child: Image.asset(
-                    //               'assets/images/chalkboard.png',
-                    //               width: 30,
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-
                     body: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -496,7 +459,9 @@ class HomeScreen extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: mPrimaryColor,
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(12),
+                                    topRight: Radius.circular(12)),
                               ),
                               width: double.infinity,
                               height: MediaQuery.of(context).size.height / 13.5,
@@ -704,6 +669,7 @@ class HomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(7),
                       child: Image.network(
                         '${item.image}',
+                        filterQuality: FilterQuality.low,
                         width: width / 4.8,
                         height: height / 8,
                         fit: BoxFit.cover,
@@ -719,8 +685,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AutoSizeText(
-                          '${item.title} في الجزيرة العربية ',
-                          maxLines: 1,
+                          '${item.content}',
                           overflow: TextOverflow.ellipsis,
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
@@ -730,7 +695,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 5),
                         AutoSizeText(
-                          '${item.createdAt}',
+                          '${item.createdAt.toString().substring(0, 10)}',
                           overflow: TextOverflow.ellipsis,
                         ),
                         AutoSizeText(

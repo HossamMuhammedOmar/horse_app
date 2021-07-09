@@ -363,34 +363,17 @@ class ReservationScreen extends StatelessWidget {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
-                                      child: Row(
-                                        textDirection: TextDirection.rtl,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          AutoSizeText(
-                                            '${conditions.toString().trim()}',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontFamily: mPrimaryArabicFont,
-                                            ),
-                                            textDirection: TextDirection.rtl,
+                                      child: Container(
+                                        child: AutoSizeText(
+                                          '${conditions.toString().trim()}',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: mPrimaryArabicFont,
                                           ),
-                                          SizedBox(width: 10),
-                                          // Container(
-                                          //   width: 10,
-                                          //   height: 10,
-                                          //   decoration: BoxDecoration(
-                                          //     color: mPrimaryColor,
-                                          //     borderRadius:
-                                          //         BorderRadius.circular(20),
-                                          //   ),
-                                          // ),
-                                        ],
+                                          textDirection: TextDirection.rtl,
+                                        ),
                                       ),
                                     ),
-                                    scrollDirection: Axis.horizontal,
-                                    reverse: true,
                                   ),
                                   SizedBox(height: 30),
                                   Padding(
@@ -499,11 +482,15 @@ class ReservationScreen extends StatelessWidget {
                                               },
                                             ),
                                             SizedBox(width: 10),
-                                            AutoSizeText(
-                                              'حر ( يمكنك الحضور في اي وقت للإسطبل )',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: mPrimaryArabicFont,
+                                            Expanded(
+                                              child: AutoSizeText(
+                                                'حر ( يمكنك الحضور في اي وقت للإسطبل )',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontFamily:
+                                                      mPrimaryArabicFont,
+                                                ),
+                                                maxLines: 1,
                                               ),
                                             ),
                                           ],

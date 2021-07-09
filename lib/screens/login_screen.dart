@@ -8,6 +8,7 @@ import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/constants/keys.dart';
 import 'package:horse_app/helpers/shared_helper_Screen.dart';
+import 'package:horse_app/screens/forgot_password_screen.dart';
 import 'package:horse_app/screens/home_screen.dart';
 import 'package:horse_app/screens/welcome_screen.dart';
 import 'package:horse_app/widgets/reusable_widgets.dart';
@@ -187,13 +188,25 @@ class LoginScreen extends StatelessWidget {
                               SizedBox(
                                 height: 30,
                               ),
-                              AutoSizeText(
-                                'إستعادة كلمة المرور',
-                                maxLines: 1,
-                                style: TextStyle(
-                                  fontFamily: mPrimaryArabicFont,
-                                  fontSize: 16,
+                              TextButton(
+                                child: AutoSizeText(
+                                  'إستعادة كلمة المرور',
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontFamily: mPrimaryArabicFont,
+                                    fontSize: 16,
+                                  ),
                                 ),
+                                onPressed: () {
+                                  Transitioner(
+                                    context: context,
+                                    child: ForgotPasswordScreen(),
+                                    animation: AnimationType.fadeIn,
+                                    duration: Duration(milliseconds: 300),
+                                    replacement: true,
+                                    curveType: CurveType.decelerate,
+                                  );
+                                },
                               ),
                               Padding(
                                 padding:

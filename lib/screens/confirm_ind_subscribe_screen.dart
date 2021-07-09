@@ -12,6 +12,8 @@ import 'package:intl/intl.dart';
 import 'package:transitioner/transitioner.dart';
 import 'package:flutter/material.dart' as ui;
 
+import 'notification_screen.dart';
+
 class ConfirmIndSubscribeScreen extends StatelessWidget {
   final _dateteController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -46,6 +48,7 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        HomeCubit _cubit = HomeCubit.get(context);
         var indImage = HomeCubit.get(context).iImage;
         return Scaffold(
           backgroundColor: Colors.white,
@@ -68,30 +71,44 @@ class ConfirmIndSubscribeScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _cubit.getUserNotification();
+                        Transitioner(
+                          context: context,
+                          child: NotificationScreen(),
+                          animation: AnimationType.fadeIn, // Optional value
+                          duration:
+                              Duration(milliseconds: 300), // Optional value
+                          replacement: true, // Optional value
+                          curveType: CurveType.decelerate, // Optional value
+                        );
+                      },
                       icon: Icon(
                         Icons.notifications_none,
                         size: 30,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(2),
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          color: Color(0xff707070),
+                    if (_cubit.notificationModel != null)
+                      if (_cubit.notificationModel!.data!
+                              .where((element) => element.seen == '0')
+                              .length !=
+                          0)
+                        Positioned(
+                          right: 7,
+                          top: 7,
+                          child: Container(
+                            // padding: const EdgeInsets.all(2),
+                            height: 15,
+                            width: 15,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(30),
+                              // border: Border.all(
+                              //   color: Color(0xff707070),
+                              // ),
+                            ),
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '0',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),

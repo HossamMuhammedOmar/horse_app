@@ -195,3 +195,21 @@ class SendContactSuccess extends HomeStates {}
 
 // SEND CONTACT
 class SendContactError extends HomeStates {}
+
+// UPDATE PROFILE
+class UpdateProfileLoading extends HomeStates {}
+
+// UPDATE PROFILE
+class UpdateProfileSuccess extends HomeStates {}
+
+// UPDATE PROFILE
+class UpdateProfileError extends HomeStates {}
+
+// FORGOT PASSWORD
+class ForgotPasswordLoading extends HomeStates {}
+
+// FORGOT PASSWORD
+class ForgotPasswordSuccess extends HomeStates {}
+
+// FORGOT PASSWORD
+class ForgotPasswordError extends HomeStates {}

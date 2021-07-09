@@ -486,4 +486,53 @@ class HomeCubit extends Cubit<HomeStates> {
       },
     );
   }
+
+  // UPDATE PROFILE
+  void updateProfile({
+    name,
+    email,
+    phone,
+    password,
+  }) {
+    emit(UpdateProfileLoading());
+    DioHelper.postData(
+      url: '$UPDATEPROFILE/${SharedHelper.getCacheData(key: TOKEN)}',
+      data: {
+        'name': name,
+        'email': email,
+        'mobile': phone,
+        if (password.toString().isNotEmpty) 'password': password,
+      },
+    ).then(
+      (value) {
+        emit(UpdateProfileSuccess());
+        getUserDataById();
+        print(value.data);
+      },
+    ).catchError((e) {
+      print(e.toString());
+      emit(UpdateProfileError());
+    });
+  }
+
+  // FORGOT PASSWORD
+  void forgotPassword({required email}) {
+    emit(ForgotPasswordLoading());
+    DioHelper.postData(
+      url: '$FORGOTPASSWORD',
+      data: {
+        'email': email,
+      },
+    ).then(
+      (value) {
+        print(value);
+        emit(ForgotPasswordSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(ForgotPasswordError());
+      },
+    );
+  }
 }

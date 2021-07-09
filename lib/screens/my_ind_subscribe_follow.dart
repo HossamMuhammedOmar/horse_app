@@ -7,8 +7,10 @@ import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/confirm_ind_subscribe_screen.dart';
 import 'package:horse_app/screens/ind_reservations_list_screen.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
 
+import 'notification_screen.dart';
 import 'profile_screen.dart';
 
 class MyIndSubscribeFollow extends StatelessWidget {
@@ -18,141 +20,159 @@ class MyIndSubscribeFollow extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         HomeCubit _cubit = HomeCubit.get(context);
-        return Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            toolbarHeight: 110,
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: Container(
-              margin: const EdgeInsets.only(right: 15, top: 15),
-              child: Image.asset(
-                'assets/images/logo.png',
-                width: 140,
-              ),
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Container(
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.notifications_none,
-                        size: 30,
+        return state is! GetMySubscribIndLoading
+            ? Scaffold(
+                backgroundColor: Colors.white,
+                appBar: AppBar(
+                  toolbarHeight: 110,
+                  centerTitle: true,
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  title: Container(
+                    margin: const EdgeInsets.only(right: 15, top: 15),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      width: 140,
+                    ),
+                  ),
+                  leading: Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: Container(
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              _cubit.getUserNotification();
+                              Transitioner(
+                                context: context,
+                                child: NotificationScreen(),
+                                animation:
+                                    AnimationType.fadeIn, // Optional value
+                                duration: Duration(
+                                    milliseconds: 300), // Optional value
+                                replacement: true, // Optional value
+                                curveType:
+                                    CurveType.decelerate, // Optional value
+                              );
+                            },
+                            icon: Icon(
+                              Icons.notifications_none,
+                              size: 30,
+                            ),
+                          ),
+                          if (_cubit.notificationModel != null)
+                            if (_cubit.notificationModel!.data!
+                                    .where((element) => element.seen == '0')
+                                    .length !=
+                                0)
+                              Positioned(
+                                right: 7,
+                                top: 7,
+                                child: Container(
+                                  // padding: const EdgeInsets.all(2),
+                                  height: 15,
+                                  width: 15,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(30),
+                                    // border: Border.all(
+                                    //   color: Color(0xff707070),
+                                    // ),
+                                  ),
+                                ),
+                              ),
+                        ],
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(2),
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          color: Color(0xff707070),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '0',
-                          style: TextStyle(color: Colors.red),
+                  ),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 30.0,
+                        child: ClipRRect(
+                          child: Image.asset(
+                            'assets/images/hore_image.jpeg',
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(60.0),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
-                  child: ClipRRect(
-                    child: Image.asset(
-                      'assets/images/hore_image.jpeg',
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(60.0),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          body: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 10,
-                ),
-                child: LayoutBuilder(
-                  builder: (context, constraint) {
-                    var topHeight = constraint.maxHeight;
-                    var topWidht = constraint.maxWidth;
-                    return Column(
-                      textDirection: TextDirection.rtl,
-                      children: [
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: IconButton(
-                                  onPressed: () {
-                                    Transitioner(
-                                      context: context,
-                                      child: ProfileScreen(),
-                                      animation: AnimationType
-                                          .fadeIn, // Optional value
-                                      duration: Duration(
-                                          milliseconds: 300), // Optional value
-                                      replacement: true, // Optional value
-                                      curveType: CurveType
-                                          .decelerate, // Optional value
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.double_arrow,
-                                    color: mPrimaryColor,
-                                  )),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Center(
-                                child: AutoSizeText(
-                                  'اشتراكات فردية',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontFamily: mPrimaryArabicFont,
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerDocked,
+                body: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                      ),
+                      child: LayoutBuilder(
+                        builder: (context, constraint) {
+                          var topHeight = constraint.maxHeight;
+                          var topWidht = constraint.maxWidth;
+                          return Column(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          Transitioner(
+                                            context: context,
+                                            child: ProfileScreen(),
+                                            animation: AnimationType
+                                                .fadeIn, // Optional value
+                                            duration: Duration(
+                                                milliseconds:
+                                                    300), // Optional value
+                                            replacement: true, // Optional value
+                                            curveType: CurveType
+                                                .decelerate, // Optional value
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.double_arrow,
+                                          color: mPrimaryColor,
+                                        )),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: Center(
+                                      child: AutoSizeText(
+                                        'اشتراكات فردية',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.black,
+                                          fontFamily: mPrimaryArabicFont,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                alignment: Alignment.centerRight,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 0.5,
+                                  color: Color(0xff707070),
                                 ),
                               ),
-                            ),
-                          ],
-                          alignment: Alignment.centerRight,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Container(
-                            width: double.infinity,
-                            height: 0.5,
-                            color: Color(0xff707070),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        state is! GetMySubscribIndLoading
-                            ? Expanded(
+                              SizedBox(height: 20),
+                              Expanded(
                                 child: Column(
                                   children: [
                                     Padding(
@@ -229,19 +249,20 @@ class MyIndSubscribeFollow extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   textDirection: TextDirection.rtl,
                                 ),
-                              )
-                            : Center(
-                                child: CircularProgressIndicator(
-                                    color: mPrimaryColor),
                               ),
-                      ],
-                    );
-                  },
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        );
+              )
+            : Scaffold(
+                body: LoadingRotating.square(
+                  backgroundColor: mPrimaryColor,
+                ),
+              );
       },
     );
   }
