@@ -30,8 +30,10 @@ class Data {
     this.timeTo,
     this.statueAr,
     this.transaction,
+    this.classCount,
   });
 
+  String? classCount;
   int? id;
   Trainer? trainer;
   Student? student;
@@ -56,6 +58,7 @@ class Data {
         timeTo: json["time_to"],
         statueAr: json["statue_ar"],
         transaction: Transaction.fromJson(json["transaction"]),
+        classCount: json['class_count'],
       );
 }
 

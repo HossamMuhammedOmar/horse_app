@@ -285,10 +285,12 @@ class TrainerSubscribeFollow extends StatelessWidget {
             // ),
           ),
           width: 116,
+          height: 50,
           padding: const EdgeInsets.all(14),
         ),
         Container(
           width: 236,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -303,6 +305,7 @@ class TrainerSubscribeFollow extends StatelessWidget {
         ),
         Container(
           width: 137,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -315,6 +318,7 @@ class TrainerSubscribeFollow extends StatelessWidget {
         ),
         Container(
           width: 141,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -327,6 +331,7 @@ class TrainerSubscribeFollow extends StatelessWidget {
         ),
         Container(
           width: 118,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -339,6 +344,7 @@ class TrainerSubscribeFollow extends StatelessWidget {
         ),
         Container(
           width: 139,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -351,11 +357,12 @@ class TrainerSubscribeFollow extends StatelessWidget {
         ),
         Container(
           width: 147,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
           child: Text(
-            '4',
+            '${item.classCount}',
             style: TextStyle(),
             textDirection: TextDirection.rtl,
           ),
@@ -363,33 +370,37 @@ class TrainerSubscribeFollow extends StatelessWidget {
         ),
         Container(
           width: 125,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
-          child: MaterialButton(
-            onPressed: () {
-              Transitioner(
-                context: context,
-                child: ConfirmTrainerSubscribeScreen(
-                  id: item.id,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: MaterialButton(
+              onPressed: () {
+                Transitioner(
+                  context: context,
+                  child: ConfirmTrainerSubscribeScreen(
+                    id: item.id,
+                  ),
+                  animation: AnimationType.fadeIn, // Optional value
+                  duration: Duration(milliseconds: 300), // Optional value
+                  replacement: true, // Optional value
+                  curveType: CurveType.decelerate, // Optional value
+                );
+              },
+              child: Text(
+                'بيانات الدفع',
+                style: TextStyle(
+                  fontFamily: mPrimaryArabicFont,
+                  color: Colors.white,
                 ),
-                animation: AnimationType.fadeIn, // Optional value
-                duration: Duration(milliseconds: 300), // Optional value
-                replacement: true, // Optional value
-                curveType: CurveType.decelerate, // Optional value
-              );
-            },
-            child: Text(
-              'بيانات الدفع',
-              style: TextStyle(
-                fontFamily: mPrimaryArabicFont,
-                color: Colors.white,
+                textDirection: TextDirection.rtl,
               ),
-              textDirection: TextDirection.rtl,
+              color: Color(0xff0E6EFD),
+              height: 20,
+              padding: const EdgeInsets.all(0),
             ),
-            color: Color(0xff0E6EFD),
-            height: 20,
-            padding: const EdgeInsets.all(0),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20),
         ),

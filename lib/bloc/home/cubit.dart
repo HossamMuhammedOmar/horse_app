@@ -287,6 +287,8 @@ class HomeCubit extends Cubit<HomeStates> {
         .then(
       (value) {
         myIndSubscribeModel = MyIndSubscribeModel.fromJson(value.data);
+        myIndSubscribeModel!.data!
+            .sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
         emit(GetMySubscribIndSuccess());
       },
     ).catchError(
@@ -308,6 +310,8 @@ class HomeCubit extends Cubit<HomeStates> {
       (value) {
         notificationModel = NotificationModel.fromJson(value.data);
         notificationModel!.data!.where((element) => element.seen == '1');
+        notificationModel!.data!
+            .sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
 
         emit(GetUserNotificationSuccess());
       },
@@ -349,6 +353,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   // GET MY PACKAGES
   SubPackageModel? subPackageModel;
+  var subItem;
   void getMyPackages() {
     print('TOKEN' + SharedHelper.getCacheData(key: TOKEN));
     emit(GetMyPackageLoading());
@@ -357,6 +362,8 @@ class HomeCubit extends Cubit<HomeStates> {
         .then(
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
+        subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+        // subPackageModel!.data!.reversed;
         // print(subPackageModel!.data!.first);
         emit(GetMyPackageSuccess());
       },

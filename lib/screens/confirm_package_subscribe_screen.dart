@@ -12,7 +12,6 @@ import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:transitioner/transitioner.dart';
 import 'package:flutter/material.dart' as ui;

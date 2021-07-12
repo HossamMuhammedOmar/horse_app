@@ -1,12 +1,14 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/confirm_package_subscribe_screen.dart';
 import 'package:horse_app/screens/profile_screen.dart';
+import 'package:horse_app/screens/subscribe_detail.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
 import 'notification_screen.dart';
@@ -346,10 +348,12 @@ class SubscibeScreen extends StatelessWidget {
             style: TextStyle(),
           ),
           width: 140,
+          height: 50,
           padding: const EdgeInsets.all(15),
         ),
         Container(
           width: 131,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -362,6 +366,7 @@ class SubscibeScreen extends StatelessWidget {
         ),
         Container(
           width: 112,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -375,6 +380,7 @@ class SubscibeScreen extends StatelessWidget {
         if (item.transaction.date == null)
           Container(
             width: 112,
+            height: 50,
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xffDEE2E6)),
             ),
@@ -388,6 +394,7 @@ class SubscibeScreen extends StatelessWidget {
         if (item.transaction.date != null)
           Container(
             width: 112,
+            height: 50,
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xffDEE2E6)),
             ),
@@ -400,6 +407,7 @@ class SubscibeScreen extends StatelessWidget {
           ),
         Container(
           width: 136,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -418,6 +426,7 @@ class SubscibeScreen extends StatelessWidget {
         ),
         Container(
           width: 129,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
@@ -430,11 +439,12 @@ class SubscibeScreen extends StatelessWidget {
         ),
         Container(
           width: 205,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
           child: Text(
-            '${item.statue}',
+            '${item.statueAr}',
             style: TextStyle(),
             textDirection: TextDirection.rtl,
           ),
@@ -442,52 +452,107 @@ class SubscibeScreen extends StatelessWidget {
         ),
         Container(
           width: 174,
+          height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
-          child: MaterialButton(
-            onPressed: () {
-              print(item.id);
-              Transitioner(
-                context: context,
-                child: ConfirmPackageSubscribeScreen(
-                  id: item.id,
+          child: item.transaction.image == null
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MaterialButton(
+                    onPressed: () {
+                      // print(item.id);
+                      Transitioner(
+                        context: context,
+                        child: ConfirmPackageSubscribeScreen(
+                          id: item.id,
+                        ),
+                        animation: AnimationType.fadeIn, // Optional value
+                        duration: Duration(milliseconds: 300), // Optional value
+                        replacement: true, // Optional value
+                        curveType: CurveType.decelerate, // Optional value
+                      );
+                    },
+                    child: Text(
+                      'دفع المبلغ',
+                      style: TextStyle(
+                        fontFamily: mPrimaryArabicFont,
+                        color: Colors.white,
+                      ),
+                      textDirection: TextDirection.rtl,
+                    ),
+                    color: Color(0xff0E6EFD),
+                    height: 20,
+                    padding: const EdgeInsets.all(0),
+                  ),
+                )
+              : FullScreenWidget(
+                  child: Image.network(
+                    '${item.transaction.image}',
+                    filterQuality: FilterQuality.low,
+                    width: 48,
+                    height: 48,
+                  ),
                 ),
-                animation: AnimationType.fadeIn, // Optional value
-                duration: Duration(milliseconds: 300), // Optional value
-                replacement: true, // Optional value
-                curveType: CurveType.decelerate, // Optional value
-              );
-            },
-            child: Text(
-              'دفع المبلغ',
-              style: TextStyle(
-                fontFamily: mPrimaryArabicFont,
-                color: Colors.white,
-              ),
-              textDirection: TextDirection.rtl,
-            ),
-            color: Color(0xff0E6EFD),
-            height: 20,
-            padding: const EdgeInsets.all(0),
-          ),
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ),
         ),
-        Container(
-          width: 321,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
+        if (item.statue == 'refused')
+          Container(
+            width: 321,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xffDEE2E6)),
+            ),
+            child: Text(
+              'جاري التحقق من الدفع وموافقة الادارة',
+              maxLines: 1,
+              style: TextStyle(),
+              textDirection: TextDirection.rtl,
+            ),
+            padding: const EdgeInsets.all(14),
           ),
-          child: Text(
-            'جاري التحقق من الدفع وموافقة الادارة',
-            maxLines: 1,
-            style: TextStyle(),
-            textDirection: TextDirection.rtl,
-          ),
-          padding: const EdgeInsets.all(14),
-        ),
+        if (item.statue == 'accepted')
+          Container(
+            padding: const EdgeInsets.only(left: 130, right: 10),
+            width: 321,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xffDEE2E6)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MaterialButton(
+                onPressed: () {
+                  // print(item.id);
+                  Transitioner(
+                    context: context,
+                    child: SubscribeDetail(
+                      name: item.package.title,
+                      classCount: item.package.classCount,
+                    ),
+                    animation: AnimationType.fadeIn, // Optional value
+                    duration: Duration(milliseconds: 300), // Optional value
+                    replacement: true, // Optional value
+                    curveType: CurveType.decelerate, // Optional value
+                  );
+                },
+                child: Text(
+                  'عرض',
+                  style: TextStyle(
+                    fontFamily: mPrimaryArabicFont,
+                    color: Colors.white,
+                  ),
+                  textDirection: TextDirection.rtl,
+                ),
+                // color: Color(0xff0E6EFD),
+                color: Colors.green,
+                height: 20,
+                padding: const EdgeInsets.all(0),
+              ),
+            ),
+          )
       ],
       textDirection: TextDirection.rtl,
       mainAxisAlignment: MainAxisAlignment.start,
