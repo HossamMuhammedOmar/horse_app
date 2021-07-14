@@ -531,6 +531,9 @@ class SubscibeScreen extends StatelessWidget {
                     child: SubscribeDetail(
                       name: item.package.title,
                       classCount: item.package.classCount,
+                      classR: item.subscription.info.restClassCount,
+                      startDate: item.subscription.info.startIn,
+                      endDate: item.subscription.info.endIn,
                     ),
                     animation: AnimationType.fadeIn, // Optional value
                     duration: Duration(milliseconds: 300), // Optional value

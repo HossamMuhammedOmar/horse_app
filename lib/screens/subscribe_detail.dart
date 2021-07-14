@@ -21,9 +21,9 @@ class SubscribeDetail extends StatelessWidget {
   const SubscribeDetail({
     required this.name,
     required this.classCount,
-    this.classR,
-    this.startDate,
-    this.endDate,
+    required this.classR,
+    required this.startDate,
+    required this.endDate,
   });
 
   @override
@@ -250,7 +250,7 @@ class SubscribeDetail extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    'test',
+                                                    '$classR',
                                                     style: TextStyle(),
                                                     textDirection:
                                                         TextDirection.rtl,
@@ -268,7 +268,8 @@ class SubscribeDetail extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    'test',
+                                                    '${startDate.toString().substring(0, 10)}',
+                                                    maxLines: 1,
                                                     style: TextStyle(),
                                                     textDirection:
                                                         TextDirection.rtl,
@@ -286,7 +287,7 @@ class SubscribeDetail extends StatelessWidget {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    'test',
+                                                    '${endDate.toString().substring(0, 10)}',
                                                     style: TextStyle(),
                                                     textDirection:
                                                         TextDirection.rtl,
@@ -413,139 +414,6 @@ class SubscribeDetail extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildItem(item, context) {
-    print(item.id);
-    return Row(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Color(0xffDEE2E6),
-            ),
-          ),
-          child: Text(
-            'test',
-            maxLines: 1,
-            textDirection: TextDirection.rtl,
-            // style: TextStyle(
-            //   fontFamily: mPrimaryArabicFont,
-            // ),
-          ),
-          width: 116,
-          padding: const EdgeInsets.all(14),
-        ),
-        Container(
-          width: 236,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
-          ),
-          child: Text(
-            'test',
-            style: TextStyle(
-              fontFamily: mPrimaryArabicFont,
-            ),
-            textDirection: TextDirection.rtl,
-          ),
-          padding: const EdgeInsets.all(10),
-        ),
-        Container(
-          width: 137,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
-          ),
-          child: Text(
-            'test',
-            style: TextStyle(),
-            textDirection: TextDirection.rtl,
-          ),
-          padding: const EdgeInsets.all(15),
-        ),
-        Container(
-          width: 141,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
-          ),
-          child: Text(
-            'test',
-            style: TextStyle(),
-            textDirection: TextDirection.rtl,
-          ),
-          padding: const EdgeInsets.all(15),
-        ),
-        Container(
-          width: 118,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
-          ),
-          child: Text(
-            'test',
-            style: TextStyle(),
-            textDirection: TextDirection.rtl,
-          ),
-          padding: const EdgeInsets.all(15),
-        ),
-        Container(
-          width: 139,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
-          ),
-          child: Text(
-            'test',
-            style: TextStyle(),
-            textDirection: TextDirection.rtl,
-          ),
-          padding: const EdgeInsets.all(15),
-        ),
-        Container(
-          width: 147,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
-          ),
-          child: Text(
-            'test',
-            style: TextStyle(),
-            textDirection: TextDirection.rtl,
-          ),
-          padding: const EdgeInsets.all(15),
-        ),
-        Container(
-          width: 125,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
-          ),
-          child: MaterialButton(
-            onPressed: () {
-              // Transitioner(
-              //   context: context,
-              //   child: ConfirmTrainerSubscribeScreen(
-              //     id: item.id,
-              //   ),
-              //   animation: AnimationType.fadeIn, // Optional value
-              //   duration: Duration(milliseconds: 300), // Optional value
-              //   replacement: true, // Optional value
-              //   curveType: CurveType.decelerate, // Optional value
-              // );
-            },
-            child: Text(
-              'بيانات الدفع',
-              style: TextStyle(
-                fontFamily: mPrimaryArabicFont,
-                color: Colors.white,
-              ),
-              textDirection: TextDirection.rtl,
-            ),
-            color: Color(0xff0E6EFD),
-            height: 20,
-            padding: const EdgeInsets.all(0),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-        ),
-      ],
-      textDirection: TextDirection.rtl,
-      mainAxisAlignment: MainAxisAlignment.start,
     );
   }
 }
