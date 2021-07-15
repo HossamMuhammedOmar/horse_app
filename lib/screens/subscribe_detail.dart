@@ -6,6 +6,7 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
+import 'package:horse_app/screens/attend_detail.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
 import 'package:transitioner/transitioner.dart';
 
@@ -17,13 +18,17 @@ class SubscribeDetail extends StatelessWidget {
   final classR;
   final startDate;
   final endDate;
+  final List? attends;
+  final trainerName;
 
   const SubscribeDetail({
-    required this.name,
-    required this.classCount,
-    required this.classR,
-    required this.startDate,
-    required this.endDate,
+    this.name,
+    this.classCount,
+    this.classR,
+    this.startDate,
+    this.endDate,
+    this.attends,
+    this.trainerName,
   });
 
   @override
@@ -125,8 +130,6 @@ class SubscribeDetail extends StatelessWidget {
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraint) {
-                    var topHeight = constraint.maxHeight;
-                    var topWidht = constraint.maxWidth;
                     return Column(
                       textDirection: TextDirection.rtl,
                       children: [
@@ -346,16 +349,29 @@ class SubscribeDetail extends StatelessWidget {
                                                 child: Center(
                                                   child: MaterialButton(
                                                     onPressed: () {
-                                                      // Transitioner(
-                                                      //   context: context,
-                                                      //   child: ConfirmTrainerSubscribeScreen(
-                                                      //     id: item.id,
-                                                      //   ),
-                                                      //   animation: AnimationType.fadeIn, // Optional value
-                                                      //   duration: Duration(milliseconds: 300), // Optional value
-                                                      //   replacement: true, // Optional value
-                                                      //   curveType: CurveType.decelerate, // Optional value
-                                                      // );
+                                                      Transitioner(
+                                                        context: context,
+                                                        child: AttendDetail(
+                                                          name: name,
+                                                          classCount:
+                                                              classCount,
+                                                          classR: classR,
+                                                          startDate: startDate,
+                                                          endDate: endDate,
+                                                          attends: attends,
+                                                          trainerName:
+                                                              trainerName,
+                                                        ),
+                                                        animation: AnimationType
+                                                            .fadeIn, // Optional value
+                                                        duration: Duration(
+                                                            milliseconds:
+                                                                300), // Optional value
+                                                        replacement:
+                                                            true, // Optional value
+                                                        curveType: CurveType
+                                                            .decelerate, // Optional value
+                                                      );
                                                     },
                                                     child: Text(
                                                       'عرض',

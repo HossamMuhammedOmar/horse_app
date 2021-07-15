@@ -526,6 +526,7 @@ class SubscibeScreen extends StatelessWidget {
               child: MaterialButton(
                 onPressed: () {
                   // print(item.id);
+                  print(item.subscription.attends);
                   Transitioner(
                     context: context,
                     child: SubscribeDetail(
@@ -534,6 +535,8 @@ class SubscibeScreen extends StatelessWidget {
                       classR: item.subscription.info.restClassCount,
                       startDate: item.subscription.info.startIn,
                       endDate: item.subscription.info.endIn,
+                      attends: item.subscription.attends,
+                      trainerName: item.trainer.name,
                     ),
                     animation: AnimationType.fadeIn, // Optional value
                     duration: Duration(milliseconds: 300), // Optional value
