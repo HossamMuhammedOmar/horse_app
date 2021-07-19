@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'package:horse_app/helpers/end_points.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -147,8 +143,6 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraint) {
-                    var topHeight = constraint.maxHeight;
-                    var topWidht = constraint.maxWidth;
                     return Column(
                       textDirection: ui.TextDirection.rtl,
                       crossAxisAlignment: CrossAxisAlignment.start,

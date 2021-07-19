@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/models/attend_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -365,11 +367,32 @@ class HomeCubit extends Cubit<HomeStates> {
     );
   }
 
-  // GET MY PACKAGES
+  // BG BUTTON COLORS
+  Color? all;
+  Color? aceepted;
+  Color? refused;
+  Color? pending;
+  // TEXT BUTTON COLOR
+  Color? allT;
+  Color? aceeptedT;
+  Color? refusedT;
+  Color? pendingT;
+
+  String currentState = 'A';
+
+  // GET ALL MY PACKAGES
   SubPackageModel? subPackageModel;
-  var subItem;
   void getMyPackages() {
-    print('TOKEN' + SharedHelper.getCacheData(key: TOKEN));
+    all = mPrimaryColor;
+    aceepted = Color(0xffF6F6F6);
+    refused = Color(0xffF6F6F6);
+    pending = Color(0xffF6F6F6);
+
+    allT = Colors.white;
+    aceeptedT = Colors.black;
+    refusedT = Colors.black;
+    pendingT = Colors.black;
+
     emit(GetMyPackageLoading());
     DioHelper.getData(
             url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
@@ -377,8 +400,96 @@ class HomeCubit extends Cubit<HomeStates> {
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
         subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
-        // subPackageModel!.data!.reversed;
-        // print(subPackageModel!.data!.first);
+        emit(GetMyPackageSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetMyPackageError());
+      },
+    );
+  }
+
+  // GET MY PACKAGE ONLY ACCEPTED
+  void getMyAcceptedPackages() {
+    emit(GetMyPackageLoading());
+    currentState = 'Y';
+    all = Color(0xffF6F6F6);
+    aceepted = mPrimaryColor;
+    refused = Color(0xffF6F6F6);
+    pending = Color(0xffF6F6F6);
+
+    allT = Colors.black;
+    aceeptedT = Colors.white;
+    refusedT = Colors.black;
+    pendingT = Colors.black;
+    DioHelper.getData(
+            url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        subPackageModel = SubPackageModel.fromJson(value.data);
+        subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+        emit(GetMyPackageSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetMyPackageError());
+      },
+    );
+  }
+
+  // GET MY PACKAGE ONLY REFUSED
+  void getMyRefusedPackages() {
+    all = Color(0xffF6F6F6);
+    aceepted = Color(0xffF6F6F6);
+    refused = mPrimaryColor;
+    pending = Color(0xffF6F6F6);
+
+    allT = Colors.black;
+    aceeptedT = Colors.black;
+    refusedT = Colors.white;
+    pendingT = Colors.black;
+
+    currentState = 'R';
+    emit(GetMyPackageLoading());
+    DioHelper.getData(
+            url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        subPackageModel = SubPackageModel.fromJson(value.data);
+        subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+
+        emit(GetMyPackageSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetMyPackageError());
+      },
+    );
+  }
+
+  // GET MY PACKAGE ONLY PENDING
+  void getMyPendingPackages() {
+    all = Color(0xffF6F6F6);
+    aceepted = Color(0xffF6F6F6);
+    refused = Color(0xffF6F6F6);
+    pending = mPrimaryColor;
+
+    currentState = 'P';
+    allT = Colors.black;
+    aceeptedT = Colors.black;
+    refusedT = Colors.black;
+    pendingT = Colors.white;
+    emit(GetMyPackageLoading());
+    DioHelper.getData(
+            url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        subPackageModel = SubPackageModel.fromJson(value.data);
+        subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+
         emit(GetMyPackageSuccess());
       },
     ).catchError(

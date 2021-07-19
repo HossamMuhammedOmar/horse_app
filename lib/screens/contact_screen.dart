@@ -146,8 +146,6 @@ class ContactScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: LayoutBuilder(
                   builder: (context, constraint) {
-                    var topHeight = constraint.maxHeight;
-                    var topWidht = constraint.maxWidth;
                     return SingleChildScrollView(
                       child: Column(
                         textDirection: TextDirection.rtl,

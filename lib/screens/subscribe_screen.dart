@@ -17,9 +17,7 @@ class SubscibeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {
-        print(state);
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         HomeCubit _cubit = HomeCubit.get(context);
         return state is! GetMyPackageLoading
@@ -119,8 +117,6 @@ class SubscibeScreen extends StatelessWidget {
                       ),
                       child: LayoutBuilder(
                         builder: (context, constraint) {
-                          var topHeight = constraint.maxHeight;
-                          var topWidht = constraint.maxWidth;
                           return Column(
                             textDirection: TextDirection.rtl,
                             children: [
@@ -188,7 +184,7 @@ class SubscibeScreen extends StatelessWidget {
                                         width: 65,
                                         height: 35,
                                         decoration: BoxDecoration(
-                                          color: mPrimaryColor,
+                                          color: _cubit.all,
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
@@ -198,12 +194,14 @@ class SubscibeScreen extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontFamily: mPrimaryArabicFont,
-                                              color: Colors.white,
+                                              color: _cubit.allT,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        _cubit.getMyPackages();
+                                      },
                                     ),
                                     SizedBox(width: 8),
                                     GestureDetector(
@@ -211,7 +209,7 @@ class SubscibeScreen extends StatelessWidget {
                                         width: 100,
                                         height: 35,
                                         decoration: BoxDecoration(
-                                          color: Color(0xffF6F6F6),
+                                          color: _cubit.pending,
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
@@ -221,13 +219,15 @@ class SubscibeScreen extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: mPrimaryArabicFont,
-                                              color: Colors.black,
+                                              color: _cubit.pendingT,
                                             ),
                                             maxLines: 1,
                                           ),
                                         ),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        _cubit.getMyPendingPackages();
+                                      },
                                     ),
                                     SizedBox(width: 8),
                                     GestureDetector(
@@ -235,7 +235,7 @@ class SubscibeScreen extends StatelessWidget {
                                         width: 65,
                                         height: 35,
                                         decoration: BoxDecoration(
-                                          color: Color(0xffF6F6F6),
+                                          color: _cubit.aceepted,
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
@@ -245,12 +245,14 @@ class SubscibeScreen extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: mPrimaryArabicFont,
-                                              color: Colors.black,
+                                              color: _cubit.aceeptedT,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        _cubit.getMyAcceptedPackages();
+                                      },
                                     ),
                                     SizedBox(width: 8),
                                     GestureDetector(
@@ -258,7 +260,7 @@ class SubscibeScreen extends StatelessWidget {
                                         width: 75,
                                         height: 35,
                                         decoration: BoxDecoration(
-                                          color: Color(0xffF6F6F6),
+                                          color: _cubit.refused,
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
@@ -268,12 +270,14 @@ class SubscibeScreen extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: mPrimaryArabicFont,
-                                              color: Colors.black,
+                                              color: _cubit.refusedT,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      onTap: () {},
+                                      onTap: () {
+                                        _cubit.getMyRefusedPackages();
+                                      },
                                     ),
                                   ],
                                 ),
@@ -299,12 +303,70 @@ class SubscibeScreen extends StatelessWidget {
                                             child: ListView.builder(
                                               itemBuilder: (context, index) =>
                                                   _buildItem(
-                                                _cubit.subPackageModel!
-                                                    .data![index],
+                                                _cubit.currentState == 'A'
+                                                    ? _cubit.subPackageModel!
+                                                        .data![index]
+                                                    : _cubit.currentState == 'Y'
+                                                        ? _cubit
+                                                            .subPackageModel!
+                                                            .data!
+                                                            .where((element) =>
+                                                                element
+                                                                    .statue ==
+                                                                'accepted')
+                                                            .toList()[index]
+                                                        : _cubit.currentState ==
+                                                                'R'
+                                                            ? _cubit
+                                                                .subPackageModel!
+                                                                .data!
+                                                                .where((element) =>
+                                                                    element
+                                                                        .statue ==
+                                                                    'refused')
+                                                                .toList()[index]
+                                                            : _cubit
+                                                                .subPackageModel!
+                                                                .data!
+                                                                .where((element) =>
+                                                                    element
+                                                                        .statue ==
+                                                                    'pending')
+                                                                .toList()[index],
                                                 context,
                                               ),
-                                              itemCount: _cubit.subPackageModel!
-                                                  .data!.length,
+                                              itemCount: _cubit.currentState ==
+                                                      'A'
+                                                  ? _cubit.subPackageModel!
+                                                      .data!.length
+                                                  : _cubit.currentState == 'Y'
+                                                      ? _cubit.subPackageModel!
+                                                          .data!
+                                                          .where((element) =>
+                                                              element.statue ==
+                                                              'accepted')
+                                                          .toList()
+                                                          .length
+                                                      : _cubit.currentState ==
+                                                              'R'
+                                                          ? _cubit
+                                                              .subPackageModel!
+                                                              .data!
+                                                              .where((element) =>
+                                                                  element
+                                                                      .statue ==
+                                                                  'refused')
+                                                              .toList()
+                                                              .length
+                                                          : _cubit
+                                                              .subPackageModel!
+                                                              .data!
+                                                              .where((element) =>
+                                                                  element
+                                                                      .statue ==
+                                                                  'pending')
+                                                              .toList()
+                                                              .length,
                                             ),
                                           ),
                                         ),

@@ -101,8 +101,6 @@ class NotificationScreen extends StatelessWidget {
                       ),
                       child: LayoutBuilder(
                         builder: (context, constraint) {
-                          var topHeight = constraint.maxHeight;
-                          var topWidht = constraint.maxWidth;
                           return Column(
                             textDirection: TextDirection.rtl,
                             crossAxisAlignment: CrossAxisAlignment.start,

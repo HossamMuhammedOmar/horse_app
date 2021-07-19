@@ -6,7 +6,6 @@ import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:transitioner/transitioner.dart';
-import 'package:flutter/material.dart' as ui;
 import 'contact_screen.dart';
 import 'home_screen.dart';
 import 'notification_screen.dart';
@@ -151,8 +150,6 @@ class PostsDetailScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: LayoutBuilder(
                           builder: (context, constraint) {
-                            var topHeight = constraint.maxHeight;
-                            var topWidht = constraint.maxWidth;
                             return Column(
                               textDirection: TextDirection.rtl,
                               mainAxisAlignment: MainAxisAlignment.start,

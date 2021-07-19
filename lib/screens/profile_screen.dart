@@ -157,8 +157,6 @@ class ProfileScreen extends StatelessWidget {
                                       const EdgeInsets.symmetric(vertical: 10),
                                   child: LayoutBuilder(
                                     builder: (context, constraint) {
-                                      var topHeight = constraint.maxHeight;
-                                      var topWidht = constraint.maxWidth;
                                       return Column(
                                         textDirection: TextDirection.rtl,
                                         mainAxisAlignment:
@@ -619,7 +617,6 @@ class ProfileScreen extends StatelessWidget {
                   backgroundColor: mPrimaryColor,
                 ),
               );
-        ;
       },
     );
   }

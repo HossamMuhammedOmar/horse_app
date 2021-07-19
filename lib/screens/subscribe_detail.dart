@@ -1,5 +1,4 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horse_app/bloc/home/cubit.dart';
