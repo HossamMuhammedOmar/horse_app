@@ -1,7 +1,6 @@
 import 'dart:io';
-import 'package:path/path.dart';
+import 'package:horse_app/models/attend_model.dart';
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/keys.dart';
@@ -38,8 +37,18 @@ class HomeCubit extends Cubit<HomeStates> {
     '9',
     '10',
   ];
+  List subTimeList = [
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+  ];
 
   String selectedTime = '4';
+  String subSelectedTime = '4';
 
   String selectedService = 'اشتراكات تدريب الخيل ارضي اقل 18 سنه';
 
@@ -62,6 +71,11 @@ class HomeCubit extends Cubit<HomeStates> {
   void selecteTime(currentValue) {
     selectedTime = currentValue;
     emit(HomeChangeSelectedTime());
+  }
+
+  void subSelecteTime(currentValue) {
+    subSelectedTime = currentValue;
+    emit(HomeChangeSubSelectedTime());
   }
 
   void selecteTrainner(currentValue) {
@@ -539,6 +553,59 @@ class HomeCubit extends Cubit<HomeStates> {
       (e) {
         print(e.toString());
         emit(ForgotPasswordError());
+      },
+    );
+  }
+
+  // SEND NEW ATTEND
+  AttendModel? attendModel;
+  void sendNewAttend({
+    required date,
+    required time,
+    required subId,
+    required trainerId,
+  }) {
+    emit(SendNewAttendLoading());
+    DioHelper.postData(
+      url: ATTENDS,
+      data: {
+        'date': date,
+        'time': time,
+        'users_package_id': subId,
+        'trainer_id': trainerId,
+      },
+    ).then(
+      (value) {
+        attendModel = AttendModel.fromJson(value.data);
+        emit(SendNewAttendSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(SendNewAttendError());
+      },
+    );
+  }
+
+  // CANCEL ATTEND
+  void cancelAttend({
+    required id,
+    required reason,
+  }) {
+    emit(CancelAttendLoading());
+    DioHelper.postData(
+      url: 'attend/$id/cancel',
+      data: {
+        'cancel_reason': reason,
+      },
+    ).then(
+      (value) {
+        emit(CancelAttendSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(CancelAttendError());
       },
     );
   }

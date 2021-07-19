@@ -34,4 +34,5 @@ const RESRVATIONREQUESTS = 'orders';
 const RESRVATIONREQUESTSIND = 'reservationRequests';
 
 const UPDATEPROFILE = 'user/update';
+
 const FORGOTPASSWORD = 'forgotPassword';

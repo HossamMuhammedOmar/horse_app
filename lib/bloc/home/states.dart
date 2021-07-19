@@ -14,6 +14,8 @@ class HomeChangeSelectedTrainner extends HomeStates {}
 
 class HomeChangeSelectedTime extends HomeStates {}
 
+class HomeChangeSubSelectedTime extends HomeStates {}
+
 class HomeChangeRadioOption extends HomeStates {}
 
 // GET USER DATA BY ID
@@ -213,3 +215,21 @@ class ForgotPasswordSuccess extends HomeStates {}
 
 // FORGOT PASSWORD
 class ForgotPasswordError extends HomeStates {}
+
+// SEND NEW ATTEND
+class SendNewAttendLoading extends HomeStates {}
+
+// SEND NEW ATTEND
+class SendNewAttendSuccess extends HomeStates {}
+
+// SEND NEW ATTEND
+class SendNewAttendError extends HomeStates {}
+
+// CANCEL ATTEND
+class CancelAttendLoading extends HomeStates {}
+
+// CANCEL ATTEND
+class CancelAttendSuccess extends HomeStates {}
+
+// CANCEL ATTEND
+class CancelAttendError extends HomeStates {}

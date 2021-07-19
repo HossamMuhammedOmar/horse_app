@@ -537,6 +537,8 @@ class SubscibeScreen extends StatelessWidget {
                       endDate: item.subscription.info.endIn,
                       attends: item.subscription.attends,
                       trainerName: item.trainer.name,
+                      trainerId: item.trainer.id,
+                      subId: item.subscription.info.id,
                     ),
                     animation: AnimationType.fadeIn, // Optional value
                     duration: Duration(milliseconds: 300), // Optional value

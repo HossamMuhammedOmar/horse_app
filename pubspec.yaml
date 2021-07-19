@@ -47,6 +47,7 @@ dependencies:
   http_parser: ^4.0.0
   http: ^0.13.3
   full_screen_image_null_safe: ^2.0.0
+  awesome_dialog: ^2.1.0
 
 dev_dependencies:
   flutter_test:

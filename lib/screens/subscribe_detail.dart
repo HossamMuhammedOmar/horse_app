@@ -20,15 +20,19 @@ class SubscribeDetail extends StatelessWidget {
   final endDate;
   final List? attends;
   final trainerName;
+  final trainerId;
+  final subId;
 
   const SubscribeDetail({
-    this.name,
-    this.classCount,
-    this.classR,
-    this.startDate,
-    this.endDate,
-    this.attends,
-    this.trainerName,
+    required this.name,
+    required this.classCount,
+    required this.classR,
+    required this.startDate,
+    required this.endDate,
+    required this.attends,
+    required this.trainerName,
+    required this.subId,
+    required this.trainerId,
   });
 
   @override
@@ -361,6 +365,8 @@ class SubscribeDetail extends StatelessWidget {
                                                           attends: attends,
                                                           trainerName:
                                                               trainerName,
+                                                          trainerId: trainerId,
+                                                          subId: subId,
                                                         ),
                                                         animation: AnimationType
                                                             .fadeIn, // Optional value

@@ -1,13 +1,16 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/attend_detail.dart';
+import 'package:intl/intl.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
-
+import 'package:flutter/material.dart' as ui;
 import 'notification_screen.dart';
 
 class NewAttendScreen extends StatelessWidget {
@@ -18,6 +21,8 @@ class NewAttendScreen extends StatelessWidget {
   final endDate;
   final List? attends;
   final trainerName;
+  final trainerId;
+  final subId;
 
   const NewAttendScreen({
     this.name,
@@ -27,11 +32,57 @@ class NewAttendScreen extends StatelessWidget {
     this.endDate,
     this.attends,
     this.trainerName,
+    this.trainerId,
+    this.subId,
   });
   @override
   Widget build(BuildContext context) {
+    print(trainerId);
+    print(subId);
     return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is SendNewAttendSuccess) {
+          Fluttertoast.showToast(
+            msg: "تم الإرسال بنجاح",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          HomeCubit.get(context).getMyPackages();
+          Transitioner(
+            context: context,
+            child: AttendDetail(
+              name: name,
+              classCount: classCount,
+              classR: classR,
+              startDate: startDate,
+              endDate: endDate,
+              attends: attends,
+              trainerName: trainerName,
+              trainerId: trainerId,
+              subId: subId,
+            ),
+            animation: AnimationType.fadeIn, // Optional value
+            duration: Duration(milliseconds: 300), // Optional value
+            replacement: true, // Optional value
+            curveType: CurveType.decelerate, // Optional value
+          );
+        }
+        if (state is SendNewAttendError) {
+          Fluttertoast.showToast(
+            msg: "فشل الإرسال، الرجاء إعاده المحاوله",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
+      },
       builder: (context, state) {
         HomeCubit _cubit = HomeCubit.get(context);
         return Scaffold(
@@ -128,7 +179,7 @@ class NewAttendScreen extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraint) {
                     return Column(
-                      textDirection: TextDirection.rtl,
+                      textDirection: ui.TextDirection.rtl,
                       children: [
                         Stack(
                           children: [
@@ -145,6 +196,9 @@ class NewAttendScreen extends StatelessWidget {
                                         startDate: startDate,
                                         endDate: endDate,
                                         attends: attends,
+                                        trainerName: trainerName,
+                                        trainerId: trainerId,
+                                        subId: subId,
                                       ),
                                       animation: AnimationType
                                           .fadeIn, // Optional value
@@ -236,41 +290,46 @@ class NewAttendScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 20),
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    width: 1200,
-                                    child: Column(
-                                      children: [
-                                        Image.asset(
-                                          'assets/images/attends_detail.png',
-                                          width: 1200,
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            height: double.infinity,
-                                            // height: 500,
-                                            child: ListView.builder(
-                                              itemBuilder: (context, index) =>
-                                                  _buildItem(
-                                                context,
+                              state is! SendNewAttendLoading
+                                  ? Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        // width: 200,
+                                        child: Column(
+                                          children: [
+                                            // Image.asset(
+                                            //   'assets/images/attends_detail.png',
+                                            //   width: 1200,
+                                            // ),
+                                            Expanded(
+                                              child: Container(
+                                                height: double.infinity,
+                                                // height: 500,
+                                                child: ListView.separated(
+                                                  itemBuilder:
+                                                      (context, index) =>
+                                                          _buildItem(
+                                                    context,
+                                                    _cubit,
+                                                  ),
+                                                  itemCount: int.parse(classR),
+                                                  separatorBuilder:
+                                                      (context, index) =>
+                                                          SizedBox(height: 40),
+                                                ),
                                               ),
-                                              itemCount: int.parse(classR),
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
+                                    )
+                                  : LoadingRotating.square(
+                                      backgroundColor: mPrimaryColor,
                                     ),
-                                  ),
-                                  scrollDirection: Axis.horizontal,
-                                  reverse: true,
-                                ),
-                              ),
                             ],
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            textDirection: TextDirection.rtl,
+                            textDirection: ui.TextDirection.rtl,
                           ),
                         ),
                       ],
@@ -285,12 +344,150 @@ class NewAttendScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(context) {
+  Widget _buildItem(context, HomeCubit _cubit) {
+    final _formKey = GlobalKey<FormState>();
+    final _dateteController = TextEditingController();
     return Row(
       children: [
-        Text('fff'),
+        Padding(
+          padding: const EdgeInsets.only(top: 27.0),
+          child: MaterialButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _cubit.sendNewAttend(
+                  date: _dateteController.text,
+                  time: _cubit.subSelectedTime,
+                  subId: subId,
+                  trainerId: trainerId,
+                );
+              }
+            },
+            child: Text(
+              'إرسال',
+              style: TextStyle(fontFamily: mPrimaryArabicFont),
+            ),
+            color: Color(0xff25b16f),
+            textColor: Colors.white,
+          ),
+        ),
+        SizedBox(width: 15),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          textDirection: ui.TextDirection.rtl,
+          children: [
+            Text(
+              'الوقت',
+              textDirection: ui.TextDirection.rtl,
+              style: TextStyle(
+                fontFamily: mPrimaryArabicFont,
+              ),
+            ),
+            Container(
+              width: 100,
+              height: 36,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black.withOpacity(0.6),
+                  width: 0.5,
+                ),
+                borderRadius: BorderRadius.circular(3),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    textDirection: ui.TextDirection.rtl,
+                    children: [
+                      Container(
+                        child: DropdownButton(
+                          iconSize: 0,
+                          items: _cubit.subTimeList.map(
+                            (s) {
+                              return DropdownMenuItem(
+                                value: s,
+                                child: Row(
+                                  children: [
+                                    AutoSizeText(
+                                      "$s مساء",
+                                      textAlign: TextAlign.start,
+                                      textDirection: ui.TextDirection.rtl,
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontFamily: mPrimaryArabicFont,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ).toList(),
+                          value: _cubit.subSelectedTime,
+                          onChanged: (value) {
+                            _cubit.subSelecteTime(
+                              value,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: 5),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          textDirection: ui.TextDirection.rtl,
+          children: [
+            Text(
+              'اليوم',
+              textDirection: ui.TextDirection.rtl,
+              style: TextStyle(
+                fontFamily: mPrimaryArabicFont,
+              ),
+            ),
+            Form(
+              key: _formKey,
+              child: Container(
+                child: TextFormField(
+                  controller: _dateteController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'هذا الحقل مطلوب';
+                    }
+                  },
+                  onTap: () {
+                    showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2222))
+                        .then((value) => _dateteController.text =
+                            DateFormat('yyyy-MM-dd').format(value!));
+                  },
+                  readOnly: true,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                width: 120,
+                height: 36,
+              ),
+            ),
+          ],
+        )
       ],
-      textDirection: TextDirection.rtl,
+      textDirection: ui.TextDirection.rtl,
       mainAxisAlignment: MainAxisAlignment.start,
     );
   }
