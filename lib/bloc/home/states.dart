@@ -233,3 +233,21 @@ class CancelAttendSuccess extends HomeStates {}
 
 // CANCEL ATTEND
 class CancelAttendError extends HomeStates {}
+
+// ACTIVE SUBSCRIBE
+class GetActiveSubscribeLoading extends HomeStates {}
+
+// ACTIVE SUBSCRIBE
+class GetActiveSubscribeSuccess extends HomeStates {}
+
+// ACTIVE SUBSCRIBE
+class GetActiveSubscribeError extends HomeStates {}
+
+// END SUBSCRIBE
+class GetEndSubscribeLoading extends HomeStates {}
+
+// END SUBSCRIBE
+class GetEndSubscribeSuccess extends HomeStates {}
+
+// END SUBSCRIBE
+class GetEndSubscribeError extends HomeStates {}

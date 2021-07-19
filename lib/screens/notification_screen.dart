@@ -219,9 +219,12 @@ class NotificationScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   textDirection: TextDirection.rtl,
                   children: [
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundColor: mPrimaryColor.withOpacity(0.5),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: CircleAvatar(
+                        radius: 15,
+                        backgroundColor: mPrimaryColor.withOpacity(0.5),
+                      ),
                     ),
                   ],
                 ),
@@ -232,9 +235,10 @@ class NotificationScreen extends StatelessWidget {
                   children: [
                     AutoSizeText(
                       '${item.content.toString().trim()}',
-                      maxLines: 3,
+                      maxLines: 2,
+                      textDirection: TextDirection.rtl,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         fontFamily: mPrimaryArabicFont,
                       ),
                     ),
@@ -243,7 +247,7 @@ class NotificationScreen extends StatelessWidget {
                       '${item.createdAt.toString().substring(0, 10)}',
                       maxLines: 1,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 13,
                       ),
                     ),
                   ],

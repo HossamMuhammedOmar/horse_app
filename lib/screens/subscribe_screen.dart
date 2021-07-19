@@ -575,6 +575,21 @@ class SubscibeScreen extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(14),
           ),
+        if (item.statue == 'pending')
+          Container(
+            width: 321,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xffDEE2E6)),
+            ),
+            child: Text(
+              'جاري التحقق من الدفع وموافقة الادارة',
+              maxLines: 1,
+              style: TextStyle(),
+              textDirection: TextDirection.rtl,
+            ),
+            padding: const EdgeInsets.all(14),
+          ),
         if (item.statue == 'accepted')
           Container(
             padding: const EdgeInsets.only(left: 130, right: 10),

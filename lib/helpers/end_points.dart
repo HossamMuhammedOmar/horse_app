@@ -36,3 +36,7 @@ const RESRVATIONREQUESTSIND = 'reservationRequests';
 const UPDATEPROFILE = 'user/update';
 
 const FORGOTPASSWORD = 'forgotPassword';
+
+const ACTIVE = 'userPackages/active?user_id';
+
+const END = 'userPackages/ended?user_id';

@@ -7,6 +7,7 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
+import 'package:horse_app/screens/confirm_screen.dart';
 import 'package:horse_app/screens/home_screen.dart';
 import 'package:transitioner/transitioner.dart';
 
@@ -46,14 +47,14 @@ class ReservationScreen extends StatelessWidget {
               fontSize: 16.0);
 
           HomeCubit.get(context).getUserNotification();
-          // Transitioner(
-          //   context: context,
-          //   child: HomeScreen(),
-          //   animation: AnimationType.fadeIn, // Optional value
-          //   duration: Duration(milliseconds: 300), // Optional value
-          //   replacement: true, // Optional value
-          //   curveType: CurveType.decelerate, // Optional value
-          // );
+          Transitioner(
+            context: context,
+            child: ConfirmScreen(),
+            animation: AnimationType.fadeIn, // Optional value
+            duration: Duration(milliseconds: 300), // Optional value
+            replacement: true, // Optional value
+            curveType: CurveType.decelerate, // Optional value
+          );
         }
 
         if (state is CreatePackageRequestError) {
@@ -465,117 +466,6 @@ class ReservationScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 10),
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: 'حر',
-                                              groupValue:
-                                                  _cubit.colorGroupValue,
-                                              onChanged: (val) {
-                                                _cubit.changeRadio(val);
-                                              },
-                                            ),
-                                            SizedBox(width: 10),
-                                            Expanded(
-                                              child: AutoSizeText(
-                                                'حر ( يمكنك الحضور في اي وقت للإسطبل )',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontFamily:
-                                                      mPrimaryArabicFont,
-                                                ),
-                                                maxLines: 1,
-                                              ),
-                                            ),
-                                          ],
-                                          textDirection: TextDirection.rtl,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Radio(
-                                              value: 'تحديد أيام',
-                                              groupValue:
-                                                  _cubit.colorGroupValue,
-                                              onChanged: (val) {
-                                                _cubit.changeRadio(val);
-                                              },
-                                            ),
-                                            AutoSizeText(
-                                              'تحديد أيام',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: mPrimaryArabicFont,
-                                              ),
-                                            ),
-                                          ],
-                                          textDirection: TextDirection.rtl,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  // SizedBox(height: 20),
-                                  // Container(
-                                  //   decoration: BoxDecoration(
-                                  //     border: Border.all(
-                                  //       color: mPrimaryColor,
-                                  //       width: 1,
-                                  //     ),
-                                  //     borderRadius: BorderRadius.circular(8),
-                                  //   ),
-                                  //   child: AutoSizeText(
-                                  //     'الحسابات البنكيه',
-                                  //     style: TextStyle(
-                                  //       fontSize: 20,
-                                  //       fontFamily: mPrimaryArabicFont,
-                                  //     ),
-                                  //     textDirection: TextDirection.rtl,
-                                  //   ),
-                                  //   width: double.infinity,
-                                  //   height: 60,
-                                  //   padding: const EdgeInsets.all(10),
-                                  // ),
-                                  // SizedBox(height: 25),
-                                  // Image.asset('assets/images/group_56843.jpg'),
-                                  // SizedBox(height: 30),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 20),
-                                  //   child: Container(
-                                  //     width: double.infinity,
-                                  //     height: 0.5,
-                                  //     color: Color(0xff707070),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(height: 20),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 20),
-                                  //   child: Column(
-                                  //     children: [
-                                  //       AutoSizeText(
-                                  //         'أرفق صوره التحويل',
-                                  //         style: TextStyle(
-                                  //           fontFamily: mPrimaryArabicFont,
-                                  //           fontSize: 18,
-                                  //           color: Color(0xffC10002),
-                                  //         ),
-                                  //       ),
-                                  //       SizedBox(height: 20),
-                                  //       Image.asset('assets/images/choose.jpg'),
-                                  //     ],
-                                  //     textDirection: TextDirection.rtl,
-                                  //     crossAxisAlignment:
-                                  //         CrossAxisAlignment.start,
-                                  //   ),
-                                  // ),
                                   SizedBox(height: 40),
                                   Center(
                                     child: Padding(
@@ -588,20 +478,11 @@ class ReservationScreen extends StatelessWidget {
                                                 (element) =>
                                                     element['name'] ==
                                                     _cubit.selectedTrainner);
-                                            var attendAt = '';
 
-                                            if (_cubit.colorGroupValue ==
-                                                'حر') {
-                                              attendAt = 'free';
-                                            }
-                                            if (_cubit.colorGroupValue ==
-                                                'تحديد أيام') {
-                                              attendAt = 'week_days';
-                                            }
                                             print(id);
                                             print(newList.first['id']);
                                             _cubit.packageRequest(
-                                              attendAt: attendAt,
+                                              attendAt: 'week_days',
                                               packageId: id,
                                               trainerId: newList.first['id'],
                                             );

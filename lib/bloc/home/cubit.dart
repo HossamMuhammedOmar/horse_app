@@ -387,11 +387,12 @@ class HomeCubit extends Cubit<HomeStates> {
     aceepted = Color(0xffF6F6F6);
     refused = Color(0xffF6F6F6);
     pending = Color(0xffF6F6F6);
-
     allT = Colors.white;
     aceeptedT = Colors.black;
     refusedT = Colors.black;
     pendingT = Colors.black;
+
+    currentState = 'A';
 
     emit(GetMyPackageLoading());
     DioHelper.getData(
@@ -717,6 +718,42 @@ class HomeCubit extends Cubit<HomeStates> {
       (e) {
         print(e.toString());
         emit(CancelAttendError());
+      },
+    );
+  }
+
+  var activeSubcribe;
+  // GET ALL ACTIVE SUBSCRIBE
+  void getAllActiveSubcribe() {
+    emit(GetActiveSubscribeLoading());
+    DioHelper.getData(url: '$ACTIVE=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        activeSubcribe = value.data;
+        emit(GetActiveSubscribeSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetActiveSubscribeError());
+      },
+    );
+  }
+
+  var endSubcribe;
+  // GET ALL ACTIVE SUBSCRIBE
+  void getAllEndSubcribe() {
+    emit(GetEndSubscribeLoading());
+    DioHelper.getData(url: '$END=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        endSubcribe = value.data;
+        emit(GetEndSubscribeSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetEndSubscribeError());
       },
     );
   }
