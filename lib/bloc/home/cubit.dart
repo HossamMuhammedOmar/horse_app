@@ -757,4 +757,25 @@ class HomeCubit extends Cubit<HomeStates> {
       },
     );
   }
+
+  // GET SUBSCIRTION DETAIL
+  SubPackageModel? subscribeDetails;
+  void getSubDetail() {
+    emit(GetSubscribeDetailLoading());
+    DioHelper.getData(
+            url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
+        .then(
+      (value) {
+        subscribeDetails = SubPackageModel.fromJson(value.data);
+        // subscribeDetails!.data!.where((element) => element.id == id);
+
+        emit(GetSubscribeDetailSuccess());
+      },
+    ).catchError(
+      (e) {
+        print(e.toString());
+        emit(GetSubscribeDetailError());
+      },
+    );
+  }
 }

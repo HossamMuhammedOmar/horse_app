@@ -15,32 +15,15 @@ import 'package:transitioner/transitioner.dart';
 import 'notification_screen.dart';
 
 class AttendDetail extends StatelessWidget {
-  final name;
-  final classCount;
-  final classR;
-  final startDate;
-  final endDate;
-  final List? attends;
-  final trainerName;
-  final trainerId;
-  final subId;
+  final id;
 
   const AttendDetail({
-    this.name,
-    this.classCount,
-    this.classR,
-    this.startDate,
-    this.endDate,
-    this.attends,
-    this.trainerName,
-    this.trainerId,
-    this.subId,
+    this.id,
   });
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        print(state);
         if (state is CancelAttendSuccess) {
           Fluttertoast.showToast(
             msg: "تم الإرسال بنجاح",
@@ -51,18 +34,12 @@ class AttendDetail extends StatelessWidget {
             textColor: Colors.white,
             fontSize: 16.0,
           );
+          HomeCubit.get(context).getSubDetail();
+
           Transitioner(
             context: context,
             child: AttendDetail(
-              name: name,
-              classCount: classCount,
-              classR: classR,
-              startDate: startDate,
-              endDate: endDate,
-              attends: attends,
-              trainerName: trainerName,
-              trainerId: trainerId,
-              subId: subId,
+              id: id,
             ),
             animation: AnimationType.fadeIn, // Optional value
             duration: Duration(milliseconds: 300), // Optional value
@@ -84,7 +61,7 @@ class AttendDetail extends StatelessWidget {
       },
       builder: (context, state) {
         HomeCubit _cubit = HomeCubit.get(context);
-        return state is! GetMyPackageLoading
+        return state is! CancelAttendLoading
             ? Scaffold(
                 backgroundColor: Colors.white,
                 appBar: AppBar(
@@ -192,15 +169,7 @@ class AttendDetail extends StatelessWidget {
                                           Transitioner(
                                             context: context,
                                             child: SubscribeDetail(
-                                              name: name,
-                                              classCount: classCount,
-                                              classR: classR,
-                                              startDate: startDate,
-                                              endDate: endDate,
-                                              attends: attends,
-                                              trainerId: trainerId,
-                                              subId: subId,
-                                              trainerName: trainerName,
+                                              id: id,
                                             ),
                                             animation: AnimationType
                                                 .fadeIn, // Optional value
@@ -252,18 +221,11 @@ class AttendDetail extends StatelessWidget {
                                           horizontal: 20),
                                       child: MaterialButton(
                                         onPressed: () {
+                                          // _cubit.getSubDetail();
                                           Transitioner(
                                             context: context,
                                             child: NewAttendScreen(
-                                              name: name,
-                                              classCount: classCount,
-                                              classR: classR,
-                                              startDate: startDate,
-                                              endDate: endDate,
-                                              attends: attends,
-                                              trainerName: trainerName,
-                                              trainerId: trainerId,
-                                              subId: subId,
+                                              id: id,
                                             ),
                                             animation: AnimationType.fadeIn,
                                             duration:
@@ -296,7 +258,7 @@ class AttendDetail extends StatelessWidget {
                                         width: double.infinity,
                                         child: Center(
                                           child: AutoSizeText(
-                                            'المتبقي لديك من الحصص التدريبية ( $classR )  يمكنك الغاء الحضور اخر موعد قبل الحضور بـ 5 ساعات ',
+                                            'المتبقي لديك من الحصص التدريبية ( ${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.subscription!.info!.restClassCount} )  يمكنك الغاء الحضور اخر موعد قبل الحضور بـ 5 ساعات ',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily: 'Cairo',
@@ -331,12 +293,25 @@ class AttendDetail extends StatelessWidget {
                                                     itemBuilder:
                                                         (context, index) =>
                                                             _buildItem(
-                                                      attends![index],
+                                                      _cubit.subscribeDetails!
+                                                          .data!
+                                                          .where((element) =>
+                                                              element.id == id)
+                                                          .first
+                                                          .subscription!
+                                                          .attends![index],
                                                       context,
                                                       _cubit,
                                                       state,
                                                     ),
-                                                    itemCount: attends!.length,
+                                                    itemCount: _cubit
+                                                        .subscribeDetails!.data!
+                                                        .where((element) =>
+                                                            element.id == id)
+                                                        .first
+                                                        .subscription!
+                                                        .attends!
+                                                        .length,
                                                   ),
                                                 ),
                                               ),
@@ -430,7 +405,7 @@ class AttendDetail extends StatelessWidget {
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
           child: Text(
-            '$trainerName',
+            '${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.trainer!.name}',
             style: TextStyle(
               fontFamily: mPrimaryArabicFont,
               fontWeight: FontWeight.normal,
@@ -554,6 +529,19 @@ class AttendDetail extends StatelessWidget {
                               textColor: Colors.white,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
+                                  Transitioner(
+                                    context: context,
+                                    child: AttendDetail(
+                                      id: id,
+                                    ),
+                                    animation:
+                                        AnimationType.fadeIn, // Optional value
+                                    duration: Duration(
+                                        milliseconds: 300), // Optional value
+                                    replacement: true, // Optional value
+                                    curveType:
+                                        CurveType.decelerate, // Optional value
+                                  );
                                   _cubit.cancelAttend(
                                     id: item.id,
                                     reason: _controller.text,

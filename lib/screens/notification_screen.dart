@@ -235,7 +235,9 @@ class NotificationScreen extends StatelessWidget {
                   children: [
                     AutoSizeText(
                       '${item.content.toString().trim()}',
-                      maxLines: 2,
+                      textAlign: TextAlign.justify,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
                         fontSize: 13,

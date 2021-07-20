@@ -251,3 +251,12 @@ class GetEndSubscribeSuccess extends HomeStates {}
 
 // END SUBSCRIBE
 class GetEndSubscribeError extends HomeStates {}
+
+// END SUBSCRIBE
+class GetSubscribeDetailLoading extends HomeStates {}
+
+// END SUBSCRIBE
+class GetSubscribeDetailSuccess extends HomeStates {}
+
+// END SUBSCRIBE
+class GetSubscribeDetailError extends HomeStates {}

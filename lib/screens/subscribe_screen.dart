@@ -603,19 +603,20 @@ class SubscibeScreen extends StatelessWidget {
               child: MaterialButton(
                 onPressed: () {
                   // print(item.id);
-                  print(item.subscription.attends);
+                  HomeCubit.get(context).getSubDetail();
                   Transitioner(
                     context: context,
                     child: SubscribeDetail(
-                      name: item.package.title,
-                      classCount: item.package.classCount,
-                      classR: item.subscription.info.restClassCount,
-                      startDate: item.subscription.info.startIn,
-                      endDate: item.subscription.info.endIn,
-                      attends: item.subscription.attends,
-                      trainerName: item.trainer.name,
-                      trainerId: item.trainer.id,
-                      subId: item.subscription.info.id,
+                      // name: item.package.title,
+                      // classCount: item.package.classCount,
+                      // classR: item.subscription.info.restClassCount,
+                      // startDate: item.subscription.info.startIn,
+                      // endDate: item.subscription.info.endIn,
+                      // attends: item.subscription.attends,
+                      // trainerName: item.trainer.name,
+                      // trainerId: item.trainer.id,
+                      // subId: item.subscription.info.id,
+                      id: item.id,
                     ),
                     animation: AnimationType.fadeIn, // Optional value
                     duration: Duration(milliseconds: 300), // Optional value
