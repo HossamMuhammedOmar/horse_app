@@ -420,7 +420,7 @@ class SubscibeScreen extends StatelessWidget {
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
           child: Text(
-            'بيانات الدفع',
+            '${item.student.name}',
             style: TextStyle(),
             textDirection: TextDirection.rtl,
           ),
@@ -474,43 +474,80 @@ class SubscibeScreen extends StatelessWidget {
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
           child: item.attendAt == 'free'
-              ? Text(
-                  'حر',
-                  style: TextStyle(),
-                  textDirection: TextDirection.rtl,
+              ? Center(
+                  child: Text(
+                    'حر',
+                    style: TextStyle(
+                      fontFamily: mPrimaryArabicFont,
+                    ),
+                    textDirection: TextDirection.rtl,
+                  ),
                 )
-              : Text(
-                  'محدد المواعيد',
-                  style: TextStyle(),
-                  textDirection: TextDirection.rtl,
+              : Center(
+                  child: Text(
+                    'محدد المواعيد',
+                    style: TextStyle(
+                      fontFamily: mPrimaryArabicFont,
+                    ),
+                    textDirection: TextDirection.rtl,
+                  ),
                 ),
-          padding: const EdgeInsets.all(14),
         ),
-        Container(
-          width: 129,
-          height: 50,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
+        if (item.paymentVerified == "0")
+          Container(
+            width: 129,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Color(0xffDEE2E6),
+              ),
+              color: Color(0xffBB2D3B),
+            ),
+            child: Center(
+              child: Text(
+                'غير مدفوع',
+                style: TextStyle(
+                  fontFamily: mPrimaryArabicFont,
+                  color: Colors.white,
+                ),
+                textDirection: TextDirection.rtl,
+              ),
+            ),
           ),
-          child: Text(
-            'حاله الدفع',
-            style: TextStyle(),
-            textDirection: TextDirection.rtl,
+        if (item.paymentVerified == "1")
+          Container(
+            width: 129,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xffDEE2E6)),
+              color: Colors.green,
+            ),
+            child: Center(
+              child: Text(
+                'مدفوع',
+                style: TextStyle(
+                  fontFamily: mPrimaryArabicFont,
+                  color: Colors.white,
+                ),
+                textDirection: TextDirection.rtl,
+              ),
+            ),
           ),
-          padding: const EdgeInsets.all(14),
-        ),
         Container(
           width: 205,
           height: 50,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
-          child: Text(
-            '${item.statueAr}',
-            style: TextStyle(),
-            textDirection: TextDirection.rtl,
+          child: Center(
+            child: Text(
+              '${item.statueAr}',
+              style: TextStyle(
+                fontFamily: mPrimaryArabicFont,
+              ),
+              textDirection: TextDirection.rtl,
+            ),
           ),
-          padding: const EdgeInsets.all(15),
         ),
         Container(
           width: 174,
@@ -567,13 +604,16 @@ class SubscibeScreen extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xffDEE2E6)),
             ),
-            child: Text(
-              'جاري التحقق من الدفع وموافقة الادارة',
-              maxLines: 1,
-              style: TextStyle(),
-              textDirection: TextDirection.rtl,
+            child: Center(
+              child: Text(
+                'جاري التحقق من الدفع وموافقة الادارة',
+                maxLines: 1,
+                style: TextStyle(
+                  fontFamily: mPrimaryArabicFont,
+                ),
+                textDirection: TextDirection.rtl,
+              ),
             ),
-            padding: const EdgeInsets.all(14),
           ),
         if (item.statue == 'pending')
           Container(

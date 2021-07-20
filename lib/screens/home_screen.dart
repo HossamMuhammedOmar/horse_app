@@ -21,11 +21,14 @@ class HomeScreen extends StatelessWidget {
     return Builder(
       builder: (BuildContext context) {
         HomeCubit.get(context).getUserNotification();
+        HomeCubit.get(context).getAllActiveSubcribe();
+        HomeCubit.get(context).getAllEndSubcribe();
         return BlocConsumer<HomeCubit, HomeStates>(
           listener: (context, state) {},
           builder: (context, state) {
             HomeCubit _cubit = HomeCubit.get(context);
-
+            var acounte = _cubit.activeCount;
+            var endCount = _cubit.endCount;
             var catId;
             return state is! GetUserNotificationLoading &&
                     _cubit.categoriesModel != null &&
@@ -53,6 +56,13 @@ class HomeScreen extends StatelessWidget {
                               IconButton(
                                 onPressed: () {
                                   _cubit.getUserNotification();
+                                  _cubit.notificationModel!.data!
+                                      .where((element) => element.seen == '0')
+                                      .forEach((element) {
+                                    print(element.id);
+                                    _cubit.seenAllNotification(
+                                        noteId: element.id);
+                                  });
                                   Transitioner(
                                     context: context,
                                     child: NotificationScreen(),
@@ -159,34 +169,100 @@ class HomeScreen extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20),
                                       child: Center(
-                                        child: RichText(
-                                          textAlign: TextAlign.center,
-                                          text: TextSpan(
-                                            text: 'إشتراك ',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: mPrimaryArabicFont,
-                                              color: mPrimaryColor,
+                                        // child: RichText(
+                                        //   textAlign: TextAlign.center,
+                                        //   text: TextSpan(
+                                        //     text: 'إشتراك ',
+                                        //     style: TextStyle(
+                                        //       fontSize: 16,
+                                        //       fontFamily: mPrimaryArabicFont,
+                                        //       color: mPrimaryColor,
+                                        //     ),
+                                        //     children: const <TextSpan>[
+                                        //       TextSpan(
+                                        //         text: 'فعال',
+                                        //         style: TextStyle(
+                                        //           color: Color(0xff079606),
+                                        //         ),
+                                        //       ),
+                                        //       TextSpan(text: ' ( )'),
+                                        //       TextSpan(text: ' '),
+                                        //       TextSpan(text: ' إشتراك '),
+                                        //       TextSpan(
+                                        //         text: 'منتهي ',
+                                        //         style: TextStyle(
+                                        //           color: Color(0xffEE1313),
+                                        //         ),
+                                        //       ),
+                                        //       TextSpan(text: '( 0 )'),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'إشتراك',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: mPrimaryArabicFont,
+                                                color: mPrimaryColor,
+                                              ),
+                                              textDirection: TextDirection.rtl,
                                             ),
-                                            children: const <TextSpan>[
-                                              TextSpan(
-                                                text: 'فعال',
-                                                style: TextStyle(
-                                                  color: Color(0xff079606),
-                                                ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              'فعال',
+                                              textAlign: TextAlign.center,
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                color: Color(0xff079606),
+                                                fontSize: 16,
+                                                fontFamily: mPrimaryArabicFont,
                                               ),
-                                              TextSpan(text: ' ( 0 )'),
-                                              TextSpan(text: ' '),
-                                              TextSpan(text: ' إشتراك '),
-                                              TextSpan(
-                                                text: 'منتهي ',
-                                                style: TextStyle(
-                                                  color: Color(0xffEE1313),
-                                                ),
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              '$acounte',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 16,
                                               ),
-                                              TextSpan(text: '( 0 )'),
-                                            ],
-                                          ),
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              'إشتراك',
+                                              textAlign: TextAlign.center,
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: mPrimaryArabicFont,
+                                                color: mPrimaryColor,
+                                              ),
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              'منتهي',
+                                              textAlign: TextAlign.center,
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(
+                                                color: Color(0xffEE1313),
+                                                fontSize: 16,
+                                                fontFamily: mPrimaryArabicFont,
+                                              ),
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              '$endCount',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                          textDirection: TextDirection.rtl,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                         ),
                                       ),
                                     ),

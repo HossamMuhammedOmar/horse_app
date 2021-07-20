@@ -723,6 +723,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   var activeSubcribe;
+  int? activeCount = 0;
   // GET ALL ACTIVE SUBSCRIBE
   void getAllActiveSubcribe() {
     emit(GetActiveSubscribeLoading());
@@ -730,6 +731,7 @@ class HomeCubit extends Cubit<HomeStates> {
         .then(
       (value) {
         activeSubcribe = value.data;
+        activeCount = activeSubcribe['data'].length;
         emit(GetActiveSubscribeSuccess());
       },
     ).catchError(
@@ -741,6 +743,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   var endSubcribe;
+  int? endCount = 0;
   // GET ALL ACTIVE SUBSCRIBE
   void getAllEndSubcribe() {
     emit(GetEndSubscribeLoading());
@@ -748,6 +751,7 @@ class HomeCubit extends Cubit<HomeStates> {
         .then(
       (value) {
         endSubcribe = value.data;
+        endCount = endSubcribe['data'].length;
         emit(GetEndSubscribeSuccess());
       },
     ).catchError(
@@ -777,5 +781,12 @@ class HomeCubit extends Cubit<HomeStates> {
         emit(GetSubscribeDetailError());
       },
     );
+  }
+
+  // SEEN ALL NOTIFICATION
+  void seenAllNotification({required noteId}) {
+    DioHelper.getData(url: '$SEEN/$noteId').then((value) {}).catchError((e) {
+      print(e.toString());
+    });
   }
 }

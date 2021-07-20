@@ -40,3 +40,5 @@ const FORGOTPASSWORD = 'forgotPassword';
 const ACTIVE = 'userPackages/active?user_id';
 
 const END = 'userPackages/ended?user_id';
+
+const SEEN = 'user/notes/seen';
