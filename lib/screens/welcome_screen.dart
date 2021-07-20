@@ -65,13 +65,13 @@ class WelcomeScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      myPrimaryButton(
-                        title: 'تخطي',
-                        onClick: () {},
-                      ),
+                      // SizedBox(
+                      //   height: 25,
+                      // ),
+                      // myPrimaryButton(
+                      //   title: 'تخطي',
+                      //   onClick: () {},
+                      // ),
                     ],
                   ),
                 ),

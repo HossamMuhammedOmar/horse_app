@@ -15,6 +15,7 @@ import 'dart:ui' as ui;
 import 'package:transitioner/transitioner.dart';
 
 import 'notification_screen.dart';
+import 'profile_screen.dart';
 
 class IndSubscribeScreen extends StatelessWidget {
   final indReservationId;
@@ -83,6 +84,12 @@ class IndSubscribeScreen extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         _cubit.getUserNotification();
+                        _cubit.notificationModel!.data!
+                            .where((element) => element.seen == '0')
+                            .forEach((element) {
+                          print(element.id);
+                          _cubit.seenAllNotification(noteId: element.id);
+                        });
                         Transitioner(
                           context: context,
                           child: NotificationScreen(),
@@ -98,27 +105,28 @@ class IndSubscribeScreen extends StatelessWidget {
                         size: 30,
                       ),
                     ),
-                    if (_cubit.notificationModel != null)
-                      if (_cubit.notificationModel!.data!
-                              .where((element) => element.seen == '0')
-                              .length !=
-                          0)
-                        Positioned(
-                          right: 7,
-                          top: 7,
-                          child: Container(
-                            // padding: const EdgeInsets.all(2),
-                            height: 15,
-                            width: 15,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(30),
-                              // border: Border.all(
-                              //   color: Color(0xff707070),
-                              // ),
-                            ),
+                    Positioned(
+                      right: 0,
+                      top: 4,
+                      child: Container(
+                        // padding: const EdgeInsets.all(2),
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(30),
+                          // border: Border.all(
+                          //   color: Color(0xff707070),
+                          // ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${_cubit.notificationModel!.data!.where((element) => element.seen == '0').length}',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -126,17 +134,30 @@ class IndSubscribeScreen extends StatelessWidget {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 20),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
-                  child: ClipRRect(
-                    child: Image.asset(
-                      'assets/images/hore_image.jpeg',
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
+                child: GestureDetector(
+                  onTap: () {
+                    _cubit.getUserDataById();
+                    Transitioner(
+                      context: context,
+                      child: ProfileScreen(),
+                      animation: AnimationType.fadeIn, // Optional value
+                      duration: Duration(milliseconds: 300), // Optional value
+                      replacement: true, // Optional value
+                      curveType: CurveType.decelerate, // Optional value
+                    );
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 30.0,
+                    child: ClipRRect(
+                      child: Image.asset(
+                        'assets/images/hore_image.jpeg',
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(60.0),
                     ),
-                    borderRadius: BorderRadius.circular(60.0),
                   ),
                 ),
               ),

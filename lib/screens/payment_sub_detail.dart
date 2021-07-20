@@ -7,49 +7,50 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
-import 'package:horse_app/screens/subscribe_screen.dart';
+import 'package:horse_app/screens/subscribe_detail.dart';
 import 'package:intl/intl.dart';
 import 'package:transitioner/transitioner.dart';
 import 'package:flutter/material.dart' as ui;
-
 import 'notification_screen.dart';
 import 'profile_screen.dart';
 
-class ConfirmPackageSubscribeScreen extends StatelessWidget {
+class PaymentSubDetail extends StatelessWidget {
   final _dateteController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final id;
 
-  ConfirmPackageSubscribeScreen({required this.id});
+  PaymentSubDetail({required this.id});
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        if (state is SendPackagePaymentSuccess) {
+        if (state is SendTrainerPaymentSuccess) {
           _dateteController.text = '';
-          HomeCubit.get(context).pImage = null;
+          HomeCubit.get(context).tImage = null;
           Fluttertoast.showToast(
-              msg: "تم الإرسال بنجاح",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              fontSize: 16.0);
+            msg: "تم الإرسال بنجاح",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         }
-        if (state is SendPackagePaymentError) {
+        if (state is SendTrainerPaymentError) {
           Fluttertoast.showToast(
-              msg: "فشل الإرسال، الرجاء إعاده المحاوله",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0);
+            msg: "فشل الإرسال، الرجاء إعاده المحاوله",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         }
       },
       builder: (context, state) {
-        var packageImage = HomeCubit.get(context).pImage;
+        var trainerImage = HomeCubit.get(context).tImage;
         HomeCubit _cubit = HomeCubit.get(context);
         return Scaffold(
           backgroundColor: Colors.white,
@@ -174,11 +175,12 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 8.0),
                               child: IconButton(
                                   onPressed: () {
-                                    HomeCubit.get(context).pImage = null;
-
+                                    HomeCubit.get(context).tImage = null;
                                     Transitioner(
                                       context: context,
-                                      child: SubscibeScreen(),
+                                      child: SubscribeDetail(
+                                        id: id,
+                                      ),
                                       animation: AnimationType
                                           .fadeIn, // Optional value
                                       duration: Duration(
@@ -285,15 +287,16 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  packageImage == null
+                                  trainerImage == null
                                       ? GestureDetector(
                                           child: Image.asset(
                                               'assets/images/choose.jpg'),
                                           onTap: () {
-                                            HomeCubit.get(context).getImage();
-                                          })
+                                            HomeCubit.get(context).tGetImage();
+                                          },
+                                        )
                                       : AutoSizeText(
-                                          packageImage.path,
+                                          trainerImage.path,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                 ],
@@ -305,30 +308,30 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                 child: MaterialButton(
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
-                                      if (packageImage == null) {
+                                      if (trainerImage == null) {
                                         Fluttertoast.showToast(
-                                          msg: "لم تحدد أي صور",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.red,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0,
-                                        );
+                                            msg: "لم تحدد أي صور",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
                                       } else {
                                         final _image =
                                             await MultipartFile.fromFile(
-                                                packageImage.path);
-
+                                                trainerImage.path);
                                         final formData = FormData.fromMap(
                                           {
-                                            'date': _dateteController.text,
-                                            'image': _image,
+                                            'transaction_date':
+                                                _dateteController.text,
+                                            'transaction_image': _image,
                                             '_method': 'put',
                                           },
                                         );
-
-                                        HomeCubit.get(context).sendPaymentInfo(
+                                        // );
+                                        HomeCubit.get(context)
+                                            .sendTrainerPaymentInfo(
                                           formData: formData,
                                           id: id,
                                         );
@@ -337,7 +340,7 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                                   },
                                   minWidth: double.infinity,
                                   height: 50,
-                                  child: state is! SendPackagePaymentLoading
+                                  child: state is! SendTrainerPaymentLoading
                                       ? AutoSizeText(
                                           'إرسال',
                                           style: TextStyle(
@@ -366,19 +369,4 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
       },
     );
   }
-
-  // void _upload(packageImage) {
-  //   if (packageImage == null) return;
-  //   String base64Image = packageImage!.readAsBytesSync();
-  //   String fileName = packageImage.path.split("/").last;
-  //
-  //   http.put(Uri.parse('$RESRVATIONREQUESTSIND/$id'), body: {
-  //     "image": base64Image,
-  //     "name": fileName,
-  //   }).then((res) {
-  //     print(res);
-  //   }).catchError((err) {
-  //     print(err);
-  //   });
-  // }
 }

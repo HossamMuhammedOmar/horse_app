@@ -2,7 +2,7 @@
     package="com.example.horse_app">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="horse_app"
+        android:label="إسطبل العساكر"
         android:icon="@mipmap/ic_launcher">
 
         <activity
