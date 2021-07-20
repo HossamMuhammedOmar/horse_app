@@ -10,8 +10,6 @@ import 'package:horse_app/screens/payment_sub_detail.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
-
-import 'confirm_trainer_subscribe_screen.dart';
 import 'notification_screen.dart';
 import 'profile_screen.dart';
 

@@ -38,7 +38,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
   // IMAGE
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       productImage = File(pickedFile.path);

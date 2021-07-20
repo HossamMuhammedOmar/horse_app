@@ -175,7 +175,7 @@ class ConfirmPackageSubscribeScreen extends StatelessWidget {
                               child: IconButton(
                                   onPressed: () {
                                     HomeCubit.get(context).pImage = null;
-
+                                    HomeCubit.get(context).getMyPackages();
                                     Transitioner(
                                       context: context,
                                       child: SubscibeScreen(),

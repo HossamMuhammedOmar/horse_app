@@ -505,7 +505,7 @@ class HomeCubit extends Cubit<HomeStates> {
   File? pImage;
   var pPicker = ImagePicker();
   Future<void> getImage() async {
-    final pPickedFile = await pPicker.getImage(source: ImageSource.gallery);
+    final pPickedFile = await pPicker.pickImage(source: ImageSource.gallery);
 
     if (pPickedFile != null) {
       pImage = File(pPickedFile.path);
@@ -538,7 +538,7 @@ class HomeCubit extends Cubit<HomeStates> {
   File? tImage;
   var tPicker = ImagePicker();
   Future<void> tGetImage() async {
-    final tPickedFile = await pPicker.getImage(source: ImageSource.gallery);
+    final tPickedFile = await pPicker.pickImage(source: ImageSource.gallery);
 
     if (tPickedFile != null) {
       tImage = File(tPickedFile.path);
@@ -568,7 +568,7 @@ class HomeCubit extends Cubit<HomeStates> {
   File? iImage;
   var iPicker = ImagePicker();
   Future<void> iGetImage() async {
-    final iPickedFile = await pPicker.getImage(source: ImageSource.gallery);
+    final iPickedFile = await pPicker.pickImage(source: ImageSource.gallery);
 
     if (iPickedFile != null) {
       iImage = File(iPickedFile.path);
