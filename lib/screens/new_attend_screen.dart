@@ -300,6 +300,8 @@ class NewAttendScreen extends StatelessWidget {
                                                       height: double.infinity,
                                                       // height: 500,
                                                       child: ListView.separated(
+                                                        physics:
+                                                            BouncingScrollPhysics(),
                                                         itemBuilder:
                                                             (context, index) =>
                                                                 _buildItem(
@@ -355,157 +357,161 @@ class NewAttendScreen extends StatelessWidget {
   Widget _buildItem(context, HomeCubit _cubit) {
     final _formKey = GlobalKey<FormState>();
     final _dateteController = TextEditingController();
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 27.0),
-          child: MaterialButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _cubit.sendNewAttend(
-                  date: _dateteController.text,
-                  time: _cubit.subSelectedTime,
-                  subId: _cubit.subscribeDetails!.data!
-                      .where((element) => element.id == id)
-                      .first
-                      .subscription!
-                      .info!
-                      .id,
-                  trainerId: _cubit.subscribeDetails!.data!
-                      .where((element) => element.id == id)
-                      .first
-                      .trainer!
-                      .id,
-                );
-              }
-            },
-            child: Text(
-              'إرسال',
-              style: TextStyle(fontFamily: mPrimaryArabicFont),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: BouncingScrollPhysics(),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 27.0),
+            child: MaterialButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _cubit.sendNewAttend(
+                    date: _dateteController.text,
+                    time: _cubit.subSelectedTime,
+                    subId: _cubit.subscribeDetails!.data!
+                        .where((element) => element.id == id)
+                        .first
+                        .subscription!
+                        .info!
+                        .id,
+                    trainerId: _cubit.subscribeDetails!.data!
+                        .where((element) => element.id == id)
+                        .first
+                        .trainer!
+                        .id,
+                  );
+                }
+              },
+              child: Text(
+                'إرسال',
+                style: TextStyle(fontFamily: mPrimaryArabicFont),
+              ),
+              color: Color(0xff25b16f),
+              textColor: Colors.white,
             ),
-            color: Color(0xff25b16f),
-            textColor: Colors.white,
           ),
-        ),
-        SizedBox(width: 15),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          textDirection: ui.TextDirection.rtl,
-          children: [
-            Text(
-              'الوقت',
-              textDirection: ui.TextDirection.rtl,
-              style: TextStyle(
-                fontFamily: mPrimaryArabicFont,
-              ),
-            ),
-            Container(
-              width: 100,
-              height: 36,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black.withOpacity(0.6),
-                  width: 0.5,
+          SizedBox(width: 15),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            textDirection: ui.TextDirection.rtl,
+            children: [
+              Text(
+                'الوقت',
+                textDirection: ui.TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: mPrimaryArabicFont,
                 ),
-                borderRadius: BorderRadius.circular(3),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+              Container(
+                width: 100,
+                height: 36,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black.withOpacity(0.6),
+                    width: 0.5,
+                  ),
+                  borderRadius: BorderRadius.circular(3),
                 ),
-                child: DropdownButtonHideUnderline(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    textDirection: ui.TextDirection.rtl,
-                    children: [
-                      Container(
-                        child: DropdownButton(
-                          iconSize: 0,
-                          items: _cubit.subTimeList.map(
-                            (s) {
-                              return DropdownMenuItem(
-                                value: s,
-                                child: Row(
-                                  children: [
-                                    AutoSizeText(
-                                      "$s مساء",
-                                      textAlign: TextAlign.start,
-                                      textDirection: ui.TextDirection.rtl,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                        fontFamily: mPrimaryArabicFont,
-                                        fontSize: 15,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      textDirection: ui.TextDirection.rtl,
+                      children: [
+                        Container(
+                          child: DropdownButton(
+                            iconSize: 0,
+                            items: _cubit.subTimeList.map(
+                              (s) {
+                                return DropdownMenuItem(
+                                  value: s,
+                                  child: Row(
+                                    children: [
+                                      AutoSizeText(
+                                        "$s مساء",
+                                        textAlign: TextAlign.start,
+                                        textDirection: ui.TextDirection.rtl,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          fontFamily: mPrimaryArabicFont,
+                                          fontSize: 15,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                            value: _cubit.subSelectedTime,
+                            onChanged: (value) {
+                              _cubit.subSelecteTime(
+                                value,
                               );
                             },
-                          ).toList(),
-                          value: _cubit.subSelectedTime,
-                          onChanged: (value) {
-                            _cubit.subSelecteTime(
-                              value,
-                            );
-                          },
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(width: 5),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          textDirection: ui.TextDirection.rtl,
-          children: [
-            Text(
-              'اليوم',
-              textDirection: ui.TextDirection.rtl,
-              style: TextStyle(
-                fontFamily: mPrimaryArabicFont,
-              ),
-            ),
-            Form(
-              key: _formKey,
-              child: Container(
-                child: TextFormField(
-                  controller: _dateteController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'هذا الحقل مطلوب';
-                    }
-                  },
-                  onTap: () {
-                    showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(2222))
-                        .then((value) => _dateteController.text =
-                            DateFormat('yyyy-MM-dd').format(value!));
-                  },
-                  readOnly: true,
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
+            ],
+          ),
+          SizedBox(width: 5),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            textDirection: ui.TextDirection.rtl,
+            children: [
+              Text(
+                'اليوم',
+                textDirection: ui.TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: mPrimaryArabicFont,
                 ),
-                width: 120,
-                height: 36,
               ),
-            ),
-          ],
-        )
-      ],
-      textDirection: ui.TextDirection.rtl,
-      mainAxisAlignment: MainAxisAlignment.start,
+              Form(
+                key: _formKey,
+                child: Container(
+                  child: TextFormField(
+                    controller: _dateteController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'هذا الحقل مطلوب';
+                      }
+                    },
+                    onTap: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2222))
+                          .then((value) => _dateteController.text =
+                              DateFormat('yyyy-MM-dd').format(value!));
+                    },
+                    readOnly: true,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  width: 120,
+                  height: 36,
+                ),
+              ),
+            ],
+          )
+        ],
+        textDirection: ui.TextDirection.rtl,
+        mainAxisAlignment: MainAxisAlignment.start,
+      ),
     );
   }
 }

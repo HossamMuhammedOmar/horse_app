@@ -192,115 +192,119 @@ class SubscibeScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 20),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  textDirection: TextDirection.rtl,
-                                  children: [
-                                    GestureDetector(
-                                      child: Container(
-                                        width: 65,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: _cubit.all,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'الـكل',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: mPrimaryArabicFont,
-                                              color: _cubit.allT,
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                physics: BouncingScrollPhysics(),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    textDirection: TextDirection.rtl,
+                                    children: [
+                                      GestureDetector(
+                                        child: Container(
+                                          width: 65,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: _cubit.all,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'الـكل',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: mPrimaryArabicFont,
+                                                color: _cubit.allT,
+                                              ),
                                             ),
                                           ),
                                         ),
+                                        onTap: () {
+                                          _cubit.getMyPackages();
+                                        },
                                       ),
-                                      onTap: () {
-                                        _cubit.getMyPackages();
-                                      },
-                                    ),
-                                    SizedBox(width: 8),
-                                    GestureDetector(
-                                      child: Container(
-                                        width: 100,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: _cubit.pending,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'تحت المراجعه',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: mPrimaryArabicFont,
-                                              color: _cubit.pendingT,
-                                            ),
-                                            maxLines: 1,
+                                      SizedBox(width: 8),
+                                      GestureDetector(
+                                        child: Container(
+                                          width: 100,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: _cubit.pending,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        _cubit.getMyPendingPackages();
-                                      },
-                                    ),
-                                    SizedBox(width: 8),
-                                    GestureDetector(
-                                      child: Container(
-                                        width: 65,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: _cubit.aceepted,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'مقبوله',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: mPrimaryArabicFont,
-                                              color: _cubit.aceeptedT,
+                                          child: Center(
+                                            child: Text(
+                                              'تحت المراجعه',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: mPrimaryArabicFont,
+                                                color: _cubit.pendingT,
+                                              ),
+                                              maxLines: 1,
                                             ),
                                           ),
                                         ),
+                                        onTap: () {
+                                          _cubit.getMyPendingPackages();
+                                        },
                                       ),
-                                      onTap: () {
-                                        _cubit.getMyAcceptedPackages();
-                                      },
-                                    ),
-                                    SizedBox(width: 8),
-                                    GestureDetector(
-                                      child: Container(
-                                        width: 75,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: _cubit.refused,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'مرفوضه',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: mPrimaryArabicFont,
-                                              color: _cubit.refusedT,
+                                      SizedBox(width: 8),
+                                      GestureDetector(
+                                        child: Container(
+                                          width: 65,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: _cubit.aceepted,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'مقبوله',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: mPrimaryArabicFont,
+                                                color: _cubit.aceeptedT,
+                                              ),
                                             ),
                                           ),
                                         ),
+                                        onTap: () {
+                                          _cubit.getMyAcceptedPackages();
+                                        },
                                       ),
-                                      onTap: () {
-                                        _cubit.getMyRefusedPackages();
-                                      },
-                                    ),
-                                  ],
+                                      SizedBox(width: 8),
+                                      GestureDetector(
+                                        child: Container(
+                                          width: 75,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: _cubit.refused,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'مرفوضه',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: mPrimaryArabicFont,
+                                                color: _cubit.refusedT,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          _cubit.getMyRefusedPackages();
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 25),
