@@ -141,12 +141,12 @@ class EditProfileScreen extends StatelessWidget {
                         },
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
-                          radius: 30.0,
+                          radius: 40.0,
                           child: ClipRRect(
                             child: Image.asset(
                               'assets/images/hore_image.jpeg',
-                              width: 60,
-                              height: 60,
+                              width: 70,
+                              height: 70,
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(60.0),
