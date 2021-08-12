@@ -393,7 +393,7 @@ class HomeCubit extends Cubit<HomeStates> {
     pendingT = Colors.black;
 
     currentState = 'A';
-
+    print(SharedHelper.getCacheData(key: TOKEN) + 'ID');
     emit(GetMyPackageLoading());
     DioHelper.getData(
             url: '$PACKAGEREQUEST=${SharedHelper.getCacheData(key: TOKEN)}')
@@ -401,10 +401,12 @@ class HomeCubit extends Cubit<HomeStates> {
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
         subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+        print('SSSSSSUCCCCEESSSSS');
         emit(GetMyPackageSuccess());
       },
     ).catchError(
       (e) {
+        print('ERRRRROROROROOROROR');
         print(e.toString());
         emit(GetMyPackageError());
       },

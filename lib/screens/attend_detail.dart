@@ -95,13 +95,10 @@ class AttendDetail extends StatelessWidget {
                               Transitioner(
                                 context: context,
                                 child: NotificationScreen(),
-                                animation:
-                                    AnimationType.fadeIn, // Optional value
-                                duration: Duration(
-                                    milliseconds: 300), // Optional value
-                                replacement: true, // Optional value
-                                curveType:
-                                    CurveType.decelerate, // Optional value
+                                animation: AnimationType.fadeIn,
+                                duration: Duration(milliseconds: 300),
+                                replacement: true,
+                                curveType: CurveType.decelerate,
                               );
                             },
                             icon: Icon(

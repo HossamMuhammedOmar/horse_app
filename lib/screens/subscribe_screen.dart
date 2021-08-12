@@ -20,6 +20,7 @@ class SubscibeScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         HomeCubit _cubit = HomeCubit.get(context);
+        // print(_cubit.subPackageModel!.data);
         return state is! GetMyPackageLoading
             ? Scaffold(
                 backgroundColor: Colors.white,
@@ -323,7 +324,6 @@ class SubscibeScreen extends StatelessWidget {
                                         Expanded(
                                           child: Container(
                                             // height: double.infinity,
-
                                             // height: 500,
                                             child: ListView.builder(
                                               itemBuilder: (context, index) =>

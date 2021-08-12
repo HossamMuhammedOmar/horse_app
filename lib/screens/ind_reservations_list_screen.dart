@@ -8,7 +8,6 @@ import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/ind_subscribe_screen.dart';
 import 'package:horse_app/screens/profile_screen.dart';
 import 'package:transitioner/transitioner.dart';
-
 import 'notification_screen.dart';
 
 class IndReservationListScreen extends StatelessWidget {
@@ -153,7 +152,7 @@ class IndReservationListScreen extends StatelessWidget {
                                   icon: Icon(
                                     Icons.double_arrow,
                                     color: mPrimaryColor,
-                                  )),
+                                  ),),
                             ),
                             Padding(
                               padding:
