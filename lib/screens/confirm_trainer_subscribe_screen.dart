@@ -141,8 +141,8 @@ class ConfirmTrainerSubscribeScreen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     radius: 40.0,
                     child: ClipRRect(
-                      child: Image.asset(
-                        'assets/images/hore_image.jpeg',
+                      child: Image.network(
+                        '${_cubit.profileModel!.data!.photo}',
                         width: 70,
                         height: 70,
                         fit: BoxFit.cover,

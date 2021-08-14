@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
             ..getAllCategories()
             ..getAllPostsData()
             ..getAllTrainers()
-            ..getIndivReservation(),
+            ..getIndivReservation()
+            ..getUserDataById(),
         ),
       ],
       child: MaterialApp(

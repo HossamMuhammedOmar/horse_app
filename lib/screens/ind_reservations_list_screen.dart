@@ -106,8 +106,8 @@ class IndReservationListScreen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     radius: 40.0,
                     child: ClipRRect(
-                      child: Image.asset(
-                        'assets/images/hore_image.jpeg',
+                      child: Image.network(
+                        '${_cubit.profileModel!.data!.photo}',
                         width: 70,
                         height: 70,
                         fit: BoxFit.cover,
@@ -136,23 +136,24 @@ class IndReservationListScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(right: 8.0),
                               child: IconButton(
-                                  onPressed: () {
-                                    Transitioner(
-                                      context: context,
-                                      child: ProfileScreen(),
-                                      animation: AnimationType
-                                          .fadeIn, // Optional value
-                                      duration: Duration(
-                                          milliseconds: 300), // Optional value
-                                      replacement: true, // Optional value
-                                      curveType: CurveType
-                                          .decelerate, // Optional value
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.double_arrow,
-                                    color: mPrimaryColor,
-                                  ),),
+                                onPressed: () {
+                                  Transitioner(
+                                    context: context,
+                                    child: ProfileScreen(),
+                                    animation:
+                                        AnimationType.fadeIn, // Optional value
+                                    duration: Duration(
+                                        milliseconds: 300), // Optional value
+                                    replacement: true, // Optional value
+                                    curveType:
+                                        CurveType.decelerate, // Optional value
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.double_arrow,
+                                  color: mPrimaryColor,
+                                ),
+                              ),
                             ),
                             Padding(
                               padding:
