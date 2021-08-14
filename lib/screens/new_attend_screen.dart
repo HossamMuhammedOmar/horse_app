@@ -308,16 +308,20 @@ class NewAttendScreen extends StatelessWidget {
                                                           context,
                                                           _cubit,
                                                         ),
-                                                        itemCount: int.parse(_cubit
-                                                            .subscribeDetails!
-                                                            .data!
-                                                            .where((element) =>
-                                                                element.id ==
-                                                                id)
-                                                            .first
-                                                            .subscription!
-                                                            .info!
-                                                            .restClassCount!),
+                                                        itemCount: int.parse(
+                                                          _cubit
+                                                              .subscribeDetails!
+                                                              .data!
+                                                              .where(
+                                                                  (element) =>
+                                                                      element
+                                                                          .id ==
+                                                                      id)
+                                                              .first
+                                                              .subscription!
+                                                              .info!
+                                                              .restClassCount!,
+                                                        ),
                                                         separatorBuilder:
                                                             (context, index) =>
                                                                 SizedBox(

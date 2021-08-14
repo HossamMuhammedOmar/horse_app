@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
@@ -25,6 +26,7 @@ class ConfirmScreen extends StatelessWidget {
             SizedBox(height: 30),
             MaterialButton(
               onPressed: () {
+                HomeCubit.get(context).getMyPackages();
                 Transitioner(
                   context: context,
                   child: SubscibeScreen(),

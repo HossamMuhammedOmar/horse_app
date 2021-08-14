@@ -29,6 +29,7 @@ class HomeScreen extends StatelessWidget {
             HomeCubit _cubit = HomeCubit.get(context);
             var acounte = _cubit.activeCount;
             var endCount = _cubit.endCount;
+            // ignore: unused_local_variable
             var catId;
             return state is! GetUserNotificationLoading &&
                     _cubit.categoriesModel != null &&
