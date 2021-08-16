@@ -330,11 +330,11 @@ class SubscibeScreen extends StatelessWidget {
                                                   _buildItem(
                                                 _cubit.currentState == 'A'
                                                     ? _cubit.subPackageModel!
-                                                        .data![index]
+                                                        .data[index]
                                                     : _cubit.currentState == 'Y'
                                                         ? _cubit
                                                             .subPackageModel!
-                                                            .data!
+                                                            .data
                                                             .where((element) =>
                                                                 element
                                                                     .statue ==
@@ -344,7 +344,7 @@ class SubscibeScreen extends StatelessWidget {
                                                                 'R'
                                                             ? _cubit
                                                                 .subPackageModel!
-                                                                .data!
+                                                                .data
                                                                 .where((element) =>
                                                                     element
                                                                         .statue ==
@@ -352,7 +352,7 @@ class SubscibeScreen extends StatelessWidget {
                                                                 .toList()[index]
                                                             : _cubit
                                                                 .subPackageModel!
-                                                                .data!
+                                                                .data
                                                                 .where((element) =>
                                                                     element
                                                                         .statue ==
@@ -362,11 +362,11 @@ class SubscibeScreen extends StatelessWidget {
                                               ),
                                               itemCount: _cubit.currentState ==
                                                       'A'
-                                                  ? _cubit.subPackageModel!
-                                                      .data!.length
+                                                  ? _cubit.subPackageModel!.data
+                                                      .length
                                                   : _cubit.currentState == 'Y'
-                                                      ? _cubit.subPackageModel!
-                                                          .data!
+                                                      ? _cubit
+                                                          .subPackageModel!.data
                                                           .where((element) =>
                                                               element.statue ==
                                                               'accepted')
@@ -376,7 +376,7 @@ class SubscibeScreen extends StatelessWidget {
                                                               'R'
                                                           ? _cubit
                                                               .subPackageModel!
-                                                              .data!
+                                                              .data
                                                               .where((element) =>
                                                                   element
                                                                       .statue ==
@@ -385,7 +385,7 @@ class SubscibeScreen extends StatelessWidget {
                                                               .length
                                                           : _cubit
                                                               .subPackageModel!
-                                                              .data!
+                                                              .data
                                                               .where((element) =>
                                                                   element
                                                                       .statue ==
@@ -574,54 +574,106 @@ class SubscibeScreen extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          width: 174,
-          height: 50,
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffDEE2E6)),
-          ),
-          child: item.transaction.image == null
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MaterialButton(
-                    onPressed: () {
-                      // print(item.id);
-                      Transitioner(
-                        context: context,
-                        child: ConfirmPackageSubscribeScreen(
-                          id: item.id,
+        if (item.statue != 'refused')
+          Container(
+            width: 174,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xffDEE2E6)),
+            ),
+            child: item.transaction.image == null
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      onPressed: () {
+                        // print(item.id);
+                        Transitioner(
+                          context: context,
+                          child: ConfirmPackageSubscribeScreen(
+                            id: item.id,
+                          ),
+                          animation: AnimationType.fadeIn, // Optional value
+                          duration:
+                              Duration(milliseconds: 300), // Optional value
+                          replacement: true, // Optional value
+                          curveType: CurveType.decelerate, // Optional value
+                        );
+                      },
+                      child: Text(
+                        'دفع المبلغ',
+                        style: TextStyle(
+                          fontFamily: mPrimaryArabicFont,
+                          color: Colors.white,
                         ),
-                        animation: AnimationType.fadeIn, // Optional value
-                        duration: Duration(milliseconds: 300), // Optional value
-                        replacement: true, // Optional value
-                        curveType: CurveType.decelerate, // Optional value
-                      );
-                    },
-                    child: Text(
-                      'دفع المبلغ',
-                      style: TextStyle(
-                        fontFamily: mPrimaryArabicFont,
-                        color: Colors.white,
+                        textDirection: TextDirection.rtl,
                       ),
-                      textDirection: TextDirection.rtl,
+                      color: Color(0xff0E6EFD),
+                      height: 20,
+                      padding: const EdgeInsets.all(0),
                     ),
-                    color: Color(0xff0E6EFD),
-                    height: 20,
-                    padding: const EdgeInsets.all(0),
+                  )
+                : FullScreenWidget(
+                    child: Image.network(
+                      '${item.transaction.image}',
+                      filterQuality: FilterQuality.low,
+                      width: 48,
+                      height: 48,
+                    ),
                   ),
-                )
-              : FullScreenWidget(
-                  child: Image.network(
-                    '${item.transaction.image}',
-                    filterQuality: FilterQuality.low,
-                    width: 48,
-                    height: 48,
-                  ),
-                ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
           ),
-        ),
+        if (item.statue == 'refused')
+          Container(
+            width: 174,
+            height: 50,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xffDEE2E6)),
+            ),
+            child: item.transaction.image == null
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      onPressed: () {
+                        // print(item.id);
+                        Transitioner(
+                          context: context,
+                          child: ConfirmPackageSubscribeScreen(
+                            id: item.id,
+                          ),
+                          animation: AnimationType.fadeIn, // Optional value
+                          duration:
+                              Duration(milliseconds: 300), // Optional value
+                          replacement: true, // Optional value
+                          curveType: CurveType.decelerate, // Optional value
+                        );
+                      },
+                      // child: Text(
+                      //   'دفع المبلغ',
+                      //   style: TextStyle(
+                      //     fontFamily: mPrimaryArabicFont,
+                      //     color: Colors.white,
+                      //   ),
+                      //   textDirection: TextDirection.rtl,
+                      // ),
+                      // color: Color(0xff0E6EFD),
+                      height: 20,
+                      padding: const EdgeInsets.all(0),
+                    ),
+                  )
+                : FullScreenWidget(
+                    child: Image.network(
+                      '${item.transaction.image}',
+                      filterQuality: FilterQuality.low,
+                      width: 48,
+                      height: 48,
+                    ),
+                  ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+          ),
         if (item.statue == 'refused')
           Container(
             width: 321,

@@ -400,7 +400,7 @@ class HomeCubit extends Cubit<HomeStates> {
         .then(
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
-        subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+        subPackageModel!.data.sort((b, a) => a.id.compareTo((b.id).toInt()));
         print('SSSSSSUCCCCEESSSSS');
         emit(GetMyPackageSuccess());
       },
@@ -431,7 +431,7 @@ class HomeCubit extends Cubit<HomeStates> {
         .then(
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
-        subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+        subPackageModel!.data.sort((b, a) => a.id.compareTo((b.id).toInt()));
         emit(GetMyPackageSuccess());
       },
     ).catchError(
@@ -461,7 +461,7 @@ class HomeCubit extends Cubit<HomeStates> {
         .then(
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
-        subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+        subPackageModel!.data.sort((b, a) => a.id.compareTo((b.id).toInt()));
 
         emit(GetMyPackageSuccess());
       },
@@ -491,7 +491,7 @@ class HomeCubit extends Cubit<HomeStates> {
         .then(
       (value) {
         subPackageModel = SubPackageModel.fromJson(value.data);
-        subPackageModel!.data!.sort((b, a) => a.id!.compareTo((b.id)!.toInt()));
+        subPackageModel!.data.sort((b, a) => a.id.compareTo((b.id).toInt()));
 
         emit(GetMyPackageSuccess());
       },
@@ -628,16 +628,13 @@ class HomeCubit extends Cubit<HomeStates> {
     email,
     phone,
     password,
+    photo,
+    required formData,
   }) {
     emit(UpdateProfileLoading());
     DioHelper.postData(
       url: '$UPDATEPROFILE/${SharedHelper.getCacheData(key: TOKEN)}',
-      data: {
-        'name': name,
-        'email': email,
-        'mobile': phone,
-        if (password.toString().isNotEmpty) 'password': password,
-      },
+      data: formData,
     ).then(
       (value) {
         emit(UpdateProfileSuccess());
@@ -790,5 +787,20 @@ class HomeCubit extends Cubit<HomeStates> {
     DioHelper.getData(url: '$SEEN/$noteId').then((value) {}).catchError((e) {
       print(e.toString());
     });
+  }
+
+  // UPDATE USER IMAGE
+  File? profileImage;
+  var profilePicker = ImagePicker();
+  Future getProfileImage() async {
+    final pickedFile =
+        await profilePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      emit(PickedProfileImageSuccess());
+    } else {
+      print('No image selected');
+      emit(PickedProfileImageError());
+    }
   }
 }

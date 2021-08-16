@@ -308,20 +308,16 @@ class NewAttendScreen extends StatelessWidget {
                                                           context,
                                                           _cubit,
                                                         ),
-                                                        itemCount: int.parse(
-                                                          _cubit
-                                                              .subscribeDetails!
-                                                              .data!
-                                                              .where(
-                                                                  (element) =>
-                                                                      element
-                                                                          .id ==
-                                                                      id)
-                                                              .first
-                                                              .subscription!
-                                                              .info!
-                                                              .restClassCount!,
-                                                        ),
+                                                        itemCount: _cubit
+                                                            .subscribeDetails!
+                                                            .data
+                                                            .where((element) =>
+                                                                element.id ==
+                                                                id)
+                                                            .first
+                                                            .subscription
+                                                            .info!
+                                                            .restClassCount,
                                                         separatorBuilder:
                                                             (context, index) =>
                                                                 SizedBox(
@@ -374,16 +370,16 @@ class NewAttendScreen extends StatelessWidget {
                   _cubit.sendNewAttend(
                     date: _dateteController.text,
                     time: _cubit.subSelectedTime,
-                    subId: _cubit.subscribeDetails!.data!
+                    subId: _cubit.subscribeDetails!.data
                         .where((element) => element.id == id)
                         .first
-                        .subscription!
+                        .subscription
                         .info!
                         .id,
-                    trainerId: _cubit.subscribeDetails!.data!
+                    trainerId: _cubit.subscribeDetails!.data
                         .where((element) => element.id == id)
                         .first
-                        .trainer!
+                        .trainer
                         .id,
                   );
                 }

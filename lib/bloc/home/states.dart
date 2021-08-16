@@ -260,3 +260,9 @@ class GetSubscribeDetailSuccess extends HomeStates {}
 
 // END SUBSCRIBE
 class GetSubscribeDetailError extends HomeStates {}
+
+// PICKED PROFILE IMAGE
+class PickedProfileImageSuccess extends HomeStates {}
+
+// PICKED PROFILE IMAGE
+class PickedProfileImageError extends HomeStates {}

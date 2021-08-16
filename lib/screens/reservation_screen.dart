@@ -275,83 +275,97 @@ class ReservationScreen extends StatelessWidget {
                                   SizedBox(height: 15),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 25),
+                                        horizontal: 10),
                                     child: Container(
-                                      child: Row(
-                                        textDirection: TextDirection.rtl,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          AutoSizeText(
-                                            '$price',
+                                      child: Center(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
                                             textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                          SizedBox(width: 5),
-                                          AutoSizeText(
-                                            'ريال',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: mPrimaryArabicFont,
-                                              color: Colors.black,
-                                            ),
-                                            textDirection: TextDirection.rtl,
-                                          ),
-                                          SizedBox(width: 10),
-                                          Container(
-                                            height: 30,
-                                            width: 1,
-                                            color: mPrimaryColor,
-                                          ),
-                                          SizedBox(width: 10),
-                                          AutoSizeText(
-                                            'عدد الحصص',
-                                            textDirection: TextDirection.rtl,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: mPrimaryArabicFont,
-                                            ),
-                                          ),
-                                          SizedBox(width: 5),
-                                          AutoSizeText(
-                                            '$classCount',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.red,
-                                            ),
-                                            textDirection: TextDirection.rtl,
-                                          ),
-                                          SizedBox(width: 10),
-                                          Container(
-                                            height: 30,
-                                            width: 1,
-                                            color: mPrimaryColor,
-                                          ),
-                                          SizedBox(width: 10),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.black,
-                                                width: 0.5,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              AutoSizeText(
+                                                '$price',
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.red,
+                                                ),
                                               ),
-                                            ),
-                                            child: AutoSizeText(
-                                              '$subDays يوم ',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.red,
-                                                fontFamily: mPrimaryArabicFont,
+                                              SizedBox(width: 5),
+                                              AutoSizeText(
+                                                'ريال',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontFamily:
+                                                      mPrimaryArabicFont,
+                                                  color: Colors.black,
+                                                ),
+                                                textDirection:
+                                                    TextDirection.rtl,
                                               ),
-                                              textAlign: TextAlign.center,
-                                              textDirection: TextDirection.rtl,
-                                            ),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                height: 30,
+                                                width: 1,
+                                                color: mPrimaryColor,
+                                              ),
+                                              SizedBox(width: 10),
+                                              AutoSizeText(
+                                                'عدد الحصص',
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontFamily:
+                                                      mPrimaryArabicFont,
+                                                ),
+                                              ),
+                                              SizedBox(width: 5),
+                                              AutoSizeText(
+                                                '$classCount',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.red,
+                                                ),
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                              ),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                height: 30,
+                                                width: 1,
+                                                color: mPrimaryColor,
+                                              ),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.black,
+                                                    width: 0.5,
+                                                  ),
+                                                ),
+                                                child: AutoSizeText(
+                                                  '$subDays يوم ',
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.red,
+                                                    fontFamily:
+                                                        mPrimaryArabicFont,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                  textDirection:
+                                                      TextDirection.rtl,
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
                                       color: mPrimaryColor.withOpacity(0.07),
                                       height: 50,

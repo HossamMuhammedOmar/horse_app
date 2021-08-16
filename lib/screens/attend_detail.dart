@@ -277,7 +277,7 @@ class AttendDetail extends StatelessWidget {
                                         width: double.infinity,
                                         child: Center(
                                           child: AutoSizeText(
-                                            'المتبقي لديك من الحصص التدريبية ( ${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.subscription!.info!.restClassCount} )  يمكنك الغاء الحضور اخر موعد قبل الحضور بـ 5 ساعات ',
+                                            'المتبقي لديك من الحصص التدريبية ( ${_cubit.subscribeDetails!.data.where((element) => element.id == id).first.subscription.info!.restClassCount} )  يمكنك الغاء الحضور اخر موعد قبل الحضور بـ 5 ساعات ',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily: 'Cairo',
@@ -313,23 +313,23 @@ class AttendDetail extends StatelessWidget {
                                                         (context, index) =>
                                                             _buildItem(
                                                       _cubit.subscribeDetails!
-                                                          .data!
+                                                          .data
                                                           .where((element) =>
                                                               element.id == id)
                                                           .first
-                                                          .subscription!
-                                                          .attends![index],
+                                                          .subscription
+                                                          .attends[index],
                                                       context,
                                                       _cubit,
                                                       state,
                                                     ),
                                                     itemCount: _cubit
-                                                        .subscribeDetails!.data!
+                                                        .subscribeDetails!.data
                                                         .where((element) =>
                                                             element.id == id)
                                                         .first
-                                                        .subscription!
-                                                        .attends!
+                                                        .subscription
+                                                        .attends
                                                         .length,
                                                   ),
                                                 ),
@@ -424,7 +424,7 @@ class AttendDetail extends StatelessWidget {
             border: Border.all(color: Color(0xffDEE2E6)),
           ),
           child: Text(
-            '${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.trainer!.name}',
+            '${_cubit.subscribeDetails!.data.where((element) => element.id == id).first.trainer.name}',
             style: TextStyle(
               fontFamily: mPrimaryArabicFont,
               fontWeight: FontWeight.normal,

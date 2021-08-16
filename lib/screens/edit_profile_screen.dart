@@ -1,4 +1,5 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,6 +20,10 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _nameController.text = HomeCubit.get(context).profileModel!.data!.name!;
+    _emailController.text = HomeCubit.get(context).profileModel!.data!.email!;
+    _phoneController.text = HomeCubit.get(context).profileModel!.data!.mobile!;
+    _nameController.text = HomeCubit.get(context).profileModel!.data!.name!;
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
         if (state is UpdateProfileSuccess) {
@@ -46,10 +51,8 @@ class EditProfileScreen extends StatelessWidget {
       },
       builder: (context, state) {
         HomeCubit _cubit = HomeCubit.get(context);
-        _nameController.text = _cubit.profileModel!.data!.name!;
-        _emailController.text = _cubit.profileModel!.data!.email!;
-        _phoneController.text = _cubit.profileModel!.data!.mobile!;
-        _nameController.text = _cubit.profileModel!.data!.name!;
+
+        var profileImage = _cubit.profileImage;
         return state is! GetUserDataLoading
             ? Scaffold(
                 backgroundColor: Colors.white,
@@ -178,9 +181,11 @@ class EditProfileScreen extends StatelessWidget {
                                           const EdgeInsets.only(right: 8.0),
                                       child: IconButton(
                                           onPressed: () {
+                                            _cubit.profileImage = null;
                                             Transitioner(
                                               context: context,
                                               child: ProfileScreen(),
+
                                               animation: AnimationType
                                                   .fadeIn, // Optional value
                                               duration: Duration(
@@ -229,6 +234,29 @@ class EditProfileScreen extends StatelessWidget {
                                   child: Form(
                                     child: Column(
                                       children: [
+                                        Center(
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              _cubit.getProfileImage();
+                                            },
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.white,
+                                              radius: 60.0,
+                                              child: ClipRRect(
+                                                child: profileImage == null
+                                                    ? Image.network(
+                                                        '${_cubit.profileModel!.data!.photo}',
+                                                        width: 200,
+                                                        height: 200,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image.file(profileImage),
+                                                borderRadius:
+                                                    BorderRadius.circular(60.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                         Text(
                                           'الإسم',
                                           textDirection: TextDirection.rtl,
@@ -310,13 +338,36 @@ class EditProfileScreen extends StatelessWidget {
                                               vertical: 40),
                                           child: Center(
                                             child: MaterialButton(
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                var _image;
+                                                if (_cubit.profileImage != null)
+                                                  _image = await MultipartFile
+                                                      .fromFile(
+                                                    profileImage!.path,
+                                                  );
+
+                                                final formData =
+                                                    FormData.fromMap(
+                                                  {
+                                                    'name':
+                                                        _nameController.text,
+                                                    "email":
+                                                        _emailController.text,
+                                                    "mobile":
+                                                        _phoneController.text,
+                                                    if (_passController.text
+                                                        .toString()
+                                                        .isNotEmpty)
+                                                      'password':
+                                                          _passController.text,
+
+                                                    'photo': _image,
+                                                    // '_method': 'put',
+                                                  },
+                                                );
+
                                                 _cubit.updateProfile(
-                                                  name: _nameController.text,
-                                                  email: _emailController.text,
-                                                  phone: _phoneController.text,
-                                                  password:
-                                                      _passController.text,
+                                                  formData: formData,
                                                 );
                                               },
                                               child:

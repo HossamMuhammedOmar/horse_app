@@ -224,7 +224,7 @@ class SubscribeDetail extends StatelessWidget {
                                                       ),
                                                       child: Center(
                                                         child: Text(
-                                                          '${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.package!.title}',
+                                                          '${_cubit.subscribeDetails!.data.where((element) => element.id == id).first.package.title}',
                                                           maxLines: 1,
                                                           textDirection:
                                                               TextDirection.rtl,
@@ -251,7 +251,7 @@ class SubscribeDetail extends StatelessWidget {
                                                       ),
                                                       child: Center(
                                                         child: Text(
-                                                          '${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.package!.classCount}',
+                                                          '${_cubit.subscribeDetails!.data.where((element) => element.id == id).first.package.classCount}',
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 mPrimaryArabicFont,
@@ -274,7 +274,7 @@ class SubscribeDetail extends StatelessWidget {
                                                       ),
                                                       child: Center(
                                                         child: Text(
-                                                          '${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.subscription!.info!.restClassCount}',
+                                                          '${_cubit.subscribeDetails!.data.where((element) => element.id == id).first.subscription.info!.restClassCount}',
                                                           style: TextStyle(),
                                                           textDirection:
                                                               TextDirection.rtl,
@@ -294,7 +294,7 @@ class SubscribeDetail extends StatelessWidget {
                                                       ),
                                                       child: Center(
                                                         child: Text(
-                                                          '${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.subscription!.info!.startIn.toString().substring(0, 10)}',
+                                                          '${_cubit.subscribeDetails!.data.where((element) => element.id == id).first.subscription.info!.startIn.toString().substring(0, 10)}',
                                                           maxLines: 1,
                                                           style: TextStyle(),
                                                           textDirection:
@@ -315,7 +315,7 @@ class SubscribeDetail extends StatelessWidget {
                                                       ),
                                                       child: Center(
                                                         child: Text(
-                                                          '${_cubit.subscribeDetails!.data!.where((element) => element.id == id).first.subscription!.info!.endIn.toString().substring(0, 10)}',
+                                                          '${_cubit.subscribeDetails!.data.where((element) => element.id == id).first.subscription.info!.endIn.toString().substring(0, 10)}',
                                                           style: TextStyle(),
                                                           textDirection:
                                                               TextDirection.rtl,
