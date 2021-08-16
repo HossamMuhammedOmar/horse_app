@@ -633,33 +633,6 @@ class SubscibeScreen extends StatelessWidget {
             child: item.transaction.image == null
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: MaterialButton(
-                      onPressed: () {
-                        // print(item.id);
-                        Transitioner(
-                          context: context,
-                          child: ConfirmPackageSubscribeScreen(
-                            id: item.id,
-                          ),
-                          animation: AnimationType.fadeIn, // Optional value
-                          duration:
-                              Duration(milliseconds: 300), // Optional value
-                          replacement: true, // Optional value
-                          curveType: CurveType.decelerate, // Optional value
-                        );
-                      },
-                      // child: Text(
-                      //   'دفع المبلغ',
-                      //   style: TextStyle(
-                      //     fontFamily: mPrimaryArabicFont,
-                      //     color: Colors.white,
-                      //   ),
-                      //   textDirection: TextDirection.rtl,
-                      // ),
-                      // color: Color(0xff0E6EFD),
-                      height: 20,
-                      padding: const EdgeInsets.all(0),
-                    ),
                   )
                 : FullScreenWidget(
                     child: Image.network(
