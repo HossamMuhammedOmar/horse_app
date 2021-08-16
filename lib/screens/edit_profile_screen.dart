@@ -7,7 +7,6 @@ import 'package:horse_app/bloc/home/cubit.dart';
 import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
 import 'notification_screen.dart';
 import 'profile_screen.dart';
@@ -412,10 +411,8 @@ class EditProfileScreen extends StatelessWidget {
                 ),
               )
             : Scaffold(
-                body: Scaffold(
-                  body: LoadingRotating.square(
-                    backgroundColor: mPrimaryColor,
-                  ),
+                body: Center(
+                  child: Image.asset('assets/images/loading.gif'),
                 ),
               );
       },

@@ -8,7 +8,6 @@ import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/attend_detail.dart';
 import 'package:horse_app/screens/payment_sub_detail.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
 import 'notification_screen.dart';
 import 'profile_screen.dart';
@@ -459,8 +458,8 @@ class SubscribeDetail extends StatelessWidget {
                 ),
               )
             : Scaffold(
-                body: LoadingRotating.square(
-                  backgroundColor: mPrimaryColor,
+                body: Center(
+                  child: Image.asset('assets/images/loading.gif'),
                 ),
               );
       },

@@ -346,8 +346,8 @@ class NewAttendScreen extends StatelessWidget {
                 ),
               )
             : Scaffold(
-                body: LoadingRotating.square(
-                  backgroundColor: mPrimaryColor,
+                body: Center(
+                  child: Image.asset('assets/images/loading.gif'),
                 ),
               );
       },

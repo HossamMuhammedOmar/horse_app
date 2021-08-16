@@ -14,7 +14,6 @@ import 'package:horse_app/screens/login_screen.dart';
 import 'package:horse_app/screens/my_ind_subscribe_follow.dart';
 import 'package:horse_app/screens/subscribe_screen.dart';
 import 'package:horse_app/screens/trainer_subscribe_follow.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
 
 import 'contact_screen.dart';
@@ -634,8 +633,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
               )
             : Scaffold(
-                body: LoadingRotating.square(
-                  backgroundColor: mPrimaryColor,
+                body: Center(
+                  child: Image.asset('assets/images/loading.gif'),
                 ),
               );
       },

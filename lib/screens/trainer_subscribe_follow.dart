@@ -6,7 +6,6 @@ import 'package:horse_app/bloc/home/states.dart';
 import 'package:horse_app/constants/colors.dart';
 import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/confirm_trainer_subscribe_screen.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
 import 'notification_screen.dart';
 import 'profile_screen.dart';
@@ -277,8 +276,8 @@ class TrainerSubscribeFollow extends StatelessWidget {
                 ),
               )
             : Scaffold(
-                body: LoadingRotating.square(
-                  backgroundColor: mPrimaryColor,
+                body: Center(
+                  child: Image.asset('assets/images/loading.gif'),
                 ),
               );
       },

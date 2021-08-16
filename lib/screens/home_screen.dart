@@ -12,7 +12,6 @@ import 'package:horse_app/screens/posts_detail_screen.dart';
 import 'package:horse_app/screens/profile_screen.dart';
 import 'package:horse_app/screens/reservation_screen.dart';
 import 'package:transitioner/transitioner.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'notification_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -640,8 +639,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ))
                 : Scaffold(
-                    body: LoadingRotating.square(
-                      backgroundColor: mPrimaryColor,
+                    body: Center(
+                      child: Image.asset('assets/images/loading.gif'),
                     ),
                   );
           },

@@ -9,7 +9,6 @@ import 'package:horse_app/constants/fonts.dart';
 import 'package:horse_app/screens/confirm_package_subscribe_screen.dart';
 import 'package:horse_app/screens/profile_screen.dart';
 import 'package:horse_app/screens/subscribe_detail.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'package:transitioner/transitioner.dart';
 import 'notification_screen.dart';
 
@@ -411,8 +410,8 @@ class SubscibeScreen extends StatelessWidget {
                 ),
               )
             : Scaffold(
-                body: LoadingRotating.square(
-                  backgroundColor: mPrimaryColor,
+                body: Center(
+                  child: Image.asset('assets/images/loading.gif'),
                 ),
               );
       },
