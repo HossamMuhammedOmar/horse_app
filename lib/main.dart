@@ -12,7 +12,6 @@ void main() async {
   await SharedHelper.init();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
   runApp(MyApp());
 }
 
